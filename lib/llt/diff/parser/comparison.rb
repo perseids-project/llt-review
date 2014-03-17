@@ -18,6 +18,10 @@ module LLT
       def xml_attributes
         { gold_id: @gold_id, review_id: @review_id }
       end
+
+      def stats
+        "<stats/>"
+      end
     end
   end
 end

@@ -51,12 +51,16 @@ module LLT
 
       def to_xml
         "<#{xml_tag}#{to_xml_attrs(xml_attributes)}>" +
-        container_to_xml +
+          container_to_xml + stats +
         "</#{xml_tag}>"
       end
 
       def container_to_xml
         "#{container.values.map(&:to_xml).join}"
+      end
+
+      def stats
+        ''
       end
 
       private
