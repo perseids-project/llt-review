@@ -1,7 +1,9 @@
 module LLT
   class Diff::Parser
-    class DiffContainer
+    class SentenceDiff
       include HashContainable
+
+      xml_tag :sentence
     end
   end
 end

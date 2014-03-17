@@ -1,6 +1,6 @@
 module LLT
   class Diff::Parser
-    class Difference
+    class WordDiff
       include HashContainable
 
       attr_accessor :lemma, :postag, :head, :relation

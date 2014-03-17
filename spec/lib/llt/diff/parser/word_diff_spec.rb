@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe LLT::Diff::Parser::Difference do
-  let(:difference) { LLT::Diff::Parser::Difference.new(1) }
+describe LLT::Diff::Parser::WordDiff do
+  let(:difference) { LLT::Diff::Parser::WordDiff.new(1) }
 
   describe "#to_xml" do
     it "returns differences grouped by original and new" do
