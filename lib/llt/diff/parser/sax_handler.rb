@@ -44,10 +44,6 @@ module LLT
         @word = Word.new(value.to_i)
         @sentence.add(@word)
       end
-
-      def parse_word
-        puts 'word'
-      end
     end
   end
 end
