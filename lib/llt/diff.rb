@@ -18,7 +18,7 @@ module LLT
     def parse_threaded(gold, reviewables)
       threads = [gold, reviewables].flatten.map { |el| Thread.new { parse(el) } }
       results = threads.map { |t| t.join; t.value }
-      [results.shift, results.map { |result| Parser::Reviewable.new(nil, result) }]
+      [results.shift, results.map.with_index { |result, i| Parser::Reviewable.new(i + 1, result) }]
     end
 
     def parse(data)
