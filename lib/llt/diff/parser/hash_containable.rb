@@ -52,7 +52,7 @@ module LLT
       end
 
       def container_to_xml
-        "#{container.map(&:to_xml).join}"
+        "#{container.values.map(&:to_xml).join}"
       end
 
       private
