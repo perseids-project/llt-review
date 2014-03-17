@@ -43,10 +43,6 @@ module LLT
       def report_hash
         %w{ relation }.each_with_object({}) { |e, hsh| hsh[e] = counter_hash }
       end
-
-      def counter_hash
-        Hash.new(0)
-      end
     end
   end
 end
