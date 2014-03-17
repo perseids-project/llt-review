@@ -7,7 +7,7 @@ module LLT
 
       attr_reader :container, :id
 
-      def initialize(id)
+      def initialize(id = nil)
         @id = id
         @container = {}
       end
