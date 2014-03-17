@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["LFDM"]
   spec.email         = ["1986gh@gmail.com"]
   spec.summary       = %q{Compares annotations}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
 
