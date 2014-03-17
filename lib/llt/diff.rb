@@ -1,8 +1,11 @@
+require 'llt/core/api/helpers'
 require "llt/diff/version"
 
 module LLT
   class Diff
     require 'llt/diff/parser'
+
+    include Core::Api::Helpers
 
     def diff(gold, reviewables)
       parse_files(gold, reviewables)
@@ -38,7 +41,7 @@ module LLT
     end
 
     def to_xml
-      header + diff_to_xml
+      XML_DECLARATION + header + diff_to_xml
     end
 
     def header
@@ -53,11 +56,6 @@ module LLT
 
     def parse(data)
       Parser.new.parse(data)
-    end
-
-    require 'open-uri'
-    def get_from_uri(uri)
-      URI(uri).read
     end
   end
 end
