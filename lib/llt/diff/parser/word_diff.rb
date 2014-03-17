@@ -16,8 +16,8 @@ module LLT
         res = { original: {}, new: {} }
         DIFFERENCES.each do |var|
           if diff = send(var)
-            res[:original] = { var => diff.first }
-            res[:new]      = { var => diff.last }
+            res[:original][var] = diff.first
+            res[:new][var]      = diff.last
           end
         end
         res
