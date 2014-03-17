@@ -6,7 +6,6 @@ module LLT
 
     def initialize(gold, reviewables)
       @gold, @reviewables = parse_threaded(gold, reviewables)
-      @diff = {}
     end
 
     def compare
