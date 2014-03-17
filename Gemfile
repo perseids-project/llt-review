@@ -4,4 +4,6 @@ source 'https://rubygems.org'
 gemspec
 gem 'coveralls', require: false
 
+gem 'llt-core', git: 'git://github.com/latin-language-toolkit/llt-core.git'
+
 gem 'pry'
