@@ -5,6 +5,8 @@ module LLT
     class Parser
       require 'llt/diff/parser/sax_handler'
       require 'llt/diff/parser/reviewable'
+      require 'llt/diff/parser/comparison'
+      require 'llt/diff/parser/gold'
 
       require 'llt/diff/parser/sentence_diff'
       require 'llt/diff/parser/word_diff'

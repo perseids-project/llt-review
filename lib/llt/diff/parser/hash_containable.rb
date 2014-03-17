@@ -40,6 +40,10 @@ module LLT
         { id: id }
       end
 
+      def xml_heading
+        %{<#{xml_tag} id="#{id}"/>}
+      end
+
       def xml_tag
         self.class.default_xml_tag
       end

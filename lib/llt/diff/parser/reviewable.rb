@@ -5,16 +5,26 @@ module LLT
 
       container_alias :diff
 
+      xml_tag :reviewable
+
       def initialize(id, sentences)
         super(id)
         @sentences = sentences
       end
 
       def compare(gold)
-        gold.each do |gold_id, sentence|
-          difference = sentence.compare(@sentences[gold_id])
-          add(difference) if difference.any?
+        comparison = Comparison.new(gold.id, id)
+
+        gold.sentences.each do |sentence_id, sentence|
+          difference = sentence.compare(@sentences[sentence_id])
+          comparison.add(difference) if difference.any?
         end
+
+        add(comparison) if comparison.any?
+      end
+
+      def to_xml
+        container_to_xml
       end
     end
   end
