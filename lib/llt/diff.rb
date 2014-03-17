@@ -3,7 +3,7 @@ require "llt/diff/version"
 module LLT
   class Diff
     require 'llt/diff/parser'
-    require 'llt/diff/difference'
+    require 'llt/diff/parser/difference'
 
     def initialize(gold, review)
       @gold, @review = parse_threaded(gold, review)

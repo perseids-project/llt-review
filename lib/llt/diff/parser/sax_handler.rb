@@ -1,6 +1,7 @@
 module LLT
   class Diff::Parser
     class SaxHandler < Ox::Sax
+      require 'llt/diff/parser/hash_containable'
       require 'llt/diff/parser/sentence'
       require 'llt/diff/parser/word'
 
@@ -36,9 +37,8 @@ module LLT
       end
 
       def register_word(value)
-        id = value.to_i
-        @word = Word.new(id)
-        @sentence.add_word(id, @word)
+        @word = Word.new(value.to_i)
+        @sentence.add(@word)
       end
 
       def parse_word

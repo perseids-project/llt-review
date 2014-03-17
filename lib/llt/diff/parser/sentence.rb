@@ -1,19 +1,14 @@
 module LLT
   class Diff::Parser
     class Sentence
+      include HashContainable
+
+      container_alias :words
+
       def initialize(id)
-        @id = id
-        @words  = {}
+        super
         @comparable_elements = %i{ lemma postag head relation }
         @diff = {}
-      end
-
-      def [](id)
-        @words[id]
-      end
-
-      def add_word(id, word)
-        @words[id] = word
       end
 
       def report
@@ -21,12 +16,12 @@ module LLT
       end
 
       def compare(other)
-        @words.each do |id, word|
+        words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
             a, b = [word, other_word].map { |w| w.send(comparator) }
             if a != b
-              d = @diff[id] ||= new_difference(id)
+              d = @diff[id] ||= Difference.new(id)
               d.send("#{comparator}=", [a, b])
             end
           end
@@ -51,10 +46,6 @@ module LLT
 
       def counter_hash
         Hash.new(0)
-      end
-
-      def new_difference(id)
-        LLT::Diff::Difference.new(id)
       end
     end
   end
