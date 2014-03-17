@@ -8,7 +8,6 @@ module LLT
       def initialize(id)
         super
         @comparable_elements = %i{ lemma postag head relation }
-        @diff = SentenceDiff.new(id)
       end
 
       def report
@@ -16,18 +15,19 @@ module LLT
       end
 
       def compare(other)
+        diff = SentenceDiff.new(id)
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
             a, b = [word, other_word].map { |w| w.send(comparator) }
             if a != b
-              d = @diff[id] ||= WordDiff.new(id)
+              d = diff[id] ||= WordDiff.new(id)
               d.send("#{comparator}=", [a, b])
             end
           end
         end
 
-        @diff
+        diff
       end
 
       private
