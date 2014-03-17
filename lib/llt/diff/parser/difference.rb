@@ -6,10 +6,6 @@ module LLT
       attr_accessor :lemma, :postag, :head, :relation
 
       def to_xml
-        as_xml
-      end
-
-      def as_xml
         grouped_differences.map { |type, val| "<#{type} #{to_xml_attrs(val)}/>" }.join
       end
 
