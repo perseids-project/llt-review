@@ -12,19 +12,29 @@ module LLT
         @result = ParseResult.new
       end
 
-      # make known when we are in a word element, otherwise we're in a sentence
       def start_element(name)
-        @in_word = name == :word
+        case name
+        when :word     then @in_word = true
+        when :sentence then @in_sentence = true
+        end
+      end
+
+      def end_element(name)
+        case name
+        when :word     then @in_word = false
+        when :sentence then @in_sentence = false
+        end
       end
 
       def attr(name, value)
-        if @in_word
+        case
+        when @in_word
           if name == :id
             register_word(value)
           else
             @word.send("#{name}=", value)
           end
-        else
+        when @in_sentence
           register_sentence(value) if name == :id
         end
       end
