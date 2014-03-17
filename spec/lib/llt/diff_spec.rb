@@ -5,7 +5,7 @@ describe LLT::Diff do
     LLT::Diff::VERSION.should_not be_nil
   end
 
-  def diff(gold, review)
+  def diff(gold, *review)
     LLT::Diff.new(gold, review)
   end
 

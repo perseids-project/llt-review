@@ -4,24 +4,29 @@ module LLT
   class Diff
     require 'llt/diff/parser'
     require 'llt/diff/parser/difference'
+    require 'llt/diff/parser/reviewable'
 
-    def initialize(gold, review)
-      @gold, @review = parse_threaded(gold, review)
+    def initialize(gold, reviewables)
+      @gold, *@reviewables = parse_threaded(gold, reviewables)
       @diff = {}
     end
 
     def compare
-      @gold.each do |id, sentence|
-        if (difference = sentence.compare(@review[id])).any?
-          @diff[id] = difference
+      @reviewables.each_with_index do |reviewable, i|
+        @gold.each do |id, sentence|
+          if (difference = sentence.compare(reviewable[id])).any?
+            @diff[id] = difference
+          end
         end
-      end
 
+      end
       @diff
     end
 
-    def parse_threaded(*elements)
-      threads = elements.map { |el| Thread.new { parse(el) } }
+    # first item should be the gold standard, followed by
+    # one or several annotations to compare
+    def parse_threaded(gold, reviewables)
+      threads = [gold, reviewables].flatten.map { |el| Thread.new { parse(el) } }
       threads.map { |t| t.join; t.value }
     end
 
