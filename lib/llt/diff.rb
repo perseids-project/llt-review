@@ -1,7 +1,7 @@
 require "llt/diff/version"
 
 module LLT
-  module Diff
+  class Diff
     # Your code goes here...
   end
 end
