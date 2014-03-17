@@ -4,6 +4,12 @@ module LLT
       def initialize(id)
         @id = id
         @words  = {}
+        @comparable_elements = %i{ lemma postag head relation }
+        @diff = {}
+      end
+
+      def [](id)
+        @words[id]
       end
 
       def add_word(id, word)
@@ -12,6 +18,21 @@ module LLT
 
       def report
         @report ||= create_report
+      end
+
+      def compare(other)
+        @words.each do |id, word|
+          other_word = other[id]
+          @comparable_elements.each do |comparator|
+            a, b = [word, other_word].map { |w| w.send(comparator) }
+            if a != b
+              d = @diff[id] ||= new_difference(id)
+              d.send("#{comparator}=", [a, b])
+            end
+          end
+        end
+
+        @diff
       end
 
       private
@@ -30,6 +51,10 @@ module LLT
 
       def counter_hash
         Hash.new(0)
+      end
+
+      def new_difference(id)
+        LLT::Diff::Difference.new(id)
       end
     end
   end
