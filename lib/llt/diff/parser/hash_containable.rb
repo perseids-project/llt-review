@@ -38,6 +38,10 @@ module LLT
 
       private
 
+      def to_xml_attrs(attrs)
+        attrs.map { |k, v| %{#{k}="#{v}"} }.join(' ')
+      end
+
       def counter_hash
         Hash.new(0)
       end
