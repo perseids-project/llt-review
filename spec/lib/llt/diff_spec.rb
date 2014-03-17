@@ -33,8 +33,9 @@ describe LLT::Diff do
 
       d = diff(gold, review)
       result = d.compare
-      result.should have(1).item
-      result[21].should have(3).items
+      result.should have(1).item         # we had one reviewable annotation
+      result[0].should have(1).item      # one sentence with differences
+      result[0][21].should have(3).items # and 3 words with differences
     end
   end
 end

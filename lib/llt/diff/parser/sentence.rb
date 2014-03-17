@@ -8,7 +8,7 @@ module LLT
       def initialize(id)
         super
         @comparable_elements = %i{ lemma postag head relation }
-        @diff = {}
+        @diff = DiffContainer.new(id)
       end
 
       def report

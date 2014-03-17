@@ -28,6 +28,10 @@ module LLT
         @container[id]
       end
 
+      def []=(id, element)
+        @container[id] = element
+      end
+
       def size
         @container.size
       end
