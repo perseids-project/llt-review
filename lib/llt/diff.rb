@@ -41,13 +41,17 @@ module LLT
     end
 
     def to_xml
-      XML_DECLARATION + header + diff_to_xml
+      XML_DECLARATION + wrap_with_tag('doc', header + diff_to_xml)
     end
 
     def header
-      "<files>" +
-        (@gold + @reviewables).map(&:xml_heading).join +
-      "</files>"
+      wrap_with_tag('files', (@gold + @reviewables).map(&:xml_heading).join)
+    end
+
+    def wrap_with_tag(tag, content)
+      "<#{tag}>" +
+        content +
+      "</#{tag}>"
     end
 
     def diff_to_xml
