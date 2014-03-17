@@ -36,10 +36,29 @@ module LLT
         @container.size
       end
 
+      def xml_attributes
+        { id: id }
+      end
+
+      def xml_tag
+        self.class.default_xml_tag
+      end
+      alias_method :default_xml_tag, :xml_tag
+
+      def to_xml
+        "<#{xml_tag}#{to_xml_attrs(xml_attributes)}>" +
+        container_to_xml +
+        "</#{xml_tag}>"
+      end
+
+      def container_to_xml
+        "#{container.map(&:to_xml).join}"
+      end
+
       private
 
       def to_xml_attrs(attrs)
-        attrs.map { |k, v| %{#{k}="#{v}"} }.join(' ')
+        attrs.map { |k, v| %{ #{k}="#{v}"} }.join
       end
 
       def counter_hash
@@ -54,6 +73,15 @@ module LLT
         def container_alias(al)
           alias_method al, :container
           alias_method "no_#{al}?", :empty?
+        end
+
+        # Defines the default xml tag used by #to_xml
+        def xml_tag(tag)
+          @default_xml_tag = tag
+        end
+
+        def default_xml_tag
+          @default_xml_tag
         end
       end
     end

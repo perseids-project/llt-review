@@ -5,8 +5,10 @@ module LLT
 
       attr_accessor :lemma, :postag, :head, :relation
 
-      def to_xml
-        grouped_differences.map { |type, val| "<#{type} #{to_xml_attrs(val)}/>" }.join
+      xml_tag :word
+
+      def container_to_xml
+        grouped_differences.map { |type, val| "<#{type}#{to_xml_attrs(val)}/>" }.join
       end
 
       DIFFERENCES = %i{ lemma postag head relation }
