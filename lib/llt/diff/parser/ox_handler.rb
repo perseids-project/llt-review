@@ -10,6 +10,10 @@ module LLT
         @result = ParseResult.new
       end
 
+      def parse(data)
+        Ox.sax_parse(self, data)
+      end
+
       def start_element(name)
         case name
         when :word     then @in_word = true
