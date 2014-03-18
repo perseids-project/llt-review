@@ -1,15 +1,17 @@
+require 'ox'
+
 module LLT
   class Diff::Parser
-    class SaxHandler < Ox::Sax
-      require 'llt/diff/parser/hash_containable'
-      require 'llt/diff/parser/parse_result'
-      require 'llt/diff/parser/sentence'
-      require 'llt/diff/parser/word'
+    class OxHandler < Ox::Sax
 
       attr_reader :result
 
       def initialize
         @result = ParseResult.new
+      end
+
+      def parse(data)
+        Ox.sax_parse(self, data)
       end
 
       def start_element(name)
