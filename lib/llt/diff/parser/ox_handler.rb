@@ -4,11 +4,7 @@ module LLT
   class Diff::Parser
     class OxHandler < Ox::Sax
 
-      attr_reader :result
-
-      def initialize
-        @result = ParseResult.new
-      end
+      include ParseHelper
 
       def parse(data)
         Ox.sax_parse(self, data)
@@ -39,18 +35,6 @@ module LLT
         when @in_sentence
           register_sentence(value) if name == :id
         end
-      end
-
-      private
-
-      def register_sentence(value)
-        @sentence = Sentence.new(value.to_i)
-        @result.add(@sentence)
-      end
-
-      def register_word(value)
-        @word = Word.new(value.to_i)
-        @sentence.add(@word)
       end
     end
   end

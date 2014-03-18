@@ -12,6 +12,7 @@ module LLT
       require 'llt/diff/parser/sentence_diff'
       require 'llt/diff/parser/word_diff'
 
+      require 'llt/diff/parser/parse_helper'
       autoload :NokogiriHandler, 'llt/diff/parser/nokogiri_handler'
       autoload :OxHandler,       'llt/diff/parser/ox_handler'
 
