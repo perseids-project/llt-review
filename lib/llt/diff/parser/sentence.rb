@@ -34,14 +34,12 @@ module LLT
 
       def create_report
         report_hash.each do |category, res|
-          @words.each do |id, word|
-            res[word.send(category)] += 1
-          end
-        end
+          words.each { |_, word| res[word.send(category)] += 1 }
+        end.merge(words: { total: size })
       end
 
       def report_hash
-        %w{ relation }.each_with_object({}) { |e, hsh| hsh[e] = counter_hash }
+        %i{ relation lemma }.each_with_object({}) { |e, hsh| hsh[e] = counter_hash }
       end
     end
   end
