@@ -38,8 +38,9 @@ module LLT
         end.merge(words: { total: size })
       end
 
+      TO_COUNT = %i{ relation lemma }
       def report_hash
-        %i{ relation lemma }.each_with_object({}) { |e, hsh| hsh[e] = counter_hash }
+        Hash[TO_COUNT.map { |c| [c, counter_hash ]}]
       end
     end
   end
