@@ -7,4 +7,8 @@ gem 'coveralls', require: false
 gem 'llt-core', git: 'git://github.com/latin-language-toolkit/llt-core.git'
 
 gem 'ox', platform: :ruby
-gem 'nokogiri', platform: :jruby
+
+platform :jruby do
+  gem 'nokogiri'
+  gem 'jruby-httpclient'
+end
