@@ -17,5 +17,10 @@ describe LLT::Diff::Parser::HashContainable do
       h = { x: { a: 3, b: 5 } }
       dummy.send(:sort_report, h).should == { x: { b: 5, a: 3 } }
     end
+
+    it "sorts alphabetically if the numeric value is equal" do
+      h = { x: { c: 3, a: 3, b: 5 } }
+      dummy.send(:sort_report, h).should == { x: { b: 5, a: 3, c: 3 } }
+    end
   end
 end

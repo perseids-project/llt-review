@@ -85,7 +85,7 @@ module LLT
 
       def sort_report(report)
         report.each_with_object({}) do |(category, counts), hsh|
-          hsh[category] = Hash[counts.sort_by { |_, count| count }]
+          hsh[category] = Hash[counts.sort_by { |k, count| [count, k] }]
         end
       end
 
