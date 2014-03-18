@@ -83,6 +83,12 @@ module LLT
         end
       end
 
+      def sort_report(report)
+        report.each_with_object({}) do |(category, counts), hsh|
+          hsh[category] = Hash[counts.sort_by { |_, count| count }]
+        end
+      end
+
       def self.included(klass)
         klass.extend(ClassMethods)
       end

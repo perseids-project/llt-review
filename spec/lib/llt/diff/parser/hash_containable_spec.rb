@@ -11,4 +11,11 @@ describe LLT::Diff::Parser::HashContainable do
       res.should ==  { x: { a: 3, 'b' => 5 } }
     end
   end
+
+  describe "#sort_report" do
+    it "sorts reports by their numeric values" do
+      h = { x: { a: 3, b: 5 } }
+      dummy.send(:sort_report, h).should == { x: { b: 5, a: 3 } }
+    end
+  end
 end
