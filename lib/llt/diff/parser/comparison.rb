@@ -5,18 +5,18 @@ module LLT
 
       xml_tag :comparison
 
-      def initialize(gold_id, review_id)
-        @gold_id   = gold_id
-        @review_id = review_id
-        @container = {}
+      def initialize(gold, reviewable)
+        @gold       = gold
+        @reviewable = reviewable
+        @container  = {}
       end
 
       def id
-        "#{@gold_id}---#{@review_id}"
+        "#{@gold.id}---#{@reviewable.id}"
       end
 
       def xml_attributes
-        { gold_id: @gold_id, review_id: @review_id }
+        { gold_id: @gold.id, review_id: @reviewable.id }
       end
 
       def stats

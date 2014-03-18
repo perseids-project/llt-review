@@ -13,7 +13,7 @@ module LLT
       end
 
       def compare(gold)
-        comparison = Comparison.new(gold.id, id)
+        comparison = Comparison.new(gold, self)
 
         gold.sentences.each do |sentence_id, sentence|
           difference = sentence.compare(@sentences[sentence_id])
