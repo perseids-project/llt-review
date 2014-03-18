@@ -5,6 +5,8 @@ module LLT
 
       xml_tag :comparison
 
+      attr_reader :gold, :reviewable
+
       def initialize(gold, reviewable)
         @gold       = gold
         @reviewable = reviewable
