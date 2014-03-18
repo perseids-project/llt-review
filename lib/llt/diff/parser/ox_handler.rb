@@ -43,10 +43,6 @@ module LLT
 
       private
 
-      def parse_sentence
-        @sentence_id
-      end
-
       def register_sentence(value)
         @sentence = Sentence.new(value.to_i)
         @result.add(@sentence)
