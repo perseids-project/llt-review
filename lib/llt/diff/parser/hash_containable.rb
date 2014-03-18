@@ -73,6 +73,16 @@ module LLT
         Hash.new(0)
       end
 
+      def merge_reports(*reports)
+        categories = reports.first.keys
+        categories.each_with_object({}) do |c, hsh|
+          values = reports.map { |r| r[c] }
+          hsh[c] = values.inject do |m, other|
+            m.merge(other) { |_, ov, nv| ov + nv }
+          end
+        end
+      end
+
       def self.included(klass)
         klass.extend(ClassMethods)
       end
