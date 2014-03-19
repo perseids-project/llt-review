@@ -102,6 +102,23 @@ module LLT
         end
       end
 
+      def hash_to_xml(hsh)
+        hsh.map do |k, nested|
+          children, attrs = nested.partition { |_, v| v.is_a?(Hash) }
+          wrap_with_tag(k, attrs, children.map { |c| hash_to_xml(Hash[*c]) }.join)
+        end.join
+      end
+
+      def wrap_with_tag(tag, attrs = {}, content)
+        if content.empty?
+          "<#{tag}#{to_xml_attrs(attrs)}/>"
+        else
+          "<#{tag}#{to_xml_attrs(attrs)}>" +
+            content +
+          "</#{tag}>"
+        end
+      end
+
       def self.included(klass)
         klass.extend(ClassMethods)
       end

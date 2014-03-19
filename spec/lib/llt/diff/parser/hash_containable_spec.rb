@@ -34,4 +34,12 @@ describe LLT::Diff::Parser::HashContainable do
       dummy.send(:sort_report, h).should == { x: { b: 5, a: 3, c: 3 } }
     end
   end
+
+  describe "#hash_to_xml" do
+    it "creates xml out of nested hashes" do
+      h1 = { x: { a: { total: 1, c: { total: 2 }}, 'b' => { total: 3 }}}
+      res = '<x><a total="1"><c total="2"/></a><b total="3"/></x>'
+      dummy.send(:hash_to_xml, h1).should == res
+    end
+  end
 end
