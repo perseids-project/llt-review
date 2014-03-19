@@ -13,6 +13,8 @@ module LLT
       all_diffs
     end
 
+    private
+
     def all_diffs
       @reviewables.map { |reviewable| reviewable.diff.values }.flatten
     end
