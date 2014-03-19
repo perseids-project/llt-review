@@ -19,6 +19,10 @@ module LLT
           rep.merge(full_report)
         end
       end
+
+      def container_to_xml
+        hash_to_xml(report)
+      end
     end
   end
 end
