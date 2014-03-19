@@ -75,9 +75,21 @@ module LLT
 
       def merge_reports(*reports)
         reports.compact!
-        return reports.first if reports.one?
-        return reports.inject(:+) if reports.first.is_a?(Fixnum)
-        a, b = reports
+        case reports.size
+        when 1 then
+          reports.first
+        when 2
+          if reports.first.is_a?(Fixnum)
+            reports.inject(:+)
+          else
+            do_the_merge(*reports)
+          end
+        else
+          merge_reports(reports.shift, merge_reports(*reports))
+        end
+      end
+
+      def do_the_merge(a, b)
         categories = a.keys | b.keys
         categories.each_with_object({}) do |cat, hsh|
           hsh[cat] = merge_reports(a[cat], b[cat])

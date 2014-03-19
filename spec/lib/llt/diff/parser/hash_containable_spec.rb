@@ -13,6 +13,14 @@ describe LLT::Diff::Parser::HashContainable do
                             d: { total: 5},
                             e: { total: 6}}}
     end
+
+    it "takes multiple hashes at once" do
+      h1 = { x: { a: { total: 1, c: { total: 2 }}, 'b' => { total: 3 }}}
+      h2 = { x: { a: { total: 2, c: { total: 3 }}, 'b' => { total: 2 }}}
+      h3 = { x: { a: { total: 1, c: { total: 1 }}, 'b' => { total: 1 }}}
+      res = dummy.send(:merge_reports, h1, h2, h3)
+      res.should ==  { x: { a: { total: 4, c: { total: 6 }}, 'b' => { total: 6 }}}
+    end
   end
 
   describe "#sort_report" do
