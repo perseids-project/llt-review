@@ -3,7 +3,12 @@ module LLT
     class Word
       include HashContainable
 
-      attr_accessor :form, :lemma, :postag, :head, :relation
+      attr_accessor :form, :lemma, :head, :relation
+      attr_reader :postag
+
+      def postag=(tag)
+        Postag.new(tag)
+      end
     end
   end
 end

@@ -10,6 +10,7 @@ module LLT
       require 'llt/diff/parser/parse_result'
       require 'llt/diff/parser/sentence'
       require 'llt/diff/parser/word'
+      require 'llt/diff/parser/postag'
       require 'llt/diff/parser/sentence_diff'
       require 'llt/diff/parser/word_diff'
 
