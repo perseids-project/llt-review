@@ -56,4 +56,12 @@ describe LLT::Diff do
       result.should have(4).items # we have two times two reviewable annotations now
     end
   end
+
+  describe "#report" do
+    it "analyses occurences of lemmata, head, relation, postags... of passed uris" do
+      allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+      result = differ.report(:uri_for_g1)
+      result.should have(1).item
+    end
+  end
 end

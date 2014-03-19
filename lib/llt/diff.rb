@@ -18,6 +18,12 @@ module LLT
       all_diffs
     end
 
+    def report(*uris)
+      @reports = parse_files(Report: uris)
+      # create the report
+      @reports
+    end
+
     def to_xml(type = :xml)
       XML_DECLARATION + wrap_with_tag('doc', header + send("#{type}_to_xml"))
     end
@@ -65,6 +71,10 @@ module LLT
 
     def diff_to_xml
       @reviewables.map(&:to_xml).join
+    end
+
+    def report_to_xml
+      @reports.map(&:to_xml).join
     end
 
     def parse(data)
