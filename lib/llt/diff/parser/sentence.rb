@@ -10,6 +10,7 @@ module LLT
         @comparable_elements = %i{ lemma postag head relation }
       end
 
+      # currently unsorted
       def report
         @report ||= create_report
       end
@@ -32,15 +33,24 @@ module LLT
 
       private
 
+      # a multi-step process to avoid unnecessary performance issues
+      # the simple attributes can just be counted together, while the more
+      # complex ones such as postag need separate merging
       def create_report
-        report_hash.each do |category, res|
-          words.each { |_, word| res[word.send(category)] += 1 }
-        end.merge(words: { total: size })
+        rep = report_hash.each do |category, counter|
+          words.each do |_, word|
+            res = counter[word.send(category)] ||= counter_hash
+            res[:total] += 1
+          end
+        end
+        postag_reports = words.map { |_, w| w.postag.report if w.postag }.compact
+        postag = { postag: { total: size }.merge(merge_reports(*postag_reports)) }
+        { word: { total: size }, head: { total: size }}.merge(rep).merge(postag)
       end
 
-      TO_COUNT = %i{ relation lemma postag }
+      TO_COUNT = %i{ relation lemma }
       def report_hash
-        Hash[TO_COUNT.map { |c| [c, counter_hash ]}]
+        Hash[TO_COUNT.map { |c| [c, { total: size } ]}]
       end
     end
   end

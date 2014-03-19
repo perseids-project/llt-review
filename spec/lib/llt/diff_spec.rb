@@ -67,10 +67,20 @@ describe LLT::Diff do
         word: { total: 5 },
         head: { total: 5 },
         relation: {
-          total: 5, 'ADV' => 1, 'ATR' => 1, 'AuxP' => 1, 'PRED' => 1, 'SBJ' => 1
+          total: 5,
+          'ADV' => { total: 1 },
+          'ATR' => { total: 1 },
+          'AuxP' => { total: 1 },
+          'PRED' => { total: 1 },
+          'SBJ' => { total: 1 }
         },
         lemma: {
-          total: 5, 'flumen1' => 1, 'in1' => 1, 'is1' => 1, 'pons1' => 1, 'sum1' => 1,
+          total: 5,
+          'flumen1' => { total: 1 },
+          'in1' => { total: 1 },
+          'is1' => { total: 1 },
+          'pons1' => { total: 1 },
+          'sum1' => { total: 1 },
         },
         postag: {
           total: 5,
@@ -81,7 +91,7 @@ describe LLT::Diff do
               'r' => { total: 1 },
               'p' => { total: 1 },
               'n' => { total: 2 },
-              'v' => 1
+              'v' => { total: 1 }
             },
             person: {
               total: 1,
@@ -105,19 +115,17 @@ describe LLT::Diff do
             },
             gender: {
               total: 3,
-              'm' => { total: 2 },
-              'n' => { total: 1 },
+              'n' => { total: 2 },
+              'm' => { total: 1 },
             },
             case: {
               total: 3,
               'b' => { total: 2 },
               'n' => { total: 1 },
             },
-            degree: { total: 0 }
           }
         }
       }
-
       result.first.report.should == expected_report
     end
   end
