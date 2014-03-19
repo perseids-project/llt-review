@@ -73,10 +73,14 @@ module LLT
         Hash.new(0)
       end
 
-      def merge_reports(a, b)
-        return a + b if a.is_a?(Fixnum)
-        a.each_with_object({}) do |(k, v), hsh|
-          hsh[k] = merge_reports(v, b[k])
+      def merge_reports(*reports)
+        reports.compact!
+        return reports.first if reports.one?
+        return reports.inject(:+) if reports.first.is_a?(Fixnum)
+        a, b = reports
+        categories = a.keys | b.keys
+        categories.each_with_object({}) do |cat, hsh|
+          hsh[cat] = merge_reports(a[cat], b[cat])
         end
       end
 

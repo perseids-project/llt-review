@@ -3,12 +3,15 @@ require 'spec_helper'
 describe LLT::Diff::Parser::HashContainable do
   let(:dummy) { Class.new { include LLT::Diff::Parser::HashContainable }.new }
 
-  describe "#merge_reports" do
-    it "merges count figures from two hashes" do
-      h1 = { x: { a: { total: 1, c: { total: 2 }}, 'b' => { total: 3 }}}
-      h2 = { x: { a: { total: 2, c: { total: 3 }}, 'b' => { total: 2 }}}
+  describe "#merge_reports", :focus do
+    it "merges count figures from nested hashes" do
+      h1 = { x: { a: { total: 1, c: { total: 2 }}, 'b' => { total: 3 }, d: { total: 5}}}
+      h2 = { x: { a: { total: 2, c: { total: 3 }}, 'b' => { total: 2 }, e: { total: 6}}}
       res = dummy.send(:merge_reports, h1, h2)
-      res.should ==  { x: { a: { total: 3, c: { total: 5 }}, 'b' => { total: 5 }}}
+      res.should ==  { x: { a: { total: 3, c: { total: 5 }},
+                            'b' => { total: 5 },
+                            d: { total: 5},
+                            e: { total: 6}}}
     end
   end
 
