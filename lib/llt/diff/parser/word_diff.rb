@@ -16,8 +16,8 @@ module LLT
         end
       end
 
-      def postag=(*data)
-        @postag = PostagDiff.new(data)
+      def postag=(data)
+        @postag = PostagDiff.new(*data)
       end
 
       def container_to_xml
