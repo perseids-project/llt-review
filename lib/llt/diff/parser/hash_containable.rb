@@ -110,6 +110,7 @@ module LLT
       end
 
       def wrap_with_tag(tag, attrs = {}, content)
+        tag = "p#{tag}" if tag.match(/^\d/)
         if content.empty?
           "<#{tag}#{to_xml_attrs(attrs)}/>"
         else
