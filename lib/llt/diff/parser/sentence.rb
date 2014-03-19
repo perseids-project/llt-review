@@ -15,7 +15,7 @@ module LLT
       end
 
       def compare(other)
-        diff = SentenceDiff.new(id)
+        diff = SentenceDiff.new(self)
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
@@ -38,7 +38,7 @@ module LLT
         end.merge(words: { total: size })
       end
 
-      TO_COUNT = %i{ relation lemma }
+      TO_COUNT = %i{ relation lemma postag }
       def report_hash
         Hash[TO_COUNT.map { |c| [c, counter_hash ]}]
       end
