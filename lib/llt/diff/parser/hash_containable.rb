@@ -73,13 +73,10 @@ module LLT
         Hash.new(0)
       end
 
-      def merge_reports(*reports)
-        categories = reports.first.keys
-        categories.each_with_object({}) do |c, hsh|
-          values = reports.map { |r| r[c] }
-          hsh[c] = values.inject do |m, other|
-            m.merge(other) { |_, ov, nv| ov + nv }
-          end
+      def merge_reports(a, b)
+        return a + b if a.is_a?(Fixnum)
+        a.each_with_object({}) do |(k, v), hsh|
+          hsh[k] = merge_reports(v, b[k])
         end
       end
 
