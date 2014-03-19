@@ -3,6 +3,7 @@ module LLT
     class Parser
       require 'llt/diff/parser/hash_containable'
 
+      require 'llt/diff/parser/report'
       require 'llt/diff/parser/gold'
       require 'llt/diff/parser/reviewable'
       require 'llt/diff/parser/comparison'
