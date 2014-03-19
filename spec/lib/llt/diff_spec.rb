@@ -62,6 +62,63 @@ describe LLT::Diff do
       allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
       result = differ.report(:uri_for_g1)
       result.should have(1).item
+      expected_report = {
+        sentence: { total: 1 },
+        word: { total: 5 },
+        head: { total: 5 },
+        relation: {
+          total: 5, 'ADV' => 1, 'ATR' => 1, 'AuxP' => 1, 'PRED' => 1, 'SBJ' => 1
+        },
+        lemma: {
+          total: 5, 'flumen1' => 1, 'in1' => 1, 'is1' => 1, 'pons1' => 1, 'sum1' => 1,
+        },
+        postag: {
+          total: 5,
+          datapoints: {
+            total: 45,
+            part_of_speech: {
+              total: 5,
+              'r' => { total: 1 },
+              'p' => { total: 1 },
+              'n' => { total: 2 },
+              'v' => 1
+            },
+            person: {
+              total: 1,
+              '3' => { total: 1 },
+            },
+            number: {
+              total: 4,
+              's' =>  { total: 4 },
+            },
+            tense: {
+              total: 1,
+              'i' => { total: 1 },
+            },
+            mood: {
+              total: 1,
+              'i' => { total: 1 },
+            },
+            voice: {
+              total: 1,
+              'a' => { total: 1 },
+            },
+            gender: {
+              total: 3,
+              'm' => { total: 2 },
+              'n' => { total: 1 },
+            },
+            case: {
+              total: 3,
+              'b' => { total: 2 },
+              'n' => { total: 1 },
+            },
+            degree: { total: 0 }
+          }
+        }
+      }
+
+      result.first.report.should == expected_report
     end
   end
 end
