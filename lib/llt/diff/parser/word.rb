@@ -7,7 +7,7 @@ module LLT
       attr_reader :postag
 
       def postag=(tag)
-        Postag.new(tag)
+        @postag = Postag.new(tag)
       end
     end
   end
