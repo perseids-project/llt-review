@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LLT::Diff::Parser::HashContainable do
   let(:dummy) { Class.new { include LLT::Diff::Parser::HashContainable }.new }
 
-  describe "#merge_reports", :focus do
+  describe "#merge_reports" do
     it "merges count figures from nested hashes" do
       h1 = { x: { a: { total: 1, c: { total: 2 }}, 'b' => { total: 3 }, d: { total: 5}}}
       h2 = { x: { a: { total: 2, c: { total: 3 }}, 'b' => { total: 2 }, e: { total: 6}}}
