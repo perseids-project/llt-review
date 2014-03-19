@@ -19,7 +19,7 @@ module LLT
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
-            a, b = [word, other_word].map { |w| w.send(comparator) }
+            a, b = [word, other_word].map { |w| w.send(comparator).to_s }
             if a != b
               d = diff[id] ||= WordDiff.new(id)
               d.send("#{comparator}=", [a, b])
