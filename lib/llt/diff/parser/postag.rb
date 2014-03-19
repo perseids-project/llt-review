@@ -21,6 +21,10 @@ module LLT
           Hash[POSTAG_SCHEMA.zip(@postag.each_char)]
         end
       end
+
+      def clean_analysis
+        @clean = analysis.reject { |_, v| v == '-' }
+      end
     end
   end
 end
