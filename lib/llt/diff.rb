@@ -20,7 +20,7 @@ module LLT
 
     def report(*uris)
       @reports = parse_files(Report: uris)
-      # create the report
+      @reports.each(&:report)
       @reports
     end
 
