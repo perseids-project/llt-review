@@ -10,6 +10,9 @@ module LLT
       end
 
       def report
+        @report ||= begin
+          { datapoints: { total: datapoints }.merge(analysis_to_report)}
+        end
       end
 
       POSTAG_SCHEMA = %i{
@@ -24,6 +27,18 @@ module LLT
 
       def clean_analysis
         @clean = analysis.reject { |_, v| v == '-' }
+      end
+
+      def analysis_to_report
+        Hash[
+          clean_analysis.map do |type, val|
+            [type, { total: 1, val => { total: 1 }}]
+          end
+        ]
+      end
+
+      def datapoints
+        POSTAG_SCHEMA.size
       end
     end
   end

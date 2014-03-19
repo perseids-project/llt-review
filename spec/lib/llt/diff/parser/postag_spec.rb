@@ -33,4 +33,22 @@ describe LLT::Diff::Parser::Postag do
       postag.clean_analysis.should == res
     end
   end
+
+  describe "#report" do
+    it "returns a report hash of the postag" do
+      res = {
+        datapoints: {
+          total: 9,
+          part_of_speech: { total: 1, 'v' => { total: 1 } },
+          person: { total: 1, '3' => { total: 1 }, },
+          number: { total: 1, 's' =>  { total: 1 }, },
+          tense: { total: 1, 'i' => { total: 1 }, },
+          mood: { total: 1, 'i' => { total: 1 }, },
+          voice: { total: 1, 'a' => { total: 1 }, },
+        }
+      }
+
+      postag.report.should == res
+    end
+  end
 end
