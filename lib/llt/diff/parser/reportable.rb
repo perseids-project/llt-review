@@ -26,6 +26,10 @@ module LLT
         @total += element.total
       end
 
+      def increment
+        @total += 1
+      end
+
       def xml_tag
         self.class.name.scan(/::(\w+)$/)[0].first.downcase
       end

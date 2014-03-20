@@ -14,8 +14,12 @@ module LLT
           # Questionable what the total numbers of datapoints should be.
           # Count empty points as well?
           data = Report::Generic.new(:datapoints, clean_analysis.size)
-          clean_analysis.each do |type, val|
-            data.add(Report::Postag::Datapoint.new(type, val))
+          add_datapoints_container(data)
+          data.each do |_, container|
+            rtr = container.reports_to_request
+            next unless val = clean_analysis[rtr]
+            container.add(Report::Postag::Datapoint.new(rtr, val))
+            container.increment
           end
           data
         end
@@ -45,6 +49,16 @@ module LLT
 
       def datapoints
         POSTAG_SCHEMA.size
+      end
+
+      PLURALIZED_POSTAG_SCHEMA = %i{
+        parts_of_speech persons numbers tenses
+        moods voices genders cases degrees
+      }
+      def add_datapoints_container(data)
+        PLURALIZED_POSTAG_SCHEMA.zip(POSTAG_SCHEMA).each do |pl, sg|
+          data.add(Report::Generic.new(pl, 0, sg))
+        end
       end
     end
   end
