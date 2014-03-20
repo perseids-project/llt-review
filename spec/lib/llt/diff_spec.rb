@@ -79,76 +79,74 @@ describe LLT::Diff do
   end
 
   describe "#report" do
-    xit "analyses occurences of lemmata, head, relation, postags... of passed uris" do
+    it "analyses occurences of lemmata, head, relation, postags... of passed uris" do
       allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g2 }
       allow(differ).to receive(:get_from_uri).with(:uri_for_g2) { g2 }
       result = differ.report(:uri_for_g1)
       result.should have(1).item
-      expected_report = {
-        sentence: { total: 1 },
-        word: { total: 5 },
-        head: { total: 5 },
-        relation: {
-          total: 5,
-          'ADV' => { total: 1 },
-          'ATR' => { total: 1 },
-          'AuxP' => { total: 1 },
-          'PRED' => { total: 1 },
-          'SBJ' => { total: 1 }
-        },
-        lemma: {
-          total: 5,
-          'flumen1' => { total: 1 },
-          'in1' => { total: 1 },
-          'is1' => { total: 1 },
-          'pons1' => { total: 1 },
-          'sum1' => { total: 1 },
-        },
-        postag: {
-          total: 5,
-          datapoints: {
-            total: 45,
-            part_of_speech: {
-              total: 5,
-              'r' => { total: 1 },
-              'p' => { total: 1 },
-              'n' => { total: 2 },
-              'v' => { total: 1 }
-            },
-            person: {
-              total: 1,
-              '3' => { total: 1 },
-            },
-            number: {
-              total: 4,
-              's' =>  { total: 4 },
-            },
-            tense: {
-              total: 1,
-              'i' => { total: 1 },
-            },
-            mood: {
-              total: 1,
-              'i' => { total: 1 },
-            },
-            voice: {
-              total: 1,
-              'a' => { total: 1 },
-            },
-            gender: {
-              total: 3,
-              'n' => { total: 2 },
-              'm' => { total: 1 },
-            },
-            case: {
-              total: 3,
-              'b' => { total: 2 },
-              'n' => { total: 1 },
-            },
-          }
-        }
-      }
-      result.first.report.should == expected_report
+      report = result.first
+      report[:sentences].total.should == 2
+      report[:words].total.should == 10
+      report[:heads].total.should == 10
+
+      relations = report[:relations]
+      relations.total.should == 10
+      relations['ADV'].total.should == 2
+      relations['ATR'].total.should == 2
+      relations['AuxP'].total.should == 2
+      relations['PRED'].total.should == 2
+      relations['SBJ'].total.should == 2
+
+      lemmata = report[:lemmata]
+      lemmata.total.should == 10
+      lemmata['flumen1'].total.should == 2
+      lemmata['in1'].total.should == 2
+      lemmata['is1'].total.should == 2
+      lemmata['pons1'].total.should == 2
+      lemmata['sum1'].total.should == 2
+
+      postags = report[:postags]
+      postags.total.should == 10
+
+      datapoints = postags[:datapoints]
+      datapoints.total.should == 38
+
+      pos = datapoints[:parts_of_speech]
+      pos.total.should == 10
+      pos['r'].total.should == 2
+      pos['p'].total.should == 2
+      pos['n'].total.should == 4
+      pos['v'].total.should == 2
+
+      persons = datapoints[:persons]
+      persons.total.should == 2
+      persons['3'].total.should == 2
+
+      numbers = datapoints[:numbers]
+      numbers.total.should == 8
+      numbers['s'].total.should == 8
+
+      tenses = datapoints[:tenses]
+      tenses.total.should == 2
+      tenses['i'].total.should == 2
+
+      moods = datapoints[:moods]
+      moods.total.should == 2
+      moods['i'].total.should == 2
+
+      voices= datapoints[:voices]
+      voices.total.should == 2
+      voices['a'].total.should == 2
+
+      genders = datapoints[:genders]
+      genders.total.should == 6
+      genders['n'].total.should == 4
+      genders['m'].total.should == 2
+
+      cases = datapoints[:cases]
+      cases.total.should == 6
+      cases['b'].total.should == 4
+      cases['n'].total.should == 2
     end
   end
 end
