@@ -13,8 +13,10 @@ module LLT
       def report
         @report ||= begin
           add_report_container
-          @sentences.map { |_, s| s.report }.each do |rep|
-            rep.each { |_, r| add(r) }
+          if RUBY_ENGINE == 'jruby'
+            collect_multithreaded
+          else
+            collect_singlethreaded
           end
           @container.each { |_, rep| rep.sort! }
         end
