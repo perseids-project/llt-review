@@ -24,7 +24,7 @@ module LLT
       @reports
     end
 
-    def to_xml(type = :xml)
+    def to_xml(type = :diff)
       XML_DECLARATION + wrap_with_tag('doc', header + send("#{type}_to_xml"))
     end
 
