@@ -11,13 +11,14 @@ module LLT
 
       def report
         @report ||= begin
-          #{ datapoints: { total: datapoints }.merge(analysis_to_report)}
-          Report.const_get(:Postag).new(@postag)
+          # Questionable what the total numbers of datapoints should be.
+          # Count empty points as well?
+          data = Report::Generic.new(:datapoints, clean_analysis.size)
+          clean_analysis.each do |type, val|
+            data.add(Report::Postag::Datapoint.new(type, val))
+          end
+          data
         end
-      end
-
-      def id
-        to_s
       end
 
       POSTAG_SCHEMA = %i{

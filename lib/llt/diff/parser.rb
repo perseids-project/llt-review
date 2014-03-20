@@ -8,6 +8,7 @@ module LLT
       require 'llt/diff/parser/report/generic'
       require 'llt/diff/parser/report/lemma'
       require 'llt/diff/parser/report/postag'
+      require 'llt/diff/parser/report/postag/datapoint'
       require 'llt/diff/parser/report/relation'
       require 'llt/diff/parser/gold'
       require 'llt/diff/parser/reviewable'
