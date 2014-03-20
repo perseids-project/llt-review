@@ -13,11 +13,11 @@ module LLT
         @report ||= begin
           # Questionable what the total numbers of datapoints should be.
           # Count empty points as well?
-          data = Report::Generic.new(:datapoints, clean_analysis.size)
+          data = Report::Generic.new(:datapoints, analysis.size)
           add_datapoints_container(data)
           data.each do |_, container|
             rtr = container.reports_to_request
-            next unless val = clean_analysis[rtr]
+            next unless (val = analysis[rtr]) && val != '-'
             container.add(Report::Postag::Datapoint.new(rtr, val))
             container.increment
           end
@@ -33,18 +33,6 @@ module LLT
         @analysis ||= begin
           Hash[POSTAG_SCHEMA.zip(@postag.each_char)]
         end
-      end
-
-      def clean_analysis
-        @clean = analysis.reject { |_, v| v == '-' }
-      end
-
-      def analysis_to_report
-        Hash[
-          clean_analysis.map do |type, val|
-            [type, { total: 1, val => { total: 1 }}]
-          end
-        ]
       end
 
       def datapoints
