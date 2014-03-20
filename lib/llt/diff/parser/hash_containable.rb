@@ -73,53 +73,6 @@ module LLT
         Hash.new(0)
       end
 
-      def merge_reports(*reports)
-        reports.compact!
-        case reports.size
-        when 1 then
-          reports.first
-        when 2
-          if reports.first.is_a?(Fixnum)
-            reports.inject(:+)
-          else
-            do_the_merge(*reports)
-          end
-        else
-          merge_reports(reports.shift, merge_reports(*reports))
-        end
-      end
-
-      def do_the_merge(a, b)
-        categories = a.keys | b.keys
-        categories.each_with_object({}) do |cat, hsh|
-          hsh[cat] = merge_reports(a[cat], b[cat])
-        end
-      end
-
-      def sort_report(report)
-        report.each_with_object({}) do |(category, counts), hsh|
-          hsh[category] = Hash[counts.sort_by { |k, count| [count, k] }]
-        end
-      end
-
-      def hash_to_xml(hsh)
-        hsh.map do |k, nested|
-          children, attrs = nested.partition { |_, v| v.is_a?(Hash) }
-          wrap_with_tag(k, attrs, children.map { |c| hash_to_xml(Hash[*c]) }.join)
-        end.join
-      end
-
-      def wrap_with_tag(tag, attrs = {}, content)
-        tag = "p#{tag}" if tag.match(/^\d/)
-        if content.empty?
-          "<#{tag}#{to_xml_attrs(attrs)}/>"
-        else
-          "<#{tag}#{to_xml_attrs(attrs)}>" +
-            content +
-          "</#{tag}>"
-        end
-      end
-
       def self.included(klass)
         klass.extend(ClassMethods)
       end
