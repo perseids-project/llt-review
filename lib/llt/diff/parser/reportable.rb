@@ -11,17 +11,19 @@ module LLT
         @total = total
       end
 
-
-      def increment
-        @total += 1
-      end
-
       def add(element)
         if el = @container[element.id]
-          el.increment
+          el.add_total(element)
+          element.container.each do |_, nested_el|
+            el.add(nested_el)
+          end
         else
           @container[element.id] = element
         end
+      end
+
+      def add_total(element)
+        @total += element.total
       end
 
       def xml_attributes
