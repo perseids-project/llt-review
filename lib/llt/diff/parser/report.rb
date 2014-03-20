@@ -12,14 +12,23 @@ module LLT
 
       def report
         @report ||= begin
-          rep = { sentence: { total: @sentences.count } }
-          full_report = merge_reports(*@sentences.map { |_, s| s.report })
-          rep.merge(full_report)
+          add_report_container
+          @sentences.map { |_, s| s.report }.each do |rep|
+            rep.each { |_, r| add(r) }
+          end
+          @container
         end
+
       end
 
-      def container_to_xml
-        hash_to_xml(report)
+      def xml_attributes
+        { id: @id }
+      end
+
+      private
+
+      def add_report_container
+        add(Generic.new(:sentences, @sentences.count))
       end
     end
   end
