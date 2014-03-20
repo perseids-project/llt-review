@@ -109,7 +109,7 @@ describe LLT::Diff do
       postags.total.should == 10
 
       datapoints = postags[:datapoints]
-      datapoints.total.should == 38
+      datapoints.total.should == 90
 
       pos = datapoints[:parts_of_speech]
       pos.total.should == 10
