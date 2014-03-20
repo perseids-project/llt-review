@@ -44,8 +44,10 @@ module LLT
         parts_of_speech persons numbers tenses
         moods voices genders cases degrees
       }
+
+      CONTAINER_TABLE = PLURALIZED_POSTAG_SCHEMA.zip(POSTAG_SCHEMA)
       def add_datapoints_container(data)
-        PLURALIZED_POSTAG_SCHEMA.zip(POSTAG_SCHEMA).each do |pl, sg|
+        CONTAINER_TABLE.each do |pl, sg|
           data.add(Report::Generic.new(pl, 0, sg))
         end
       end
