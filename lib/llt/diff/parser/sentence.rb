@@ -15,11 +15,11 @@ module LLT
       end
 
       def compare(other)
-        diff = SentenceDiff.new(id)
+        diff = SentenceDiff.new(self)
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
-            a, b = [word, other_word].map { |w| w.send(comparator) }
+            a, b = [word, other_word].map { |w| w.send(comparator).to_s }
             if a != b
               d = diff[id] ||= WordDiff.new(id)
               d.send("#{comparator}=", [a, b])
@@ -33,14 +33,27 @@ module LLT
       private
 
       def create_report
-        report_hash.each do |category, res|
-          words.each { |_, word| res[word.send(category)] += 1 }
-        end.merge(words: { total: size })
+        @report ||= begin
+          report_container.each do |_, reportable|
+            if rtr = reportable.reports_to_request
+              words.each { |_, word| reportable.add(word.send(rtr).report) }
+            end
+          end
+        end
       end
 
-      TO_COUNT = %i{ relation lemma }
-      def report_hash
-        Hash[TO_COUNT.map { |c| [c, counter_hash ]}]
+      def report_container
+        reports = {
+          words: nil,
+          heads: nil,
+          relations: :relation,
+          lemmata: :lemma,
+          postags: :postag,
+        }
+
+        reports.each_with_object({}) do |(tag, requested), hsh|
+          hsh[tag] = Report::Generic.new(tag, size, requested)
+        end
       end
     end
   end

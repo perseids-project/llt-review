@@ -8,10 +8,27 @@ module LLT
     include Core::Api::Helpers
 
     def diff(gold, reviewables)
-      parse_files(gold, reviewables)
+      parses = parse_files(Gold: gold, Reviewable: reviewables)
+
+      @gold, @reviewables = parses.partition do |parse_data|
+        parse_data.instance_of?(Parser::Gold)
+      end
+
       compare
       all_diffs
     end
+
+    def report(*uris)
+      @reports = parse_files(Report: uris)
+      @reports.each(&:report)
+      @reports
+    end
+
+    def to_xml(type = :xml)
+      XML_DECLARATION + wrap_with_tag('doc', header + send("#{type}_to_xml"))
+    end
+
+    private
 
     def all_diffs
       @reviewables.map { |reviewable| reviewable.diff.values }.flatten
@@ -23,11 +40,9 @@ module LLT
       end
     end
 
-    def parse_files(gold, reviewables)
-      to_parse = gold.map { |uri| [:Gold, uri] } + reviewables.map { |uri| [:Reviewable, uri] }
-      @gold, @reviewables = parse_threaded(to_parse).partition do |parse_data|
-        parse_data.instance_of?(Parser::Gold)
-      end
+    def parse_files(files)
+      to_parse = files.flat_map { |klass, uris| uris.map { |uri| [klass, uri] } }
+      parse_threaded(to_parse)
     end
 
     def parse_threaded(uris_with_classes)
@@ -40,12 +55,12 @@ module LLT
       threads.map { |t| t.join; t.value }
     end
 
-    def to_xml
-      XML_DECLARATION + wrap_with_tag('doc', header + diff_to_xml)
+    def header
+      wrap_with_tag('files', header_files.map(&:xml_heading).join)
     end
 
-    def header
-      wrap_with_tag('files', (@gold + @reviewables).map(&:xml_heading).join)
+    def header_files
+      [@gold, @reviewables, @reports].flatten.compact
     end
 
     def wrap_with_tag(tag, content)
@@ -56,6 +71,10 @@ module LLT
 
     def diff_to_xml
       @reviewables.map(&:to_xml).join
+    end
+
+    def report_to_xml
+      @reports.map(&:to_xml).join
     end
 
     def parse(data)

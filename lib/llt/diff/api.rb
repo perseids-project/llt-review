@@ -16,4 +16,14 @@ class Api < Sinatra::Base
       f.xml { diff.to_xml }
     end
   end
+
+  get '/report' do
+    uris = Array(params[:uri])
+    reporter = LLT::Diff.new
+    reporter.report(*uris)
+
+    respond_to do |f|
+      f.xml { reporter.to_xml(:report)}
+    end
+  end
 end

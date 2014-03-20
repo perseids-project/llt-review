@@ -35,6 +35,27 @@ describe LLT::Diff do
     EOF
   end
 
+  let(:g2) do
+    <<-EOF
+      <treebank>
+        <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+          <word id="1" form="In" lemma="in1" postag="r--------" head="5" relation="AuxP"/>
+          <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+          <word id="3" form="flumine" lemma="flumen1" postag="n-s---nb-" head="1" relation="ADV"/>
+          <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="SBJ"/>
+          <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+        </sentence>
+        <sentence id="22" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+          <word id="1" form="In" lemma="in1" postag="r--------" head="5" relation="AuxP"/>
+          <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+          <word id="3" form="flumine" lemma="flumen1" postag="n-s---nb-" head="1" relation="ADV"/>
+          <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="SBJ"/>
+          <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+        </sentence>
+      </treebank>
+    EOF
+  end
+
   describe "#diff" do
     it "creates a diff report of a gold and review annotation" do
       allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
@@ -54,6 +75,78 @@ describe LLT::Diff do
 
       result = differ.diff(%i{ uri_for_g1 uri_for_g2 }, %i{ uri_for_r1 uri_for_r2 })
       result.should have(4).items # we have two times two reviewable annotations now
+    end
+  end
+
+  describe "#report" do
+    it "analyses occurences of lemmata, head, relation, postags... of passed uris" do
+      allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g2 }
+      allow(differ).to receive(:get_from_uri).with(:uri_for_g2) { g2 }
+      result = differ.report(:uri_for_g1)
+      result.should have(1).item
+      report = result.first
+      report[:sentences].total.should == 2
+      report[:words].total.should == 10
+      report[:heads].total.should == 10
+
+      relations = report[:relations]
+      relations.total.should == 10
+      relations['ADV'].total.should == 2
+      relations['ATR'].total.should == 2
+      relations['AuxP'].total.should == 2
+      relations['PRED'].total.should == 2
+      relations['SBJ'].total.should == 2
+
+      lemmata = report[:lemmata]
+      lemmata.total.should == 10
+      lemmata['flumen1'].total.should == 2
+      lemmata['in1'].total.should == 2
+      lemmata['is1'].total.should == 2
+      lemmata['pons1'].total.should == 2
+      lemmata['sum1'].total.should == 2
+
+      postags = report[:postags]
+      postags.total.should == 10
+
+      datapoints = postags[:datapoints]
+      datapoints.total.should == 38
+
+      pos = datapoints[:parts_of_speech]
+      pos.total.should == 10
+      pos['r'].total.should == 2
+      pos['p'].total.should == 2
+      pos['n'].total.should == 4
+      pos['v'].total.should == 2
+
+      persons = datapoints[:persons]
+      persons.total.should == 2
+      persons['3'].total.should == 2
+
+      numbers = datapoints[:numbers]
+      numbers.total.should == 8
+      numbers['s'].total.should == 8
+
+      tenses = datapoints[:tenses]
+      tenses.total.should == 2
+      tenses['i'].total.should == 2
+
+      moods = datapoints[:moods]
+      moods.total.should == 2
+      moods['i'].total.should == 2
+
+      voices= datapoints[:voices]
+      voices.total.should == 2
+      voices['a'].total.should == 2
+
+      genders = datapoints[:genders]
+      genders.total.should == 6
+      genders['n'].total.should == 4
+      genders['m'].total.should == 2
+
+      cases = datapoints[:cases]
+      cases.total.should == 6
+      cases['b'].total.should == 4
+      cases['n'].total.should == 2
     end
   end
 end
