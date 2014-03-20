@@ -44,6 +44,7 @@ module LLT
       end
 
       def sort!
+        each { |_, el| el.sort! }
         @container = sort
       end
 
