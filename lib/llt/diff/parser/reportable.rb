@@ -35,7 +35,7 @@ module LLT
       end
 
       def sort
-        Hash[@container.sort]
+        Hash[@container.sort_by { |id, r| [r.total, id]}.reverse]
       end
 
       def sort!
