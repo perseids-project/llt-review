@@ -1,9 +1,7 @@
 module LLT
   class Diff::Parser
     class Report
-      include HashContainable
-
-      xml_tag :report
+      include Reportable
 
       attr_reader :sentences
 

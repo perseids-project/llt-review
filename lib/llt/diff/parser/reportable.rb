@@ -26,6 +26,10 @@ module LLT
         @total += element.total
       end
 
+      def xml_tag
+        self.class.name.scan(/::(\w+)$/)[0].first.downcase
+      end
+
       def xml_attributes
         { name: @id, total: @total }
       end
