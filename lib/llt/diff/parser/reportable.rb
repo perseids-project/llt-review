@@ -34,6 +34,14 @@ module LLT
         { name: @id, total: @total }
       end
 
+      def sort
+        Hash[@container.sort]
+      end
+
+      def sort!
+        @container = sort
+      end
+
       def <=>(other)
         [@total, @id] <=> [other.total, other.id]
       end
