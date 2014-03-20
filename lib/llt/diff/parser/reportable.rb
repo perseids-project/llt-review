@@ -35,7 +35,12 @@ module LLT
       end
 
       def sort
-        Hash[@container.sort_by { |id, r| [r.total, id]}.reverse]
+        Hash[
+          @container.sort do |(a_id, a_r), (b_id, b_r)|
+            comp = b_r.total <=> a_r.total
+            comp.zero? ? a_id <=> b_id : comp
+          end
+        ]
       end
 
       def sort!
