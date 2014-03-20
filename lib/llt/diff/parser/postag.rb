@@ -13,11 +13,12 @@ module LLT
         @report ||= begin
           # Questionable what the total numbers of datapoints should be.
           # Count empty points as well?
-          data = Report::Generic.new(:datapoints, analysis.size)
+          data = Report::Generic.new(:datapoints, 9)
           add_datapoints_container(data)
-          data.each do |_, container|
+          data.each_with_index do |(_, container), i|
             rtr = container.reports_to_request
-            next unless (val = analysis[rtr]) && val != '-'
+            val = @postag[i]
+            next unless val && val != '-'
             container.add(Report::Postag::Datapoint.new(rtr, val))
             container.increment
           end
