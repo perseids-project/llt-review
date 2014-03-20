@@ -25,6 +25,10 @@ module LLT
       def postag=(tag)
         @postag = Postag.new(tag)
       end
+
+      def method_missing(meth, *args, &blk)
+        super unless meth =~ /=$/
+      end
     end
   end
 end
