@@ -35,7 +35,7 @@ describe LLT::Diff::Parser::Postag do
   end
 
   describe "#report" do
-    it "returns a report hash of the postag" do
+    xit "returns a report hash of the postag" do
       res = {
         datapoints: {
           total: 9,
