@@ -11,8 +11,13 @@ module LLT
 
       def report
         @report ||= begin
-          { datapoints: { total: datapoints }.merge(analysis_to_report)}
+          #{ datapoints: { total: datapoints }.merge(analysis_to_report)}
+          Report.const_get(:Postag).new(@postag)
         end
+      end
+
+      def id
+        to_s
       end
 
       POSTAG_SCHEMA = %i{
