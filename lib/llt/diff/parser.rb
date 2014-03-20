@@ -2,8 +2,13 @@ module LLT
   class Diff
     class Parser
       require 'llt/diff/parser/hash_containable'
+      require 'llt/diff/parser/reportable'
 
       require 'llt/diff/parser/report'
+      require 'llt/diff/parser/report/generic'
+      require 'llt/diff/parser/report/lemma'
+      require 'llt/diff/parser/report/postag'
+      require 'llt/diff/parser/report/relation'
       require 'llt/diff/parser/gold'
       require 'llt/diff/parser/reviewable'
       require 'llt/diff/parser/comparison'
