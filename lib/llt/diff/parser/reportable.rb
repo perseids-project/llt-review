@@ -2,7 +2,6 @@ module LLT
   class Diff::Parser
     module Reportable
       include HashContainable
-      include Comparable
 
       attr_reader :id, :total
 
@@ -50,10 +49,6 @@ module LLT
       def sort!
         each { |_, el| el.sort! }
         @container = sort
-      end
-
-      def <=>(other)
-        [@total, @id] <=> [other.total, other.id]
       end
     end
   end
