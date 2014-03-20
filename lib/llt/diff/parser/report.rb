@@ -16,9 +16,8 @@ module LLT
           @sentences.map { |_, s| s.report }.each do |rep|
             rep.each { |_, r| add(r) }
           end
-          @container
+          @container.each { |_, rep| rep.sort! }
         end
-
       end
 
       def xml_attributes
