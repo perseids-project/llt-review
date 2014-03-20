@@ -4,10 +4,10 @@ module LLT
       include HashContainable
       include Comparable
 
-      attr_reader :total
+      attr_reader :id, :total
 
       def initialize(id, total = 1)
-        super
+        super(id)
         @total = total
       end
 
