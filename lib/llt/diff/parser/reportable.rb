@@ -53,15 +53,15 @@ module LLT
 
       def new_clone
         cloned = old_clone
-        cloned.clone_container
+        cloned.replace_with_clone(:container)
         cloned
       end
 
-      def clone_container
-        # looks a little weird, but I don't think we'll ever call that method
-        # somewhere else, so it should be ok to do
-        @container = hash_with_cloned_values(@container)
+      def replace_with_clone(inst_var)
+        iv = "@#{inst_var}"
+        instance_variable_set(iv, hash_with_cloned_values(instance_variable_get(iv)))
       end
+
       alias_method :old_clone, :clone
       alias_method :clone, :new_clone
 
