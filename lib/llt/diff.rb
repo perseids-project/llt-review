@@ -15,12 +15,19 @@ module LLT
       end
 
       compare
+      diff_report
       all_diffs
     end
 
     def report(*uris)
+      puts "START"
+      x = Time.now
       @reports = parse_files(Report: uris)
+      y = Time.now
+      puts "PARSE TIME: #{y - x}"
       @reports.each(&:report)
+      z = Time.now
+      puts "REPORT TIME: #{z - y}"
       @reports
     end
 
@@ -31,7 +38,29 @@ module LLT
     private
 
     def all_diffs
-      @reviewables.map { |reviewable| reviewable.diff.values }.flatten
+      @all_diffs ||= @reviewables.map do |reviewable|
+        reviewable.diff.values
+      end.flatten
+    end
+
+    def diff_report
+      if @reviewables.one?
+        all_diffs.each(&:report)
+      else
+        diff_report_with_cloned_reports
+      end
+    end
+
+    # Check the comment at Comparison#report for more info
+    def diff_report_with_cloned_reports
+      used_golds = []
+      all_diffs.each do |d|
+        d.report(to_clone_or_not_to_clone?(used_golds, d.gold.id))
+      end
+    end
+
+    def to_clone_or_not_to_clone?(used, id)
+      used.include?(id) ? true : (used << id; false)
     end
 
     def compare
