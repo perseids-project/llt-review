@@ -51,6 +51,10 @@ module LLT
         @container = sort
       end
 
+      # This could be implemented with a block as well (which holds
+      # whatever code needs to be performed on the cloned instance,
+      # but probably not a good idea as this called very often - make
+      # it as lean as possibe.
       def new_clone
         cloned = old_clone
         cloned.replace_with_clone(:container)
