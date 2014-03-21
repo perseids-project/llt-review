@@ -50,6 +50,20 @@ module LLT
         each { |_, el| el.sort! }
         @container = sort
       end
+
+      def new_clone
+        cloned = old_clone
+        cloned.clone_container
+        cloned
+      end
+
+      def clone_container
+        # looks a little weird, but I don't think we'll ever call that method
+        # somewhere else, so it should be ok to do
+        @container = Hash[map { |id, content| [id, content.clone] }]
+      end
+      alias_method :old_clone, :clone
+      alias_method :clone, :new_clone
     end
   end
 end
