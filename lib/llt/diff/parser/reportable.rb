@@ -57,9 +57,12 @@ module LLT
         cloned
       end
 
-      def replace_with_clone(inst_var)
-        iv = "@#{inst_var}"
-        instance_variable_set(iv, hash_with_cloned_values(instance_variable_get(iv)))
+      def replace_with_clone(*inst_vars)
+        inst_vars.each do |iv|
+          ivn = "@#{iv}"
+          cloned = hash_with_cloned_values(instance_variable_get(ivn))
+          instance_variable_set(ivn, cloned)
+        end
       end
 
       alias_method :old_clone, :clone
