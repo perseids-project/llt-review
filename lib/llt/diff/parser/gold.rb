@@ -5,7 +5,7 @@ module LLT
 
       # Check Comparison#report to learn more
       def cloned_report
-        report.each_with_object({}) { |(k, v), hsh| hsh[k] = v.clone }
+        hash_with_cloned_values(report)
       end
     end
   end

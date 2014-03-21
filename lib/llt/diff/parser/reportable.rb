@@ -60,10 +60,14 @@ module LLT
       def clone_container
         # looks a little weird, but I don't think we'll ever call that method
         # somewhere else, so it should be ok to do
-        @container = Hash[map { |id, content| [id, content.clone] }]
+        @container = hash_with_cloned_values(@container)
       end
       alias_method :old_clone, :clone
       alias_method :clone, :new_clone
+
+      def hash_with_cloned_values(hsh)
+        Hash[hsh.map { |k, v| [k, v.clone] }]
+      end
     end
   end
 end
