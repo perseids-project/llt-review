@@ -4,8 +4,10 @@ module LLT
       attr_reader :sentences
 
       # Check Comparison#report to learn more
-      def cloned_report
-        hash_with_cloned_values(report)
+      def clone
+        cloned = super
+        cloned.replace_with_clone(:sentences, :report)
+        cloned
       end
     end
   end
