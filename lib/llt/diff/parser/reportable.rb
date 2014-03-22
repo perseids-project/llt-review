@@ -3,11 +3,17 @@ module LLT
     module Reportable
       include HashContainable
 
-      attr_reader :id, :total
+      attr_reader :id, :total, :right, :wrong, :unique
 
       def initialize(id, total = 1)
         super(id)
         @total = total
+      end
+
+      def init_diff
+        @wrong = 0
+        @unique = 0
+        each { |_, el| el.init_diff }
       end
 
       def add(element)
@@ -34,7 +40,7 @@ module LLT
       end
 
       def xml_attributes
-        { name: @id, total: @total }
+        { name: @id, total: @total, right: @right, wrong: @wrong, unique: @unique }
       end
 
       def sort
