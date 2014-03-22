@@ -55,8 +55,8 @@ module LLT
       # whatever code needs to be performed on the cloned instance,
       # but probably not a good idea as this called very often - make
       # it as lean as possibe.
-      def new_clone
-        cloned = old_clone
+      def clone
+        cloned = super
         cloned.replace_with_clone(:container)
         cloned
       end
