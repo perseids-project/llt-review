@@ -11,7 +11,6 @@ module LLT
       def xml_tag
         @tag
       end
-
     end
   end
 end
