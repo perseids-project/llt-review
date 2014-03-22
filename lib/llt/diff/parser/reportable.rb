@@ -66,14 +66,6 @@ module LLT
 
       private
 
-      def replace_with_clone(*inst_vars)
-        inst_vars.each do |iv|
-          ivn = "@#{iv}"
-          cloned = hash_with_cloned_values(instance_variable_get(ivn))
-          instance_variable_set(ivn, cloned)
-        end
-      end
-
       def hash_with_cloned_values(hsh)
         Hash[hsh.map { |k, v| [k, v.clone] }]
       end
