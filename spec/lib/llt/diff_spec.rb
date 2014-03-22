@@ -75,6 +75,8 @@ describe LLT::Diff do
       w3[:lemma].new.should == 'flumen2'
       w3[:postag].original.should == 'n-s---nb-'
       w3[:postag].new.should == 'n-s---nd-'
+      w3[:postag][:case].original.should == 'b'
+      w3[:postag][:case].new.should == 'd'
 
       w4[:relation].original.should == 'SBJ'
       w4[:relation].new.should == 'OBJ'
