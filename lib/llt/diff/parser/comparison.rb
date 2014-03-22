@@ -5,12 +5,13 @@ module LLT
 
       xml_tag :comparison
 
-      attr_reader :gold, :reviewable
+      attr_reader :gold, :reviewable, :unique_differences
 
       def initialize(gold, reviewable)
         @gold       = gold
         @reviewable = reviewable
         @container  = {}
+        @unique_differences = Set.new # set suffices for now, we only need the diff_id's
       end
 
       def id
@@ -57,12 +58,22 @@ module LLT
           # least the author of these lines, LFDM, thinks that's a useful
           # feature to have.
           # We'll see tomorrow!
-          @gold.report
+
+
+          # container includes SentenceDiffs, which contain WordsDiffs
+          r = @gold.report
+          r.each { |_, rep| rep.init_diff }
+          each_value do  |d|
+            d.report_diff(r, @unique_differences)
+          end
+          r
         end
       end
 
       def stats
-        "<stats/>"
+        "<report>" +
+          @report.map { |_, rep| rep.to_xml }.join +
+        "</report>"
       end
     end
   end
