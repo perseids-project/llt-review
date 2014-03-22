@@ -20,10 +20,11 @@ module LLT
         mood voice gender case degree
       }
 
+      Temp = Struct.new(:id)
       def compute_detailed_differences
         @original.each_char.with_index do |a, i|
           b = @new[i]
-          add(GenericDiff.new(POSTAG_SCHEMA[i], a, b)) unless a == b
+          add(GenericDiff.new(Temp.new(POSTAG_SCHEMA[i]), a, b)) unless a == b
         end
       end
     end

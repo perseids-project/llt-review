@@ -22,7 +22,7 @@ module LLT
             a, b = [word, other_word].map { |w| w[comparator].to_s }
             if a != b
               d = diff[id] ||= WordDiff.new(word)
-              d.add(new_difference(comparator, a, b))
+              d.add(new_difference(word, comparator, a, b))
             end
           end
         end
@@ -59,9 +59,9 @@ module LLT
         end.merge(postags: Report::Postags.new(size))
       end
 
-      def new_difference(comparator, original, new)
+      def new_difference(word, comparator, original, new)
         klass = comparator == :postag ? PostagDiff : GenericDiff
-        klass.new(comparator, original, new)
+        klass.new(word[comparator], original, new)
       end
     end
   end

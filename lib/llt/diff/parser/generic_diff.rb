@@ -2,18 +2,18 @@ module LLT
   class Diff::Parser
     class GenericDiff
       include HashContainable
+      include DiffReporter
 
       attr_reader :original, :new
 
-      def initialize(tag, original, new)
-        super(tag)
-        @tag = tag
+      def initialize(item, original, new)
+        super(item)
         @original = original
         @new = new
       end
 
       def xml_tag
-        @tag
+        @id
       end
 
       def xml_attributes
