@@ -21,6 +21,15 @@ module LLT
         { gold_id: @gold.id, review_id: @reviewable.id }
       end
 
+      def compare
+        a = @gold.sentences
+        b = @reviewable.sentences
+        a.each do |sentence_id, sentence|
+          difference = sentence.compare(b[sentence_id])
+          add(difference) if difference.any?
+        end
+      end
+
       # The option to clone gold is here for for performance reasons only.
       # The report stats are calculated right inside the Gold report, which
       # holds all baseline figures. When there is more than one Reviewable
