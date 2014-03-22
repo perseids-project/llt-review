@@ -3,15 +3,12 @@ module LLT
     class SentenceDiff
       include HashContainable
 
+      container_alias :diff
       xml_tag :sentence
 
       def initialize(sentence)
         super(sentence.id)
         @total = sentence.size
-      end
-
-      def stats
-        "<stats/>"
       end
     end
   end

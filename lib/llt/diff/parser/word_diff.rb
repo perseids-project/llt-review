@@ -3,6 +3,8 @@ module LLT
     class WordDiff
       include HashContainable
 
+      container_alias :diff
+
       attr_reader :lemma, :head, :relation, :postag
 
       xml_tag :word
