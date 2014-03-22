@@ -23,6 +23,11 @@ module LLT
       def xml_tag
         @tag
       end
+
+      def collect_reports(words)
+        return unless @reports_to_request
+        words.each { |_, word| add(word.send(@reports_to_request).report) }
+      end
     end
   end
 end

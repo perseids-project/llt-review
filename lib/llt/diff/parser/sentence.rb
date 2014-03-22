@@ -41,9 +41,7 @@ module LLT
       def create_report
         @report ||= begin
           report_container.each do |_, reportable|
-            if rtr = reportable.reports_to_request
-              words.each { |_, word| reportable.add(word.send(rtr).report) }
-            end
+            reportable.collect_reports(words)
           end
         end
       end
