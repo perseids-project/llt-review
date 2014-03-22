@@ -51,7 +51,7 @@ module LLT
       private
 
       def add_report_container
-        add(Generic.new(:sentences, @sentences.count))
+        add(Sentences.new(@sentences.count))
       end
     end
   end
