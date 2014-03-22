@@ -60,15 +60,6 @@ module LLT
         cloned.replace_with_clone(:container)
         cloned
       end
-
-      alias_method :old_clone, :clone
-      alias_method :clone, :new_clone
-
-      private
-
-      def hash_with_cloned_values(hsh)
-        Hash[hsh.map { |k, v| [k, v.clone] }]
-      end
     end
   end
 end
