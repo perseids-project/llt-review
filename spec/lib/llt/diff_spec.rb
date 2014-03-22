@@ -107,6 +107,11 @@ describe LLT::Diff do
 
       postags = report[:postags]
       postags.total.should == 10
+      postags["r--------"].total.should == 2
+      postags["p-s---nb-"].total.should == 2
+      postags["n-s---nb-"].total.should == 2
+      postags["n-s---mn-"].total.should == 2
+      postags["v3siia---"].total.should == 2
 
       datapoints = postags[:datapoints]
       datapoints.total.should == 90

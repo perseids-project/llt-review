@@ -52,12 +52,11 @@ module LLT
           heads: nil,
           relations: :relation,
           lemmata: :lemma,
-          postags: :postag,
         }
 
         reports.each_with_object({}) do |(tag, requested), hsh|
           hsh[tag] = Report::Generic.new(tag, size, requested)
-        end
+        end.merge(postags: Report::Postags.new(size))
       end
     end
   end
