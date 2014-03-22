@@ -7,6 +7,7 @@ module LLT
 
       require 'llt/diff/parser/report'
       require 'llt/diff/parser/report/generic'
+      require 'llt/diff/parser/report/datapoints'
       require 'llt/diff/parser/report/sentences'
       require 'llt/diff/parser/report/postags'
       require 'llt/diff/parser/report/lemma'

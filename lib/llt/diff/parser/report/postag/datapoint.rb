@@ -1,7 +1,7 @@
 module LLT
   class Diff::Parser::Report::Postag
     class Datapoint
-      include Diff::Parser::Reportable
+      include Diff::Parser::NoUniqueReportable
 
       def initialize(tag, id, total = 1)
         super(id, total)
