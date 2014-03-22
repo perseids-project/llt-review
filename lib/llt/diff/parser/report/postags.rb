@@ -7,8 +7,9 @@ module LLT
 
       def collect_reports(words)
         words.each do |_, word|
-          add(Postag.new(word.postag.to_s))
-          add(word.postag.report)
+          postag = word[:postag]
+          add(Postag.new(postag.to_s))
+          add(postag.report)
         end
       end
 

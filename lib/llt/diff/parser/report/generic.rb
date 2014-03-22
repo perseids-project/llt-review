@@ -13,7 +13,7 @@ module LLT
       end
 
       def xml_attributes
-        { total: @total }
+        { total: @total, right: @right, wrong: @wrong, unique: @unique }
       end
 
       def id
@@ -26,7 +26,7 @@ module LLT
 
       def collect_reports(words)
         return unless @reports_to_request
-        words.each { |_, word| add(word.send(@reports_to_request).report) }
+        words.each { |_, word| add(word[@reports_to_request].report) }
       end
     end
   end

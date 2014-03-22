@@ -11,19 +11,23 @@ module LLT
           attribute
         end
 
+        def id
+          report_class
+        end
+
         def report
-          Report.const_get(report_class.capitalize).new(attribute)
+          @report ||= Report.const_get(report_class.capitalize).new(attribute)
         end
       end
 
       %i{ lemma head relation }.each do |attr|
         define_method("#{attr}=") do |val|
-          instance_variable_set("@#{attr}", Attr.new(val, attr))
+          add(Attr.new(val, attr))
         end
       end
 
       def postag=(tag)
-        @postag = Postag.new(tag)
+        add(Postag.new(tag))
       end
 
       def method_missing(meth, *args, &blk)

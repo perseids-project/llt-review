@@ -1,7 +1,10 @@
 module LLT
   class Diff::Parser
     class Postag
+      attr_reader :id
+
       def initialize(postag)
+        @id = :postag
         @postag = postag
       end
 
@@ -9,6 +12,7 @@ module LLT
         @postag
       end
 
+      # A little violating... move this to Datapoints
       def report
         @report ||= begin
           # Questionable what the total numbers of datapoints should be.

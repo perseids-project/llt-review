@@ -19,9 +19,9 @@ module LLT
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
-            a, b = [word, other_word].map { |w| w.send(comparator).to_s }
+            a, b = [word, other_word].map { |w| w[comparator].to_s }
             if a != b
-              d = diff[id] ||= WordDiff.new(id)
+              d = diff[id] ||= WordDiff.new(word)
               d.add(new_difference(comparator, a, b))
             end
           end
