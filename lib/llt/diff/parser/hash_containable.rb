@@ -20,6 +20,10 @@ module LLT
         @container.each(&blk)
       end
 
+      def each_value
+        @container.each { |_, el| yield(el) }
+      end
+
       def empty?
         @container.empty?
       end
@@ -73,8 +77,10 @@ module LLT
 
       private
 
+      # explicitly ask for nil, we might want true and false values,
+      # while nil basically means 'undefined'
       def to_xml_attrs(attrs)
-        attrs.map { |k, v| %{ #{k}="#{v}"} }.join
+        attrs.map { |k, v| %{ #{k}="#{v}"} unless v.nil? }.join
       end
 
       def counter_hash
