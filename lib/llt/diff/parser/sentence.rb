@@ -22,7 +22,7 @@ module LLT
             a, b = [word, other_word].map { |w| w.send(comparator).to_s }
             if a != b
               d = diff[id] ||= WordDiff.new(id)
-              d.send("#{comparator}=", [a, b])
+              d.add(GenericDiff.new(comparator, a, b))
             end
           end
         end
