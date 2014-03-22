@@ -21,7 +21,7 @@ module LLT
       end
 
       def diff_id
-        "#{original}---#{new}"
+        @diff_id ||= "#{@id}:#{@original}|#{@new}"
       end
 
       def type

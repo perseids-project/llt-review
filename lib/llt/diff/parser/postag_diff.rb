@@ -6,6 +6,10 @@ module LLT
         compute_detailed_differences
       end
 
+      def diff_id
+        @diff_id ||= "#{id}:#{map { |_, v| v.diff_id }.join('::')}"
+      end
+
       private
 
       # copied over right now from Postag until we figure out how to solve this

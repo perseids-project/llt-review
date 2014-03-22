@@ -10,6 +10,10 @@ module LLT
         super(sentence.id)
         @total = sentence.size
       end
+
+      def diff_id
+        @diff_id ||= "#{id}:#{map { |_, v| v.diff_id }.join('::')}"
+      end
     end
   end
 end
