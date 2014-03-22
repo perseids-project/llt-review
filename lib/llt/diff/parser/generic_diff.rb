@@ -6,7 +6,7 @@ module LLT
       attr_reader :original, :new
 
       def initialize(tag, original, new)
-        super("#{original}---#{new}")
+        super(tag)
         @tag = tag
         @original = original
         @new = new
@@ -21,7 +21,11 @@ module LLT
       end
 
       def diff_id
-        @id
+        "#{original}---#{new}"
+      end
+
+      def type
+        @tag
       end
     end
   end
