@@ -61,6 +61,11 @@ module LLT
         cloned
       end
 
+      alias_method :old_clone, :clone
+      alias_method :clone, :new_clone
+
+      private
+
       def replace_with_clone(*inst_vars)
         inst_vars.each do |iv|
           ivn = "@#{iv}"
@@ -68,9 +73,6 @@ module LLT
           instance_variable_set(ivn, cloned)
         end
       end
-
-      alias_method :old_clone, :clone
-      alias_method :clone, :new_clone
 
       def hash_with_cloned_values(hsh)
         Hash[hsh.map { |k, v| [k, v.clone] }]
