@@ -30,6 +30,12 @@ module LLT
         diff
       end
 
+      def clone
+        cloned = super
+        cloned.replace_with_clone(:report)
+        cloned
+      end
+
       private
 
       def create_report
