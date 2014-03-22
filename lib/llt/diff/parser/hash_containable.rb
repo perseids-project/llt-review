@@ -36,6 +36,10 @@ module LLT
         @container[id] = element
       end
 
+      def take(*ids)
+        @container.values_at(*ids)
+      end
+
       def size
         @container.size
       end
