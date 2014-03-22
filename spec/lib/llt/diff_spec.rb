@@ -65,6 +65,19 @@ describe LLT::Diff do
       result.should have(1).item         # we had one reviewable annotation
       result[0].should have(1).item      # one sentence with differences
       result[0][21].should have(3).items # and 3 words with differences
+      diff = result[0][21]
+      w1, w3, w4 = diff.take(1, 3, 4).map(&:diff)
+
+      w1[:head].original.should == '5'
+      w1[:head].new.should == '4'
+
+      w3[:lemma].original.should == 'flumen1'
+      w3[:lemma].new.should == 'flumen2'
+      w3[:postag].original.should == 'n-s---nb-'
+      w3[:postag].new.should == 'n-s---nd-'
+
+      w4[:relation].original.should == 'SBJ'
+      w4[:relation].new.should == 'OBJ'
     end
 
     it "takes multiple gold and review files" do
