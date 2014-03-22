@@ -23,6 +23,8 @@ module LLT
       require 'llt/diff/parser/postag'
       require 'llt/diff/parser/sentence_diff'
       require 'llt/diff/parser/word_diff'
+      require 'llt/diff/parser/generic_diff'
+      require 'llt/diff/parser/postag_diff'
 
       require 'llt/diff/parser/parse_helper'
       autoload :NokogiriHandler, 'llt/diff/parser/nokogiri_handler'
