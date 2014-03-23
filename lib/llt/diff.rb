@@ -20,14 +20,8 @@ module LLT
     end
 
     def report(*uris)
-      puts "START"
-      x = Time.now
       @reports = parse_files(Report: uris)
-      y = Time.now
-      puts "PARSE TIME: #{y - x}"
       @reports.each(&:report)
-      z = Time.now
-      puts "REPORT TIME: #{z - y}"
       @reports
     end
 
