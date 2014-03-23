@@ -20,6 +20,8 @@ module LLT
         mood voice gender case degree
       }
 
+      # we need an instance that responds to #id, otherwise
+      # we cannot use Difference::Generic
       Temp = Struct.new(:id)
       def compute_detailed_differences
         @original.each_char.with_index do |a, i|
