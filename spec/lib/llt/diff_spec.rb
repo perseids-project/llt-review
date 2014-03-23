@@ -74,8 +74,10 @@ describe LLT::Diff do
 
         w2[:postag].original.should == 'p-s---nb-'
         w2[:postag].new.should == 'p-s---nd-'
+        w2[:postag].unique.should == 1
         w2[:postag][:case].original.should == 'b'
         w2[:postag][:case].new.should == 'd'
+        w2[:postag][:case].unique.should == 1 # first occurence of this difference
 
         w3[:lemma].original.should == 'flumen1'
         w3[:lemma].new.should == 'flumen2'
@@ -83,9 +85,11 @@ describe LLT::Diff do
         w3[:postag].new.should == 'n-s---nd-'
         w3[:postag][:case].original.should == 'b'
         w3[:postag][:case].new.should == 'd'
+        w3[:postag][:case].unique.should == 0 # second occurence of this difference
 
         w4[:relation].original.should == 'SBJ'
         w4[:relation].new.should == 'OBJ'
+        w4[:relation].unique.should == 1
       end
     end
 

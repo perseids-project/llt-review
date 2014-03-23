@@ -5,6 +5,8 @@ module LLT
       # HashContainable, we cannot include it here, as HashContainable
       # contains ClassMethods that otherwise won't reach the object that need it
 
+      attr_reader :unique
+
       def initialize(item)
         super(item.id)
         @item = item
