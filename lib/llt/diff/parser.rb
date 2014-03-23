@@ -3,7 +3,6 @@ module LLT
     class Parser
       require 'llt/diff/parser/hash_containable'
       require 'llt/diff/parser/reportable'
-      require 'llt/diff/parser/no_unique_reportable'
       require 'llt/diff/parser/diff_reporter'
 
       require 'llt/diff/parser/report'
