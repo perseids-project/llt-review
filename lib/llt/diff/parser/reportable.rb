@@ -31,6 +31,11 @@ module LLT
         @total += element.total
       end
 
+      def add_wrong(unique = nil)
+        @wrong += 1
+        @unique += 1 if unique
+      end
+
       def increment
         @total += 1
       end
