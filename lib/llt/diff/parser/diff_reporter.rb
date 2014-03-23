@@ -27,7 +27,6 @@ module LLT
         @unique = report_unique ? 1 : 0
         write_to_report(report, report_unique)
         each_value { |v| v.report_diff(report, uniques) }
-        #add_wrong(report_unique)
       end
 
       private
