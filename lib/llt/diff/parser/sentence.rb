@@ -7,6 +7,7 @@ module LLT
 
       def initialize(id)
         super
+        # Eventually we'll need this configurable
         @comparable_elements = %i{ lemma postag head relation }
       end
 
@@ -14,6 +15,7 @@ module LLT
         @report ||= create_report
       end
 
+      # Ideally we can pass word comparisons along to Word#compare
       def compare(other)
         diff = Difference::Sentence.new(self)
         words.each do |id, word|
