@@ -20,13 +20,10 @@ module LLT
         mood voice gender case degree
       }
 
-      # we need an instance that responds to #id, otherwise
-      # we cannot use Difference::Generic
-      Temp = Struct.new(:id)
       def compute_detailed_differences
         @original.each_char.with_index do |a, i|
           b = @new[i]
-          add(Generic.new(Temp.new(POSTAG_SCHEMA[i]), a, b)) unless a == b
+          add(Datapoint.new(POSTAG_SCHEMA[i], a, b)) unless a == b
         end
       end
 
@@ -34,9 +31,7 @@ module LLT
         postags = report[:postags]
         postags.add_wrong(unique)
         postags[item.to_s].add_wrong(unique)
-        #when :postag then report[:postags][@item.to_s].add_wrong(unique)
       end
-
     end
   end
 end
