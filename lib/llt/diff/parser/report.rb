@@ -39,6 +39,7 @@ module LLT
 
       def collect_multithreaded
         slice_size = @sentences.size / 4
+        slice_size = 1 if slice_size.zero?
         threads = []
         @sentences.each_slice(slice_size) do |slice|
           temp_container = Report.new(nil, {})
