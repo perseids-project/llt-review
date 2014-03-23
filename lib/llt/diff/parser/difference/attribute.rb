@@ -4,11 +4,7 @@ module LLT
       def write_to_report(report, unique)
         container = report[report_location]
         container.add_wrong(unique)
-        container[diff_location].add_wrong(unique)
-      end
-
-      def diff_location
-        @original
+        container[item.to_s].add_wrong(unique)
       end
     end
   end
