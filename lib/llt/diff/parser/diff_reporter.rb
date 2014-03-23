@@ -25,6 +25,7 @@ module LLT
       def report_diff(report, uniques = nil)
         report_unique = report_unique?(uniques)
         @unique = report_unique ? 1 : 0
+        write_to_report(report, report_unique)
         each_value { |v| v.report_diff(report, uniques) }
         #add_wrong(report_unique)
       end
@@ -34,6 +35,9 @@ module LLT
       def report_unique?(uniques)
         return unless uniques && ! uniques.include?(diff_id)
         !! (uniques << diff_id)
+      end
+
+      def write_to_report(report, unique)
       end
     end
   end
