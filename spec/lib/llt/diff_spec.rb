@@ -26,7 +26,7 @@ describe LLT::Diff do
       <treebank>
         <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
           <word id="1" form="In" lemma="in1" postag="r--------" head="4" relation="AuxP"/>
-          <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+          <word id="2" form="eo" lemma="is1" postag="p-s---nd-" head="3" relation="ATR"/>
           <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" head="1" relation="ADV"/>
           <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="OBJ"/>
           <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
@@ -57,29 +57,36 @@ describe LLT::Diff do
   end
 
   describe "#diff" do
-    it "creates a diff report of a gold and review annotation" do
-      allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
-      allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+    describe "creates a diff report of a gold and review annotation" do
+      it "contains all differences in detail" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
 
-      result = differ.diff([:uri_for_g1], [:uri_for_r1])
-      result.should have(1).item         # we had one reviewable annotation
-      result[0].should have(1).item      # one sentence with differences
-      result[0][21].should have(3).items # and 3 words with differences
-      diff = result[0][21]
-      w1, w3, w4 = diff.take(1, 3, 4).map(&:diff)
+        result = differ.diff([:uri_for_g1], [:uri_for_r1])
+        result.should have(1).item         # we had one reviewable annotation
+        result[0].should have(1).item      # one sentence with differences
+        result[0][21].should have(4).items # and 3 words with differences
+        diff = result[0][21]
+        w1, w2,  w3, w4 = diff.take(1, 2, 3, 4).map(&:diff)
 
-      w1[:head].original.should == '5'
-      w1[:head].new.should == '4'
+        w1[:head].original.should == '5'
+        w1[:head].new.should == '4'
 
-      w3[:lemma].original.should == 'flumen1'
-      w3[:lemma].new.should == 'flumen2'
-      w3[:postag].original.should == 'n-s---nb-'
-      w3[:postag].new.should == 'n-s---nd-'
-      w3[:postag][:case].original.should == 'b'
-      w3[:postag][:case].new.should == 'd'
+        w2[:postag].original.should == 'p-s---nb-'
+        w2[:postag].new.should == 'p-s---nd-'
+        w2[:postag][:case].original.should == 'b'
+        w2[:postag][:case].new.should == 'd'
 
-      w4[:relation].original.should == 'SBJ'
-      w4[:relation].new.should == 'OBJ'
+        w3[:lemma].original.should == 'flumen1'
+        w3[:lemma].new.should == 'flumen2'
+        w3[:postag].original.should == 'n-s---nb-'
+        w3[:postag].new.should == 'n-s---nd-'
+        w3[:postag][:case].original.should == 'b'
+        w3[:postag][:case].new.should == 'd'
+
+        w4[:relation].original.should == 'SBJ'
+        w4[:relation].new.should == 'OBJ'
+      end
     end
 
     it "takes multiple gold and review files" do
