@@ -24,6 +24,7 @@ module LLT
         add(Postag.new(tag))
       end
 
+      # used when parsers try to check in attributes we are not interested in
       def method_missing(meth, *args, &blk)
         super unless meth =~ /=$/
       end
