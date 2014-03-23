@@ -3,22 +3,19 @@ module LLT
     class Parser
       require 'llt/diff/parser/hash_containable'
       require 'llt/diff/parser/reportable'
+      require 'llt/diff/parser/diff_reporter'
 
       require 'llt/diff/parser/report'
-      require 'llt/diff/parser/report/generic'
-      require 'llt/diff/parser/report/lemma'
-      require 'llt/diff/parser/report/postag'
-      require 'llt/diff/parser/report/postag/datapoint'
-      require 'llt/diff/parser/report/relation'
       require 'llt/diff/parser/gold'
       require 'llt/diff/parser/reviewable'
       require 'llt/diff/parser/comparison'
       require 'llt/diff/parser/parse_result'
+
       require 'llt/diff/parser/sentence'
       require 'llt/diff/parser/word'
       require 'llt/diff/parser/postag'
-      require 'llt/diff/parser/sentence_diff'
-      require 'llt/diff/parser/word_diff'
+
+      require 'llt/diff/parser/difference'
 
       require 'llt/diff/parser/parse_helper'
       autoload :NokogiriHandler, 'llt/diff/parser/nokogiri_handler'

@@ -1,7 +1,10 @@
 module LLT
   class Diff::Parser
     class Postag
+      attr_reader :id
+
       def initialize(postag)
+        @id = :postag
         @postag = postag
       end
 
@@ -9,11 +12,12 @@ module LLT
         @postag
       end
 
+      # A little violating... move this to Datapoints
       def report
         @report ||= begin
           # Questionable what the total numbers of datapoints should be.
           # Count empty points as well?
-          data = Report::Generic.new(:datapoints, 9)
+          data = Report::Datapoints.new(@postag.size)
           add_datapoints_container(data)
           data.each_with_index do |(_, container), i|
             rtr = container.reports_to_request
@@ -26,10 +30,15 @@ module LLT
         end
       end
 
+
+      # All these constants cannot stay. Hardcoding the meaning of every postag
+      # datapoint is a no-go.
+
       POSTAG_SCHEMA = %i{
         part_of_speech person number tense
         mood voice gender case degree
       }
+
       def analysis
         @analysis ||= begin
           Hash[POSTAG_SCHEMA.zip(@postag.each_char)]

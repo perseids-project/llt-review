@@ -1,6 +1,15 @@
 module LLT
   class Diff::Parser
     class Report
+      require 'llt/diff/parser/report/generic'
+      require 'llt/diff/parser/report/datapoints'
+      require 'llt/diff/parser/report/sentences'
+      require 'llt/diff/parser/report/postags'
+      require 'llt/diff/parser/report/lemma'
+      require 'llt/diff/parser/report/postag'
+      require 'llt/diff/parser/report/postag/datapoint'
+      require 'llt/diff/parser/report/relation'
+
       include Reportable
 
       attr_reader :sentences
@@ -51,7 +60,7 @@ module LLT
       private
 
       def add_report_container
-        add(Generic.new(:sentences, @sentences.count))
+        add(Sentences.new(@sentences.count))
       end
     end
   end

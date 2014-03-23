@@ -2,13 +2,18 @@ module LLT
   class Diff::Parser
     module Reportable
       include HashContainable
-      include Comparable
 
-      attr_reader :id, :total
+      attr_reader :id, :total, :right, :wrong, :unique
 
       def initialize(id, total = 1)
         super(id)
         @total = total
+      end
+
+      def init_diff
+        @wrong = 0
+        @unique = 0
+        each { |_, el| el.init_diff }
       end
 
       def add(element)
@@ -26,6 +31,16 @@ module LLT
         @total += element.total
       end
 
+      def add_wrong(unique = nil)
+        @wrong += 1
+        @unique += 1 if unique
+      end
+
+      def count_rights
+        @right = @total - @wrong
+        each_value(&:count_rights)
+      end
+
       def increment
         @total += 1
       end
@@ -35,7 +50,7 @@ module LLT
       end
 
       def xml_attributes
-        { name: @id, total: @total }
+        { name: @id, total: @total, right: @right, wrong: @wrong, unique: @unique }
       end
 
       def sort
@@ -52,8 +67,14 @@ module LLT
         @container = sort
       end
 
-      def <=>(other)
-        [@total, @id] <=> [other.total, other.id]
+      # This could be implemented with a block as well (which holds
+      # whatever code needs to be performed on the cloned instance,
+      # but probably not a good idea as this called very often - make
+      # it as lean as possibe.
+      def clone
+        cloned = super
+        cloned.replace_with_clone(:container)
+        cloned
       end
     end
   end

@@ -20,6 +20,10 @@ module LLT
         @container.each(&blk)
       end
 
+      def each_value
+        @container.each { |_, el| yield(el) }
+      end
+
       def empty?
         @container.empty?
       end
@@ -30,6 +34,10 @@ module LLT
 
       def []=(id, element)
         @container[id] = element
+      end
+
+      def take(*ids)
+        @container.values_at(*ids)
       end
 
       def size
@@ -63,14 +71,28 @@ module LLT
         ''
       end
 
+      def replace_with_clone(*inst_vars)
+        inst_vars.each do |iv|
+          ivn = "@#{iv}"
+          cloned = hash_with_cloned_values(instance_variable_get(ivn))
+          instance_variable_set(ivn, cloned)
+        end
+      end
+
       private
 
+      # explicitly ask for nil, we might want true and false values,
+      # while nil basically means 'undefined'
       def to_xml_attrs(attrs)
-        attrs.map { |k, v| %{ #{k}="#{v}"} }.join
+        attrs.map { |k, v| %{ #{k}="#{v}"} unless v.nil? }.join
       end
 
       def counter_hash
         Hash.new(0)
+      end
+
+      def hash_with_cloned_values(hsh)
+        Hash[hsh.map { |k, v| [k, v.clone] }]
       end
 
       def self.included(klass)

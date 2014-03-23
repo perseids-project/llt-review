@@ -7,6 +7,7 @@ module LLT
 
       def initialize(id)
         super
+        # Eventually we'll need this configurable
         @comparable_elements = %i{ lemma postag head relation }
       end
 
@@ -14,15 +15,16 @@ module LLT
         @report ||= create_report
       end
 
+      # Ideally we can pass word comparisons along to Word#compare
       def compare(other)
-        diff = SentenceDiff.new(self)
+        diff = Difference::Sentence.new(self)
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
-            a, b = [word, other_word].map { |w| w.send(comparator).to_s }
+            a, b = [word, other_word].map { |w| w[comparator].to_s }
             if a != b
-              d = diff[id] ||= WordDiff.new(id)
-              d.send("#{comparator}=", [a, b])
+              d = diff[id] ||= Difference::Word.new(word)
+              d.add(new_difference(word, comparator, a, b))
             end
           end
         end
@@ -30,14 +32,18 @@ module LLT
         diff
       end
 
+      def clone
+        cloned = super
+        cloned.replace_with_clone(:report)
+        cloned
+      end
+
       private
 
       def create_report
         @report ||= begin
           report_container.each do |_, reportable|
-            if rtr = reportable.reports_to_request
-              words.each { |_, word| reportable.add(word.send(rtr).report) }
-            end
+            reportable.collect_reports(words)
           end
         end
       end
@@ -48,12 +54,16 @@ module LLT
           heads: nil,
           relations: :relation,
           lemmata: :lemma,
-          postags: :postag,
         }
 
         reports.each_with_object({}) do |(tag, requested), hsh|
           hsh[tag] = Report::Generic.new(tag, size, requested)
-        end
+        end.merge(postags: Report::Postags.new(size))
+      end
+
+      def new_difference(word, comparator, original, new)
+        klass = Difference.const_get(comparator.capitalize)
+        klass.new(word[comparator], original, new)
       end
     end
   end

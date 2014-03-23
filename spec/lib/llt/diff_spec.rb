@@ -26,7 +26,7 @@ describe LLT::Diff do
       <treebank>
         <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
           <word id="1" form="In" lemma="in1" postag="r--------" head="4" relation="AuxP"/>
-          <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+          <word id="2" form="eo" lemma="is1" postag="p-s---nd-" head="3" relation="ATR"/>
           <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" head="1" relation="ADV"/>
           <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="OBJ"/>
           <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
@@ -57,14 +57,67 @@ describe LLT::Diff do
   end
 
   describe "#diff" do
-    it "creates a diff report of a gold and review annotation" do
-      allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
-      allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+    describe "creates a diff report of a gold and review annotation" do
+      it "contains all differences in detail" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
 
-      result = differ.diff([:uri_for_g1], [:uri_for_r1])
-      result.should have(1).item         # we had one reviewable annotation
-      result[0].should have(1).item      # one sentence with differences
-      result[0][21].should have(3).items # and 3 words with differences
+        result = differ.diff([:uri_for_g1], [:uri_for_r1])
+        result.should have(1).item         # we had one reviewable annotation
+        result[0].should have(1).item      # one sentence with differences
+        result[0][21].should have(4).items # and 3 words with differences
+        diff = result[0][21]
+        w1, w2,  w3, w4 = diff.take(1, 2, 3, 4).map(&:diff)
+
+        w1[:head].original.should == '5'
+        w1[:head].new.should == '4'
+
+        w2[:postag].original.should == 'p-s---nb-'
+        w2[:postag].new.should == 'p-s---nd-'
+        w2[:postag].unique.should == 1
+        w2[:postag][:case].original.should == 'b'
+        w2[:postag][:case].new.should == 'd'
+        w2[:postag][:case].unique.should == 1 # first occurence of this difference
+
+        w3[:lemma].original.should == 'flumen1'
+        w3[:lemma].new.should == 'flumen2'
+        w3[:postag].original.should == 'n-s---nb-'
+        w3[:postag].new.should == 'n-s---nd-'
+        w3[:postag][:case].original.should == 'b'
+        w3[:postag][:case].new.should == 'd'
+        w3[:postag][:case].unique.should == 0 # second occurence of this difference
+
+        w4[:relation].original.should == 'SBJ'
+        w4[:relation].new.should == 'OBJ'
+        w4[:relation].unique.should == 1
+      end
+
+      it "contains a full report section" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+
+        result = differ.diff([:uri_for_g1], [:uri_for_r1])
+        report = result.first.report
+        report.should_not be_empty
+
+        sentences = report[:sentences]
+        sentences.total.should == 1
+        sentences.right.should == 0
+        sentences.wrong.should == 1
+        sentences.unique.should == 1
+
+        # TODO
+        # Add a couple of more assertions just to be safe
+
+        postags = report[:postags]
+        datapoints = postags[:datapoints]
+        cases = datapoints[:cases]
+        ablative = cases['b']
+        ablative.total.should == 2
+        ablative.right.should == 0
+        ablative.wrong.should == 2
+        ablative.unique.should == 1
+      end
     end
 
     it "takes multiple gold and review files" do
@@ -107,6 +160,11 @@ describe LLT::Diff do
 
       postags = report[:postags]
       postags.total.should == 10
+      postags["r--------"].total.should == 2
+      postags["p-s---nb-"].total.should == 2
+      postags["n-s---nb-"].total.should == 2
+      postags["n-s---mn-"].total.should == 2
+      postags["v3siia---"].total.should == 2
 
       datapoints = postags[:datapoints]
       datapoints.total.should == 90

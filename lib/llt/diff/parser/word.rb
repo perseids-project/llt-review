@@ -6,26 +6,25 @@ module LLT
       attr_accessor :form, :lemma, :head, :relation
       attr_reader :postag
 
-      Attr = Struct.new(:attribute, :report_class) do
+      Attr = Struct.new(:id, :attribute) do
         def to_s
           attribute
         end
 
         def report
-          Report.const_get(report_class.capitalize).new(attribute)
+          @report ||= Report.const_get(id.capitalize).new(attribute)
         end
       end
 
-      %i{ lemma head relation }.each do |attr|
-        define_method("#{attr}=") do |val|
-          instance_variable_set("@#{attr}", Attr.new(val, attr))
-        end
+      %i{ lemma head relation }.each do |type|
+        define_method("#{type}=") { |val| add(Attr.new(type, val)) }
       end
 
       def postag=(tag)
-        @postag = Postag.new(tag)
+        add(Postag.new(tag))
       end
 
+      # used when parsers try to check in attributes we are not interested in
       def method_missing(meth, *args, &blk)
         super unless meth =~ /=$/
       end
