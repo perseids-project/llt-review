@@ -36,6 +36,11 @@ module LLT
         @unique += 1 if unique
       end
 
+      def count_rights
+        @right = @total - @wrong
+        each_value(&:count_rights)
+      end
+
       def increment
         @total += 1
       end
