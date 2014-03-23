@@ -62,10 +62,11 @@ module LLT
 
           # container includes SentenceDiffs, which contain WordsDiffs
           r = @gold.report
-          r.each { |_, rep| rep.init_diff }
+          r.each_value(&:init_diff)
           each_value do  |d|
             d.report_diff(r, @unique_differences)
           end
+          r.each_value(&:count_rights)
           r
         end
       end
