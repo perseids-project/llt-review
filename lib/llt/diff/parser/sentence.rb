@@ -15,13 +15,13 @@ module LLT
       end
 
       def compare(other)
-        diff = SentenceDiff.new(self)
+        diff = Difference::Sentence.new(self)
         words.each do |id, word|
           other_word = other[id]
           @comparable_elements.each do |comparator|
             a, b = [word, other_word].map { |w| w[comparator].to_s }
             if a != b
-              d = diff[id] ||= WordDiff.new(word)
+              d = diff[id] ||= Difference::Word.new(word)
               d.add(new_difference(word, comparator, a, b))
             end
           end
@@ -60,7 +60,7 @@ module LLT
       end
 
       def new_difference(word, comparator, original, new)
-        klass = comparator == :postag ? PostagDiff : GenericDiff
+        klass = Difference.const_get(comparator.capitalize)
         klass.new(word[comparator], original, new)
       end
     end
