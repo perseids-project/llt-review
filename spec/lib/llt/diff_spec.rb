@@ -91,6 +91,33 @@ describe LLT::Diff do
         w4[:relation].new.should == 'OBJ'
         w4[:relation].unique.should == 1
       end
+
+      it "contains a full report section" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+
+        result = differ.diff([:uri_for_g1], [:uri_for_r1])
+        report = result.first.report
+        report.should_not be_empty
+
+        sentences = report[:sentences]
+        sentences.total.should == 1
+        sentences.right.should == 0
+        sentences.wrong.should == 1
+        sentences.unique.should == 1
+
+        # TODO
+        # Add a couple of more assertions just to be safe
+
+        postags = report[:postags]
+        datapoints = postags[:datapoints]
+        cases = datapoints[:cases]
+        ablative = cases['b']
+        ablative.total.should == 2
+        ablative.right.should == 0
+        ablative.wrong.should == 2
+        ablative.unique.should == 1
+      end
     end
 
     it "takes multiple gold and review files" do
