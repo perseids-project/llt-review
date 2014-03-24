@@ -1,14 +1,9 @@
 module LLT
   class Diff::Parser::Tree
-    class Element
-      include Helper
-
-      attr_reader :tree, :head
-
+    class Element < Root
       def initialize(item, tree)
+        super(tree)
         @item = item
-        @tree = tree
-        add
       end
 
       def id
@@ -20,10 +15,9 @@ module LLT
       end
 
       def seed
-        @head = @tree[head_id]
-      end
-
-      def add
+        h = @tree[head_id]
+        h.add(self)
+        @head = h
       end
     end
   end

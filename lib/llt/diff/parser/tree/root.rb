@@ -1,8 +1,13 @@
 module LLT
   class Diff::Parser::Tree
-    class Root < Element
+    class Root
+      include Helper
+
+      attr_reader :tree, :head
+
       def initialize(tree)
         @tree = tree
+        @container = {}
       end
 
       def id
