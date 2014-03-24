@@ -3,7 +3,7 @@ module LLT
     class Element
       include Helper
 
-      attr_reader :tree
+      attr_reader :tree, :head
 
       def initialize(item, tree)
         @item = item
@@ -17,6 +17,10 @@ module LLT
 
       def head_id
         @item.head
+      end
+
+      def seed
+        @head = @tree[head_id]
       end
 
       def add

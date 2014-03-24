@@ -18,10 +18,9 @@ module LLT
         add(@root)
       end
 
-      def seed(words)
-        words.each do |word|
-          add(Element.new(word, self))
-        end
+      def seed(*words)
+        words.each { |word| add(Element.new(word, self)) }
+        each_value(&:seed)
       end
     end
   end

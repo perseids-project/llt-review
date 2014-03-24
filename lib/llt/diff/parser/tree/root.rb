@@ -11,6 +11,9 @@ module LLT
 
       def head_id
       end
+
+      def seed
+      end
     end
   end
 end

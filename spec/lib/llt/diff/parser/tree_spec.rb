@@ -24,7 +24,7 @@ describe LLT::Diff::Parser::Tree do
     let(:words) { [w1, w2, w3] }
 
     it "adds words to the Tree container" do
-      tree.seed(words)
+      tree.seed(*words)
       tree[0].should_not be_nil
       tree[1].should_not be_nil
       tree[2].should_not be_nil
@@ -32,5 +32,11 @@ describe LLT::Diff::Parser::Tree do
       tree[4].should be_nil
     end
 
+    it "elements are organized in a tree as well" do
+      tree.seed(*words)
+      tree[1].head.id.should == 0
+      tree[2].head.id.should == 3
+      tree[3].head.id.should == 1
+    end
   end
 end
