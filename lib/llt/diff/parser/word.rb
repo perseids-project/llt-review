@@ -21,6 +21,8 @@ module LLT
         add(Postag.new(tag))
       end
 
+      getter_method :lemma, :head, :relation, :postag
+
       # used when parsers try to check in attributes we are not interested in
       def method_missing(meth, *args, &blk)
         super unless meth =~ /=$/
