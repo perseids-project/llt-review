@@ -113,6 +113,12 @@ module LLT
         def default_xml_tag
           @default_xml_tag
         end
+
+        def getter_method(*methods)
+          methods.each do |method|
+            define_method(method) { @container[method] }
+          end
+        end
       end
     end
   end

@@ -3,9 +3,6 @@ module LLT
     class Word
       include HashContainable
 
-      attr_accessor :form, :lemma, :head, :relation
-      attr_reader :postag
-
       Attr = Struct.new(:id, :attribute) do
         def to_s
           attribute
