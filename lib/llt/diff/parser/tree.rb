@@ -6,7 +6,23 @@ module LLT
       require 'llt/diff/parser/tree/element'
       require 'llt/diff/parser/tree/root'
 
-      include Helper
+      include HashContainable
+
+      attr_reader :id, :root
+
+      def initialize(id = nil)
+        @id = id
+        @root = Root.new(self)
+        @container = {}
+        @tree = {}
+        add(@root)
+      end
+
+      def seed(words)
+        words.each do |word|
+          add(Element.new(word, self))
+        end
+      end
     end
   end
 end
