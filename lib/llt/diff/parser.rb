@@ -17,6 +17,8 @@ module LLT
 
       require 'llt/diff/parser/difference'
 
+      require 'llt/diff/parser/tree'
+
       require 'llt/diff/parser/parse_helper'
       autoload :NokogiriHandler, 'llt/diff/parser/nokogiri_handler'
       autoload :OxHandler,       'llt/diff/parser/ox_handler'
