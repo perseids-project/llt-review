@@ -1,5 +1,5 @@
 module LLT
-  module Diff::Parser::Difference
+  module Diff::Treebank::Difference
     class Datapoint < Generic
       def initialize(id, original, new)
         @id = id

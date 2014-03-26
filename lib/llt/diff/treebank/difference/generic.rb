@@ -1,8 +1,8 @@
 module LLT
-  module Diff::Parser::Difference
+  module Diff::Treebank::Difference
     class Generic
-      include LLT::Diff::Parser::HashContainable
-      include LLT::Diff::Parser::DiffReporter
+      include Diff::Helpers::HashContainable
+      include Diff::Helpers::DiffReporter
 
       attr_reader :original, :new
 

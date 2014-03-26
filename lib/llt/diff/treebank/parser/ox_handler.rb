@@ -1,10 +1,10 @@
 require 'ox'
 
 module LLT
-  class Diff::Parser
+  class Diff::Treebank::Parser
     class OxHandler < Ox::Sax
 
-      include ParseHelper
+      include Helper
 
       def parse(data)
         Ox.sax_parse(self, data)

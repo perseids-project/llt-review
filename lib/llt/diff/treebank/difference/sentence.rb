@@ -1,8 +1,8 @@
 module LLT
-  module Diff::Parser::Difference
+  module Diff::Treebank::Difference
     class Sentence
-      include LLT::Diff::Parser::HashContainable
-      include LLT::Diff::Parser::DiffReporter
+      include Diff::Helpers::HashContainable
+      include Diff::Helpers::DiffReporter
 
       container_alias :diff
       xml_tag :sentence

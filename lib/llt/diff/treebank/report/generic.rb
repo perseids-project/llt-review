@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser::Report
+  class Diff::Treebank::Report
     class Generic
-      include Diff::Parser::Reportable
+      include Diff::Helpers::Reportable
 
       attr_reader :reports_to_request
 

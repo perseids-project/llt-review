@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser
+  class Diff::Treebank
     class Comparison
-      include HashContainable
+      include Diff::Helpers::HashContainable
 
       xml_tag :comparison
 

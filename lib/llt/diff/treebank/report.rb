@@ -1,16 +1,16 @@
 module LLT
-  class Diff::Parser
+  class Diff::Treebank
     class Report
-      require 'llt/diff/parser/report/generic'
-      require 'llt/diff/parser/report/datapoints'
-      require 'llt/diff/parser/report/sentences'
-      require 'llt/diff/parser/report/postags'
-      require 'llt/diff/parser/report/lemma'
-      require 'llt/diff/parser/report/postag'
-      require 'llt/diff/parser/report/postag/datapoint'
-      require 'llt/diff/parser/report/relation'
+      require 'llt/diff/treebank/report/generic'
+      require 'llt/diff/treebank/report/datapoints'
+      require 'llt/diff/treebank/report/sentences'
+      require 'llt/diff/treebank/report/postags'
+      require 'llt/diff/treebank/report/lemma'
+      require 'llt/diff/treebank/report/postag'
+      require 'llt/diff/treebank/report/postag/datapoint'
+      require 'llt/diff/treebank/report/relation'
 
-      include Reportable
+      include Diff::Helpers::Reportable
 
       attr_reader :sentences
 

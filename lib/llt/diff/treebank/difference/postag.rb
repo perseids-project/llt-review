@@ -1,5 +1,5 @@
 module LLT
-  module Diff::Parser::Difference
+  module Diff::Treebank::Difference
     class Postag < Generic
       def initialize(tag, original, new)
         super

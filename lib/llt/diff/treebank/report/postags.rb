@@ -1,5 +1,5 @@
 module LLT
-  class Diff::Parser::Report
+  class Diff::Treebank::Report
     class Postags < Generic
       def initialize(total = 1)
         super(:postags, total)

@@ -1,10 +1,10 @@
 require 'nokogiri'
 
 module LLT
-  class Diff::Parser
+  class Diff::Treebank::Parser
     class NokogiriHandler < Nokogiri::XML::SAX::Document
 
-      include ParseHelper
+      include Helper
 
       def parse(data)
         Nokogiri::XML::SAX::Parser.new(self).parse(data)

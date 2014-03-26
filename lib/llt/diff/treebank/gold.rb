@@ -1,5 +1,5 @@
 module LLT
-  class Diff::Parser
+  class Diff::Treebank
     class Gold < Report
       attr_reader :sentences
 

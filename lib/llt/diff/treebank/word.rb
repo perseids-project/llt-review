@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser
+  class Diff::Treebank
     class Word
-      include HashContainable
+      include Diff::Helpers::HashContainable
 
       attr_accessor :form, :lemma, :head, :relation
       attr_reader :postag

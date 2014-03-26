@@ -1,8 +1,8 @@
 module LLT
-  class Diff::Parser
-    module ParseHelper
+  class Diff::Treebank::Parser
+    module Helper
       def initialize
-        @result = ParseResult.new
+        @result = Result.new
       end
 
       def result
@@ -12,12 +12,12 @@ module LLT
       private
 
       def register_sentence(value)
-        @sentence = Sentence.new(value.to_i)
+        @sentence = Diff::Treebank::Sentence.new(value.to_i)
         @result.add(@sentence)
       end
 
       def register_word(value)
-        @word = Word.new(value.to_i)
+        @word = Diff::Treebank::Word.new(value.to_i)
         @sentence.add(@word)
       end
     end

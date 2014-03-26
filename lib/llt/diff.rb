@@ -4,8 +4,7 @@ require "llt/diff/version"
 module LLT
   class Diff
     require 'llt/diff/helpers'
-
-    require 'llt/diff/parser'
+    require 'llt/diff/treebank'
 
     include Core::Api::Helpers
 
@@ -13,7 +12,7 @@ module LLT
       parses = parse_files(Gold: gold, Reviewable: reviewables)
 
       @gold, @reviewables = parses.partition do |parse_data|
-        parse_data.instance_of?(Parser::Gold)
+        parse_data.kind_of?(Treebank::Gold)
       end
 
       compare
@@ -74,7 +73,7 @@ module LLT
       threads = uris_with_classes.map do |klass, uri|
         Thread.new do
           data = get_from_uri(uri)
-          Parser.const_get(klass).new(uri, parse(data))
+          Treebank.const_get(klass).new(uri, parse(data))
         end
       end
       threads.map { |t| t.join; t.value }
@@ -103,7 +102,7 @@ module LLT
     end
 
     def parse(data)
-      Parser.new.parse(data)
+      Treebank::Parser.new.parse(data)
     end
   end
 end

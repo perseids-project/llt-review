@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser::Report
+  class Diff::Treebank::Report
     class Postag
-      include Diff::Parser::Reportable
+      include Diff::Helpers::Reportable
     end
   end
 end

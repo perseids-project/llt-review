@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser
-    class ParseResult
-      include HashContainable
+  class Diff::Treebank::Parser
+    class Result
+      include Diff::Helpers::HashContainable
     end
   end
 end

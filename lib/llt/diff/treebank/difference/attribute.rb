@@ -1,5 +1,5 @@
 module LLT
-  module Diff::Parser::Difference
+  module Diff::Treebank::Difference
     class Attribute < Generic
       def write_to_report(report, unique)
         container = report[report_location]

@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser::Report
+  class Diff::Treebank::Report
     class Sentences < Generic
-      include Diff::Parser::Reportable
+      include Diff::Helpers::Reportable
 
       def initialize(total = 1)
         super(:sentences, total)

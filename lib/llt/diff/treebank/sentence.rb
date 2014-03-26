@@ -1,7 +1,7 @@
 module LLT
-  class Diff::Parser
+  class Diff::Treebank
     class Sentence
-      include HashContainable
+      include Diff::Helpers::HashContainable
 
       container_alias :words
 
