@@ -5,11 +5,11 @@ require 'llt/diff'
 class Api < Sinatra::Base
   register Sinatra::RespondWith
 
-  get '/diff' do
+  get '/treebank/diff' do
     gold = Array(params[:gold])
     rev  = Array(params[:reviewable])
 
-    diff = LLT::Diff.new
+    diff = LLT::Diff::Treebank.new
     diff.diff(gold, rev)
 
     respond_to do |f|
@@ -17,9 +17,9 @@ class Api < Sinatra::Base
     end
   end
 
-  get '/report' do
+  get '/treebank/report' do
     uris = Array(params[:uri])
-    reporter = LLT::Diff.new
+    reporter = LLT::Diff::Treebank.new
     reporter.report(*uris)
 
     respond_to do |f|
