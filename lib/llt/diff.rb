@@ -12,7 +12,7 @@ module LLT
       parses = parse_files(Gold: gold, Reviewable: reviewables)
 
       @gold, @reviewables = parses.partition do |parse_data|
-        parse_data.kind_of?(Treebank::Gold)
+        parse_data.kind_of?(self.class.const_get(:Gold))
       end
 
       compare
@@ -27,7 +27,8 @@ module LLT
     end
 
     def to_xml(type = :diff)
-      XML_DECLARATION + wrap_with_tag('doc', header + send("#{type}_to_xml"))
+      root_name = "#{self.class.name.downcase}-#{type}"
+      XML_DECLARATION + wrap_with_tag(root_name, header + send("#{type}_to_xml"))
     end
 
     private
@@ -73,7 +74,7 @@ module LLT
       threads = uris_with_classes.map do |klass, uri|
         Thread.new do
           data = get_from_uri(uri)
-          Treebank.const_get(klass).new(uri, parse(data))
+          self.class.const_get(klass).new(uri, parse(data))
         end
       end
       threads.map { |t| t.join; t.value }
@@ -102,7 +103,7 @@ module LLT
     end
 
     def parse(data)
-      Treebank::Parser.new.parse(data)
+      self.class.const_get(:Parser).new.parse(data)
     end
   end
 end
