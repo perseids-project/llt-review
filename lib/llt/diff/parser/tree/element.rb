@@ -1,13 +1,12 @@
 module LLT
   class Diff::Parser::Tree
     class Element < Root
+      extend Forwardable
+      def_delegators :@item, :id, :relation, :lemma, :postag
+
       def initialize(item, tree)
         super(tree)
         @item = item
-      end
-
-      def id
-        @item.id
       end
 
       def head_id
