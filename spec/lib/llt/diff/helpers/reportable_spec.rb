@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe LLT::Diff::Parser::Reportable do
-  let(:dummy) { Class.new { include LLT::Diff::Parser::Reportable } }
+describe LLT::Diff::Helpers::Reportable do
+  let(:dummy) { Class.new { include LLT::Diff::Helpers::Reportable } }
 
   describe "#clone" do
     it "performs a deep copy including all container contents" do

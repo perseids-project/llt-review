@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe LLT::Diff::Parser do
-  let(:parser) { LLT::Diff::Parser.new() }
+describe LLT::Diff::Trebank::Parser do
+  let(:parser) { LLT::Diff::Treebank::Parser.new() }
   let(:data) { <<-EOF }
     <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
       <word id="1" form="In" lemma="in1" postag="r--------" head="5" relation="AuxP"/>

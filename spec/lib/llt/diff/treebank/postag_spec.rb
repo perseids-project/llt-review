@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe LLT::Diff::Parser::Postag do
-  let(:postag) { LLT::Diff::Parser::Postag.new('v3siia---') }
+describe LLT::Diff::Treebank::Postag do
+  let(:postag) { LLT::Diff::Treebank::Postag.new('v3siia---') }
 
   describe "#analysis" do
     it "decodes the postag into a hash" do
