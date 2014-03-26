@@ -13,8 +13,8 @@ module LLT
 
     require 'llt/diff/treebank/difference'
 
-    def parse(data)
-      Parser.new.parse(data)
+    def root_identifier
+      'treebank'
     end
   end
 end

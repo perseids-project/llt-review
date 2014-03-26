@@ -27,7 +27,7 @@ module LLT
     end
 
     def to_xml(type = :diff)
-      root_name = "#{self.class.name.downcase}-#{type}"
+      root_name = "#{root_identifier}-#{type}"
       XML_DECLARATION + wrap_with_tag(root_name, header + send("#{type}_to_xml"))
     end
 
