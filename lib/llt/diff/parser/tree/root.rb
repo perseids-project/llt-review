@@ -19,6 +19,12 @@ module LLT
 
       def seed
       end
+
+      def relation
+        "ROOT"
+      end
+      alias_method :lemma, :relation
+      alias_method :postag, :relation
     end
   end
 end
