@@ -12,7 +12,7 @@ module LLT
       parses = parse_files(Gold: gold, Reviewable: reviewables)
 
       @gold, @reviewables = parses.partition do |parse_data|
-        parse_data.kind_of?(self.class.const_get(:Gold))
+        parse_data.instance_of?(self.class.const_get(:Gold))
       end
 
       compare
