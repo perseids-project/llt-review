@@ -1,5 +1,5 @@
 module LLT
-  class Diff::Parser
+  module Diff::Helpers
     module Reportable
       include HashContainable
 

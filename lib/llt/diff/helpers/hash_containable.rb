@@ -1,7 +1,7 @@
 # This shouldn't be here - extract to core and reuse the Containable module
 
 module LLT
-  class Diff::Parser
+  module Diff::Helpers
     module HashContainable
       include Enumerable
 

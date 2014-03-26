@@ -3,6 +3,8 @@ require "llt/diff/version"
 
 module LLT
   class Diff
+    require 'llt/diff/helpers'
+
     require 'llt/diff/parser'
 
     include Core::Api::Helpers
