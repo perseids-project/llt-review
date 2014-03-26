@@ -14,13 +14,16 @@ module LLT
         @id = id
         @root = Root.new(self)
         @container = {}
-        @tree = {}
         add(@root)
       end
 
       def seed(*words)
         words.each { |word| add(Element.new(word, self)) }
         each_value(&:seed)
+      end
+
+      def tree
+        @root
       end
     end
   end
