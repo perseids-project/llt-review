@@ -46,20 +46,6 @@ module LLT
       def report(clone_gold = false)
         @report ||= begin
           @gold = @gold.clone if clone_gold
-          # TODO
-          # With everything setup, we can now look count errors in each
-          # sentence and add these to the total report then.
-          # Reportable will have to implement some methods to do that.
-          # Unique errors are a bit of a problem. Not sure, it WILL be useful
-          # to keep track of errors per sentence - if we would skip that,
-          # calculating unique errors wouldn't be a problem at all.
-          # Why we want to keep errors per sentence: To report statistics about
-          # errors per sentence (e.g. count all errors with one error), at
-          # least the author of these lines, LFDM, thinks that's a useful
-          # feature to have.
-          # We'll see tomorrow!
-
-
           # container includes SentenceDiffs, which contain WordsDiffs
           r = @gold.report
           r.each_value(&:init_diff)
