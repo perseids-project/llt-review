@@ -58,10 +58,10 @@ describe LLT::Diff::Alignment::Parser do
       result = parser.parse(data)
       s1= result[1]
       s1.should be_true
-      s1.should have(3).items
+      s1.should have(4).items
       rex = s1[2]
       rex.should have(2).items
-      rex.to_s.should == 'a king'
+      rex.translation.should == 'a king'
       rex[3].to_s.should == 'a'
       rex[4].to_s.should == 'king'
     end
