@@ -8,7 +8,7 @@ describe LLT::Diff::Alignment::Parser do
     <aligned-text xmlns="http://alpheios.net/namespaces/aligned-text">
       <language lnum="l1" xml:lang="lat"/>
       <language lnum="l2" xml:lang="eng"/>
-      <sentence>
+      <sentence id="1">
           <wds lnum="l1">
               <w n="1-1">
                   <text>Orgetorix</text>
