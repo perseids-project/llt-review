@@ -4,6 +4,7 @@ module LLT
   class Diff::Treebank::Parser
     class NokogiriHandler < Nokogiri::XML::SAX::Document
 
+      include Diff::Helpers::Parsing::Helper
       include Helper
 
       def parse(data)

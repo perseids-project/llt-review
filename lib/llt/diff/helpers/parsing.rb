@@ -1,6 +1,9 @@
 module LLT
   module Diff::Helpers
     module Parsing
+      require 'llt/diff/helpers/parsing/helper'
+      require 'llt/diff/helpers/parsing/result'
+
       def parse(data)
         io = StringIO.new(data)
         handler.parse(io)
@@ -11,13 +14,16 @@ module LLT
       def handler
         @handler ||= begin
           if RUBY_PLATFORM == 'java'
-            NokogiriHandler.new
+            namespace.const_get(:NokogiriHandler).new
           else
-            OxHandler.new
+            namespace.const_get(:OxHandler).new
           end
         end
       end
-    end
 
+      def namespace
+        self.class
+      end
+    end
   end
 end
