@@ -1,5 +1,7 @@
 module LLT
   module Diff::Helpers::Parsing::Helper
+    require 'llt/diff/helpers/parsing/helper/for_nokogiri'
+
     def initialize
       @result = Diff::Helpers::Parsing::Result.new
     end

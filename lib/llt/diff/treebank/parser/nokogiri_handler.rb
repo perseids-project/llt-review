@@ -5,6 +5,7 @@ module LLT
     class NokogiriHandler < Nokogiri::XML::SAX::Document
 
       include Diff::Helpers::Parsing::Helper
+      include Diff::Helpers::Parsing::Helper::ForNokogiri
       include Helper
 
       def parse(data)
@@ -13,12 +14,16 @@ module LLT
 
       def start_element(name, attrs = [])
         case name
-        when 'word'
-          register_word(attrs.shift.last.to_i)
-          attrs.each { |k, v| @word.send("#{k}=", v) }
-        when 'sentence'
-          register_sentence(attrs.first.last.to_i)
+        when 'word'     then register_word(attrs)
+        when 'sentence' then register_sentence(first_val(attrs))
         end
+      end
+
+      private
+
+      def register_word(attrs)
+        super(first_val(attrs))
+        attrs.each { |k, v| @word.send("#{k}=", v) }
       end
     end
   end
