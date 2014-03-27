@@ -63,7 +63,7 @@ module LLT
 
       def set_languages(name, value)
         return unless name == :"xml:lang"
-        @l1 ? @l2 = value : @l1 = value
+        @lang1 ? @lang2 = value : @lang1 = value
       end
 
       def set_orig_or_translation(value)
@@ -72,6 +72,12 @@ module LLT
 
       def stripped_id(value)
         value.slice(/(?<=-).*/)
+      end
+
+      def register_sentence(value)
+        super
+        @sentence.lang1 = @lang1
+        @sentence.lang2 = @lang2
       end
 
       def register_word(value)

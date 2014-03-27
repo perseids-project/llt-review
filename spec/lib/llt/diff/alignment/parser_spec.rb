@@ -58,6 +58,8 @@ describe LLT::Diff::Alignment::Parser do
       result = parser.parse(data)
       s1= result[1]
       s1.should be_true
+      s1.lang1.should == 'lat'
+      s1.lang2.should == 'eng'
       s1.should have(4).items
       rex = s1[2]
       rex.should have(2).items
