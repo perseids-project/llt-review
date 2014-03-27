@@ -22,7 +22,7 @@ module LLT
       private
 
       def register_word(attrs)
-        super(first_val(attrs))
+        super(attrs.shift.last) # need to shift, we don't want the id in the next step
         attrs.each { |k, v| @word.send("#{k}=", v) }
       end
     end
