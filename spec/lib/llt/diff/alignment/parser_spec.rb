@@ -11,7 +11,7 @@ describe LLT::Diff::Alignment::Parser do
       <sentence>
           <wds lnum="l1">
               <w n="1-1">
-                  <text>orgetorix</text>
+                  <text>Orgetorix</text>
                   <refs nrefs="1-1"/>
               </w>
               <w n="1-2">
@@ -29,7 +29,7 @@ describe LLT::Diff::Alignment::Parser do
           </wds>
           <wds lnum="l2">
               <w n="1-1">
-                  <text>orgetorix</text>
+                  <text>Orgetorix</text>
                   <refs nrefs="1-1"/>
               </w>
               <w n="1-2">
