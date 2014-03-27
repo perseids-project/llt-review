@@ -12,3 +12,6 @@ platform :jruby do
   gem 'nokogiri'
   gem 'jruby-httpclient'
 end
+
+gem 'pry'
+gem 'perftools.rb', platform: :ruby
