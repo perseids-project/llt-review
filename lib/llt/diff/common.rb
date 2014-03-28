@@ -4,5 +4,7 @@ class Diff
     require 'llt/diff/common/golden'
     require 'llt/diff/common/reviewable'
     require 'llt/diff/common/comparison'
+
+    require 'llt/diff/common/sentence'
   end
 end
