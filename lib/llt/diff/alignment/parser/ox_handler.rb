@@ -63,7 +63,6 @@ module LLT
         return unless name == :"xml:lang"
         @lang1 ? @lang2 = value : @lang1 = value
       end
-
     end
   end
 end
