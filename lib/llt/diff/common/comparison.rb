@@ -63,7 +63,7 @@ module LLT
 
       def stats
         "<report>" +
-          @report.map { |_, rep| rep.to_xml }.join +
+          report.map { |_, rep| rep.to_xml }.join +
         "</report>"
       end
     end
