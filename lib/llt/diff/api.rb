@@ -5,11 +5,14 @@ require 'llt/diff'
 class Api < Sinatra::Base
   register Sinatra::RespondWith
 
-  get '/treebank/diff' do
+  get '/:type/diff' do
     gold = Array(params[:gold])
     rev  = Array(params[:reviewable])
 
-    diff = LLT::Diff::Treebank.new
+    klass = params[:type]
+    # return an error if klass is neither treebank nor Alignment
+
+    diff = LLT::Diff.const_get(klass.capitalize).new
     diff.diff(gold, rev)
 
     respond_to do |f|
