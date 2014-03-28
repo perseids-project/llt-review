@@ -30,7 +30,7 @@ module LLT
       end
 
       def set_orig_or_translation(value)
-        @original = value == "l1"
+        @original = value == "L1"
       end
 
       def set_text(value)

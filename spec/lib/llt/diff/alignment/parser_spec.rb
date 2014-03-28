@@ -6,10 +6,10 @@ describe LLT::Diff::Alignment::Parser do
   # Orgetorix rex fuit. => Orgetorix was a king. - Actually, he wasn't.
   let(:data) { <<-EOF }
     <aligned-text xmlns="http://alpheios.net/namespaces/aligned-text">
-      <language lnum="l1" xml:lang="lat"/>
-      <language lnum="l2" xml:lang="eng"/>
+      <language lnum="L1" xml:lang="lat"/>
+      <language lnum="L2" xml:lang="eng"/>
       <sentence id="1">
-          <wds lnum="l1">
+          <wds lnum="L1">
               <w n="1-1">
                   <text>Orgetorix</text>
                   <refs nrefs="1-1"/>
@@ -27,7 +27,7 @@ describe LLT::Diff::Alignment::Parser do
                   <refs nrefs="1-5"/>
               </w>
           </wds>
-          <wds lnum="l2">
+          <wds lnum="L2">
               <w n="1-1">
                   <text>Orgetorix</text>
                   <refs nrefs="1-1"/>
