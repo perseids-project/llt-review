@@ -11,13 +11,12 @@ module LLT
     require 'llt/diff/alignment/word'
     require 'llt/diff/alignment/translation'
 
+    require 'llt/diff/alignment/difference'
+
     private
 
     def root_identifier
       'alignment'
-    end
-
-    def compare
     end
 
     def diff_report

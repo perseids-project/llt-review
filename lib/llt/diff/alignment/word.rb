@@ -12,6 +12,9 @@ module LLT
       def translation
         @translation ||= @container.values.map(&:to_s).join(' ')
       end
+
+      def compare(other, diff_container)
+      end
     end
   end
 end
