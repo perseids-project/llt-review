@@ -13,7 +13,7 @@ module LLT
       # can't use the class methods that set the same, as we have
       # subclasses using this value as well
       def xml_tag
-        :comparison
+        :reviewable
       end
 
       def diff
