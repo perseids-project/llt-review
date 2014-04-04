@@ -3,6 +3,8 @@ module LLT
     class Report
       include Diff::Helpers::Reportable
 
+      require 'llt/diff/common/report/generic'
+
       attr_reader :sentences
 
       def initialize(id, sentences)
