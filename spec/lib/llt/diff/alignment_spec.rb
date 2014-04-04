@@ -191,7 +191,8 @@ describe LLT::Diff::Alignment do
       result.should have(1).item
       report = result.first
       report[:sentences].total.should == 1
-      words = report[:words].total.should == 6
+      words = report[:words]
+      words.total.should == 6
       rex = words['rex']
       rex.total.should == 2
       rex['a king'].should == 2
