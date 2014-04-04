@@ -195,7 +195,7 @@ describe LLT::Diff::Alignment do
       words.total.should == 6
       rex = words['rex']
       rex.total.should == 2
-      rex['a king'].should == 2
+      rex['a king'].total.should == 2
     end
   end
 end
