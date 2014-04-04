@@ -7,7 +7,7 @@ module LLT
       private
 
       def report_container
-        { words: Report::Generic.new(:words, size) }
+        { words: Report::Generic.new(:words, size, true) }
       end
 
       def diff_namespace

@@ -24,6 +24,14 @@ module LLT
           d.add(Difference::Nrefs.new(nrefs, other.nrefs))
         end
       end
+
+      def report
+        @report ||= begin
+          rep = Report::Word.new(@text)
+          rep.add(Report::Translation.new(translation))
+          rep
+        end
+      end
     end
   end
 end
