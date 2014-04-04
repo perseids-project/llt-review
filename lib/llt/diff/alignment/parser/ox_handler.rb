@@ -46,7 +46,7 @@ module LLT
           end
         else
           case
-          when @in_wds      then set_orig_or_translation(value)
+          when @in_wds      then set_orig_or_translation(value) if name == :lnum
           when @in_sentence then register_sentence(value) if name == :id
           when @in_language then set_languages(name, value)
           end
