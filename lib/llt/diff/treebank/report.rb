@@ -3,7 +3,6 @@ module LLT
     class Report < Diff::Common::Report
       require 'llt/diff/treebank/report/generic'
       require 'llt/diff/treebank/report/datapoints'
-      require 'llt/diff/treebank/report/sentences'
       require 'llt/diff/treebank/report/postags'
       require 'llt/diff/treebank/report/lemma'
       require 'llt/diff/treebank/report/postag'
