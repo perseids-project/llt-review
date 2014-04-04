@@ -52,7 +52,7 @@ module LLT
       private
 
       def add_report_container
-        add(namespace.const_get(:Sentences).new(@sentences.count))
+        add(namespace.const_get(:Generic).new(:sentences, @sentences.count))
       end
 
       def namespace
