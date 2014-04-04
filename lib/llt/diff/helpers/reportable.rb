@@ -49,8 +49,8 @@ module LLT
         self.class.name.scan(/::(\w+)$/)[0].first.downcase
       end
 
-      def xml_attributes(identifier = :name)
-        { identifier => @id, total: @total, right: @right, wrong: @wrong, unique: @unique }
+      def xml_attributes
+        { name: @id, total: @total, right: @right, wrong: @wrong, unique: @unique }
       end
 
       def sort
