@@ -20,9 +20,10 @@ class Api < Sinatra::Base
     end
   end
 
-  get '/treebank/report' do
+  get '/:type/report' do
     uris = Array(params[:uri])
-    reporter = LLT::Diff::Treebank.new
+    klass = params[:type]
+    reporter = LLT::Diff.const_get(klass.capitalize).new
     reporter.report(*uris)
 
     respond_to do |f|
