@@ -6,6 +6,10 @@ module LLT
 
       private
 
+      def report_container
+        { words: Report::Generic.new(:words, size) }
+      end
+
       def diff_namespace
         Diff::Alignment::Difference
       end

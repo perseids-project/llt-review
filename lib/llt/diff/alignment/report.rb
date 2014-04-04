@@ -1,9 +1,9 @@
 module LLT
   class Diff::Alignment
     class Report < Diff::Common::Report
-      def report
-        {}
-      end
+      require 'llt/diff/alignment/report/generic'
+      require 'llt/diff/alignment/report/word'
+      require 'llt/diff/alignment/report/translation'
 
       private
 
