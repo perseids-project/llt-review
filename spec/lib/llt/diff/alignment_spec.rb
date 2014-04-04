@@ -114,4 +114,87 @@ describe LLT::Diff::Alignment do
       end
     end
   end
+
+  let(:rep) { <<-EOF }
+    <aligned-text xmlns="http://alpheios.net/namespaces/aligned-text">
+        <language lnum="L1" xml:lang="lat"/>
+        <language lnum="L2" xml:lang="eng"/>
+        <sentence id="1">
+            <wds lnum="L1">
+                <w n="1-1">
+                    <text>Orgetorix</text>
+                    <refs nrefs="1-1"/>
+                </w>
+                <w n="1-2">
+                    <text>rex</text>
+                    <refs nrefs="1-3 1-4"/>
+                </w>
+                <w n="1-3">
+                    <text>fuit</text>
+                    <refs nrefs="1-2"/>
+                </w>
+                <w n="1-4">
+                    <text>,</text>
+                    <refs nrefs="1-5"/>
+                </w>
+                <w n="1-5">
+                    <text>rex</text>
+                    <refs nrefs="1-6 1-7"/>
+                </w>
+                <w n="1-6">
+                    <text>.</text>
+                    <refs nrefs="1-8"/>
+                </w>
+            </wds>
+            <wds lnum="L2">
+                <w n="1-1">
+                    <text>Orgetorix</text>
+                    <refs nrefs="1-1"/>
+                </w>
+                <w n="1-2">
+                    <text>was</text>
+                    <refs nrefs="1-3"/>
+                </w>
+                <w n="1-3">
+                    <text>a</text>
+                    <refs nrefs="1-2"/>
+                </w>
+                <w n="1-4">
+                    <text>king</text>
+                    <refs nrefs="1-2"/>
+                </w>
+                <w n="1-5">
+                    <text>,</text>
+                    <refs nrefs="1-4"/>
+                </w>
+                <w n="1-6">
+                    <text>a</text>
+                    <refs nrefs="1-5"/>
+                </w>
+                <w n="1-7">
+                    <text>king</text>
+                    <refs nrefs="1-5"/>
+                </w>
+                <w n="1-8">
+                    <text>.</text>
+                    <refs nrefs="1-6"/>
+                </w>
+            </wds>
+        </sentence>
+    </aligned-text>
+  EOF
+
+  describe "#report" do
+    it "reports about how every word was translated" do
+      allow(alignment).to receive(:get_from_uri).with(:uri_for_rep) { rep }
+      result = alignment.report(:uri_for_rep)
+      result.should have(1).item
+      report = result.first
+      report[:sentences].total.should == 1
+      words = report[:words].total.should == 6
+      rex = words['rex']
+      rex.total.should == 2
+      rex['a king'].should == 2
+    end
+  end
 end
