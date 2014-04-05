@@ -101,11 +101,11 @@ module LLT
     end
 
     def diff_to_xml
-      @reviewables.map(&:to_xml).join
+      wrap_with_tag(:comparisons, @reviewables.map(&:to_xml).join)
     end
 
     def report_to_xml
-      @reports.map(&:to_xml).join
+      wrap_with_tag(:reports, @reports.map(&:to_xml).join)
     end
 
     def parse(data)
