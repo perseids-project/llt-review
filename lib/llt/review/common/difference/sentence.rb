@@ -1,7 +1,7 @@
 module LLT
   module Review::Common::Difference
     class Sentence
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
       include Review::Helpers::ReviewReporter
 
       def xml_tag

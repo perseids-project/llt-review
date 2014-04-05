@@ -1,7 +1,7 @@
 module LLT
   class Review::Common
     class Comparison
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       attr_reader :gold, :reviewable, :unique_differences
 

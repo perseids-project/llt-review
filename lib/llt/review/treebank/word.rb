@@ -1,7 +1,7 @@
 module LLT
   class Review::Treebank
     class Word
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       attr_accessor :form, :lemma, :head, :relation
       attr_reader :postag

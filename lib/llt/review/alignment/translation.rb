@@ -1,7 +1,7 @@
 module LLT
   class Review::Alignment
     class Translation
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       attr_accessor :text
 

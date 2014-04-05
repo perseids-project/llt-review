@@ -1,7 +1,7 @@
 module LLT
   module Review::Alignment::Difference
     class Translation
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
       include Review::Helpers::ReviewReporter
 
       xml_tag :translation

@@ -1,7 +1,7 @@
 module LLT
   module Review::Helpers
     module Reportable
-      include HashContainable
+      include Core::Structures::HashContainable
 
       attr_reader :id, :total, :right, :wrong, :unique
 
