@@ -17,8 +17,8 @@ module LLT
         when 'w'        then register_word(first_val(attrs))
         when 'text'     then @in_text = true
         when 'refs'     then register_translation(first_val(attrs)) unless @original
-        when 'wds'      then set_orig_or_translation(first_val(attrs))
-        when 'sentence' then register_sentence(first_val(attrs))
+        when 'wds'      then set_orig_or_translation(Hash[attrs]['lnum'])
+        when 'sentence' then register_sentence(Hash[attrs]['id'])
         when 'language' then set_languages(attrs)
         end
       end
