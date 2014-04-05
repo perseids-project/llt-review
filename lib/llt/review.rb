@@ -3,6 +3,8 @@ require 'llt/core/structures/hash_containable'
 require "llt/review/version"
 
 module LLT
+  # This is pretty much the only messy class this whole gem contains.
+  # Do something about it!
   class Review
     require 'llt/review/helpers'
 
