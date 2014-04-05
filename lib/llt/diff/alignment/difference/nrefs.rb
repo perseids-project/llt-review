@@ -1,5 +1,8 @@
 module LLT
   module Diff::Alignment::Difference
+
+    # This whole class could arguably deleted, not sure there is any need for it
+
     class Nrefs
       include Diff::Helpers::HashContainable
       include Diff::Helpers::DiffReporter
