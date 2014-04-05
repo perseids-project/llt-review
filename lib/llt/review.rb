@@ -1,5 +1,6 @@
 require 'llt/core/api/helpers'
 require 'llt/core/structures/hash_containable'
+require 'llt/core/structures/hash_containable/generic'
 require "llt/review/version"
 
 module LLT

@@ -57,14 +57,28 @@ module LLT
             d.report_diff(r, @unique_differences)
           end
           r.each_value(&:count_rights)
+
+          # This looks a bit catastrophic, the reasoning though is:
+          # The container includes the sentence diffs - the next element we
+          # like to display eventually are the contents of @report, wrapped
+          # in an report tag.
+          # It might be better to do this otherwise, but this a workaround
+          # on short notice.
+          # We just add a generic HashContainable structure to the container -
+          # other services just as the Assessor can then add their results
+          # to the container and we get a nice output in return without
+          # coupling llt-diff to llt-assessor.
+          report_container = placeholder_container(:report)
+          report_container.container.merge!(r)
+          add(report_container)
           r
         end
       end
 
-      def additional_xml_content
-        "<report>" +
-          report.map { |_, rep| rep.to_xml }.join +
-        "</report>"
+      private
+
+      def placeholder_container(tag)
+        Core::Structures::HashContainable::Generic.new(tag)
       end
     end
   end
