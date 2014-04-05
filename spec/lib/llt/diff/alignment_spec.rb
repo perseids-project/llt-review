@@ -112,6 +112,21 @@ describe LLT::Diff::Alignment do
         result[0].should have(1).item      # one sentence with differences
         result[0][1].should have(2).items # and 2 words with differences
       end
+
+      it "contains a full report section" do
+        allow(alignment).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+        allow(alignment).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+
+        result = alignment.diff([:uri_for_g1], [:uri_for_r1])
+        report = result.first.report
+        report.should_not be_empty
+
+        sentences = report[:sentences]
+        sentences.total.should == 1
+        sentences.right.should == 0
+        sentences.wrong.should == 1
+        sentences.unique.should == 1
+      end
     end
   end
 
