@@ -1,10 +1,10 @@
 # LLT::Review
 
-[![Version](http://allthebadges.io/LFDM/llt-review/badge_fury.png)](http://allthebadges.io/LFDM/llt-review/badge_fury)
-[![Dependencies](http://allthebadges.io/LFDM/llt-review/gemnasium.png)](http://allthebadges.io/LFDM/llt-review/gemnasium)
-[![Build Status](http://allthebadges.io/LFDM/llt-review/travis.png)](http://allthebadges.io/LFDM/llt-review/travis)
-[![Coverage](http://allthebadges.io/LFDM/llt-review/coveralls.png)](http://allthebadges.io/LFDM/llt-review/coveralls)
-[![Code Climate](http://allthebadges.io/LFDM/llt-review/code_climate.png)](http://allthebadges.io/LFDM/llt-review/code_climate)
+[![Version](http://allthebadges.io/latin-language-toolkit/llt-review/badge_fury.png)](http://allthebadges.io/latin-language-toolkit/llt-review/badge_fury)
+[![Dependencies](http://allthebadges.io/latin-language-toolkit/llt-review/gemnasium.png)](http://allthebadges.io/latin-language-toolkit/llt-review/gemnasium)
+[![Build Status](http://allthebadges.io/latin-language-toolkit/llt-review/travis.png)](http://allthebadges.io/latin-language-toolkit/llt-review/travis)
+[![Coverage](http://allthebadges.io/latin-language-toolkit/llt-review/coveralls.png)](http://allthebadges.io/latin-language-toolkit/llt-review/coveralls)
+[![Code Climate](http://allthebadges.io/latin-language-toolkit/llt-review/code_climate.png)](http://allthebadges.io/latin-language-toolkit/llt-review/code_climate)
 
 Compares annotations
 
