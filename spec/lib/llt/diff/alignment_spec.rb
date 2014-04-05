@@ -111,6 +111,14 @@ describe LLT::Diff::Alignment do
         result.should have(1).item         # we had one reviewable annotation
         result[0].should have(1).item      # one sentence with differences
         result[0][1].should have(2).items # and 2 words with differences
+        wrong_words = result[0][1]
+        w2, w3 = wrong_words.take(2, 3)
+
+        w2.original.should == 'a king'
+        w2.new.should == 'was'
+
+        w3.original.should == 'was'
+        w3.new.should == 'a king'
       end
 
       it "contains a full report section" do
