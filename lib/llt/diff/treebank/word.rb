@@ -24,6 +24,26 @@ module LLT
         add(Postag.new(tag))
       end
 
+      # Eventually we'll need this configurable
+      COMPARABLE_ELEMENTS = %i{ lemma postag head relation }
+
+      def compare(other, diff_container)
+        COMPARABLE_ELEMENTS.each do |comparator|
+          a, b = [self, other].map { |w| w[comparator].to_s }
+          if a != b
+            d = diff_container[id] ||= Difference::Word.new(self)
+            d.add(new_difference(comparator, a, b))
+          end
+        end
+      end
+
+      private
+
+      def new_difference(comparator, original, new)
+        klass = Difference.const_get(comparator.capitalize)
+        klass.new(self[comparator], original, new)
+      end
+
       # used when parsers try to check in attributes we are not interested in
       def method_missing(meth, *args, &blk)
         super unless meth =~ /=$/

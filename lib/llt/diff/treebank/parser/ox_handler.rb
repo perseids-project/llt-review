@@ -4,6 +4,7 @@ module LLT
   class Diff::Treebank::Parser
     class OxHandler < Ox::Sax
 
+      include Diff::Helpers::Parsing::Helper
       include Helper
 
       def parse(data)

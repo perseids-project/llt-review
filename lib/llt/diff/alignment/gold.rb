@@ -1,8 +1,9 @@
 module LLT
-  class Diff::Treebank
+  class Diff::Alignment
     class Gold < Report
       include Diff::Common::Golden
     end
   end
 end
+
 

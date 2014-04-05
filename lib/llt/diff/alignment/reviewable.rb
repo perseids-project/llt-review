@@ -1,5 +1,5 @@
 module LLT
-  class Diff::Treebank
+  class Diff::Alignment
     class Reviewable < Diff::Common::Reviewable
     end
   end

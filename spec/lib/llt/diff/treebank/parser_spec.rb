@@ -13,7 +13,7 @@ describe LLT::Diff::Treebank::Parser do
   EOF
 
   describe "#parse" do
-    it "returns a hash of parsed sentences" do
+    it "returns parsed sentences" do
       result = parser.parse(data)
       result[21].should be_true
     end

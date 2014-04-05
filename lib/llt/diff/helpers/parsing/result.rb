@@ -1,5 +1,5 @@
 module LLT
-  class Diff::Treebank::Parser
+  module Diff::Helpers::Parsing
     class Result
       include Diff::Helpers::HashContainable
     end

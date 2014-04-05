@@ -4,7 +4,10 @@ require "llt/diff/version"
 module LLT
   class Diff
     require 'llt/diff/helpers'
+
+    require 'llt/diff/common'
     require 'llt/diff/treebank'
+    require 'llt/diff/alignment'
 
     include Core::Api::Helpers
 

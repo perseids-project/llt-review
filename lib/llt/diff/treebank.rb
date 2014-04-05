@@ -13,6 +13,8 @@ module LLT
 
     require 'llt/diff/treebank/difference'
 
+    private
+
     def root_identifier
       'treebank'
     end

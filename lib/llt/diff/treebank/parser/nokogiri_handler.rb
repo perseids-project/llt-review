@@ -4,6 +4,8 @@ module LLT
   class Diff::Treebank::Parser
     class NokogiriHandler < Nokogiri::XML::SAX::Document
 
+      include Diff::Helpers::Parsing::Helper
+      include Diff::Helpers::Parsing::Helper::ForNokogiri
       include Helper
 
       def parse(data)
@@ -12,12 +14,16 @@ module LLT
 
       def start_element(name, attrs = [])
         case name
-        when 'word'
-          register_word(attrs.shift.last.to_i)
-          attrs.each { |k, v| @word.send("#{k}=", v) }
-        when 'sentence'
-          register_sentence(attrs.first.last.to_i)
+        when 'word'     then register_word(attrs)
+        when 'sentence' then register_sentence(first_val(attrs))
         end
+      end
+
+      private
+
+      def register_word(attrs)
+        super(attrs.shift.last) # need to shift, we don't want the id in the next step
+        attrs.each { |k, v| @word.send("#{k}=", v) }
       end
     end
   end
