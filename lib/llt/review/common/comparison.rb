@@ -61,7 +61,7 @@ module LLT
         end
       end
 
-      def stats
+      def additional_xml_content
         "<report>" +
           report.map { |_, rep| rep.to_xml }.join +
         "</report>"

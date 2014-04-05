@@ -59,7 +59,7 @@ module LLT
 
       def to_xml
         "<#{xml_tag}#{to_xml_attrs(xml_attributes)}>" +
-          container_to_xml + stats +
+          container_to_xml + additional_xml_content +
         "</#{xml_tag}>"
       end
 
@@ -67,7 +67,7 @@ module LLT
         "#{container.values.map(&:to_xml).join}"
       end
 
-      def stats
+      def additional_xml_content
         ''
       end
 
