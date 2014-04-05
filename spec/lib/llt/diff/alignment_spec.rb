@@ -134,6 +134,24 @@ describe LLT::Diff::Alignment do
         sentences.right.should == 0
         sentences.wrong.should == 1
         sentences.unique.should == 1
+
+        words = report[:words]
+        words.total.should == 4
+        words.right.should == 2
+        words.wrong.should == 2
+        words.unique.should == 2
+
+        rex = words['rex']
+        rex.total.should == 1
+        rex.right.should == 0
+        rex.wrong.should == 1
+        rex.unique.should == 1
+
+        fuit = words['fuit']
+        fuit.total.should == 1
+        fuit.right.should == 0
+        fuit.wrong.should == 1
+        fuit.unique.should == 1
       end
     end
   end
