@@ -6,6 +6,8 @@ module LLT
 
       xml_tag :translation
 
+      attr_reader :original, :new
+
       def initialize(original, new)
         @id = id
         @original = original
