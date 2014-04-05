@@ -1,7 +1,7 @@
 module LLT
   class Review::Common
     class Reviewable
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       attr_reader :sentences
 

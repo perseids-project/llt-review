@@ -1,7 +1,7 @@
 module LLT
   module Review::Treebank::Difference
     class Generic
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
       include Review::Helpers::ReviewReporter
 
       attr_reader :original, :new

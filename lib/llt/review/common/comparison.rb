@@ -1,7 +1,7 @@
 module LLT
   class Review::Common
     class Comparison
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       attr_reader :gold, :reviewable, :unique_differences
 
@@ -61,7 +61,7 @@ module LLT
         end
       end
 
-      def stats
+      def additional_xml_content
         "<report>" +
           report.map { |_, rep| rep.to_xml }.join +
         "</report>"

@@ -4,7 +4,7 @@ module LLT
     # This whole class could arguably deleted, not sure there is any need for it
 
     class Nrefs
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
       include Review::Helpers::ReviewReporter
 
       xml_tag :nrefs

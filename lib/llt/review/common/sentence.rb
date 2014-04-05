@@ -1,7 +1,7 @@
 module LLT
   class Review::Common
     class Sentence
-      include Review::Helpers::HashContainable
+      include Core::Structures::HashContainable
 
       def words
         @container
