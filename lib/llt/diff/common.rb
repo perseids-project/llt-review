@@ -6,5 +6,7 @@ class Diff
     require 'llt/diff/common/comparison'
 
     require 'llt/diff/common/sentence'
+
+    require 'llt/diff/common/difference'
   end
 end
