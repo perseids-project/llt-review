@@ -1,2 +1,2 @@
-require 'llt/diff/api'
+require 'llt/review/api'
 run Api

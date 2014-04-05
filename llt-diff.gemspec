@@ -1,14 +1,14 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'llt/diff/version'
+require 'llt/review/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "llt-diff"
-  spec.version       = LLT::Diff::VERSION
+  spec.name          = "llt-review"
+  spec.version       = LLT::Review::VERSION
   spec.authors       = ["LFDM"]
   spec.email         = ["1986gh@gmail.com"]
-  spec.summary       = %q{Compares annotations}
+  spec.summary       = %q{Reviews annotations}
   spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
