@@ -25,4 +25,3 @@ module LLT
     end
   end
 end
-
