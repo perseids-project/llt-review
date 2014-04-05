@@ -45,6 +45,8 @@ module LLT
         reviewable.diff.values
       end.flatten
     end
+    alias_method :diffs, :all_diffs
+    alias_method :comparisons, :all_diffs
 
     def diff_report
       if @reviewables.one?
