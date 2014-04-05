@@ -14,6 +14,14 @@ module LLT
       def new
         @new ||= @container[:translation].new
       end
+
+      private
+
+      def write_to_report(report, unique)
+        super
+        container = report[:words]
+        container[item.to_s].add_wrong(unique)
+      end
     end
   end
 end
