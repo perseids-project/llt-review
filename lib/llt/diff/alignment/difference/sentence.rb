@@ -1,10 +1,6 @@
 module LLT
   module Diff::Alignment::Difference
-    class Sentence
-      include Diff::Helpers::HashContainable
-      include Diff::Helpers::DiffReporter
-
-      xml_tag :sentence
+    class Sentence < Diff::Common::Difference::Sentence
     end
   end
 end
