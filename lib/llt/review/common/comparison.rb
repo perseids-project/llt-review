@@ -26,6 +26,12 @@ module LLT
         { gold_id: @gold.id, review_id: @reviewable.id }
       end
 
+      def all_differences
+        map do |_, element|
+          element.all_differences rescue nil # container might contain other stuff too
+        end.flatten.compact
+      end
+
       def compare
         a = @gold.sentences
         b = @reviewable.sentences

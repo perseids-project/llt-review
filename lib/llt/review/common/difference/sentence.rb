@@ -16,6 +16,10 @@ module LLT
         @diff_id ||= "#{id}:#{map { |_, v| v.diff_id }.join('::')}"
       end
 
+      def all_differences
+        @container.values
+      end
+
       private
 
       def write_to_report(report, unique)
