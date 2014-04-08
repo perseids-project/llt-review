@@ -38,8 +38,6 @@ module LLT
       XML_DECLARATION + wrap_with_tag(root_name, header + send("#{type}_to_xml"))
     end
 
-    private
-
     def all_diffs
       @all_diffs ||= @reviewables.map do |reviewable|
         reviewable.diff.values
@@ -47,6 +45,8 @@ module LLT
     end
     alias_method :diffs, :all_diffs
     alias_method :comparisons, :all_diffs
+
+    private
 
     def diff_report
       if @reviewables.one?
