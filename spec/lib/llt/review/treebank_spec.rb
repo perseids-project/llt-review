@@ -60,7 +60,7 @@ describe LLT::Review::Treebank do
 
         result = differ.diff([:uri_for_g1], [:uri_for_r1])
         result.should have(1).item         # we had one reviewable annotation
-        result[0].should have(1).item      # one sentence with differences
+        result[0].should have(2).items     # one sentence with differences, report also sitting here
         result[0][21].should have(4).items # and 3 words with differences
         diff = result[0][21]
         w1, w2,  w3, w4 = diff.take(1, 2, 3, 4).map(&:diff)
