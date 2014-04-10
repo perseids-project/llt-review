@@ -18,9 +18,6 @@ module LLT
     def root_identifier
       'alignment'
     end
-
-    def diff_report
-    end
   end
 end
 
