@@ -9,11 +9,15 @@ class Api < Sinatra::Base
     gold = Array(params[:gold])
     rev  = Array(params[:reviewable])
 
+    comp_param = params[:compare]
+    comparables = comp_param ? Array(comp_param).map(&:to_sym) : nil
+
     klass = params[:type]
     # return an error if klass is neither treebank nor Alignment
 
     diff = LLT::Review.const_get(klass.capitalize).new
-    diff.diff(gold, rev)
+    puts comparables
+    diff.diff(gold, rev, comparables)
 
     respond_to do |f|
       f.xml { diff.to_xml }
