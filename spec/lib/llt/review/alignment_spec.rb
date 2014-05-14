@@ -109,7 +109,7 @@ describe LLT::Review::Alignment do
 
         result = alignment.diff([:uri_for_g1], [:uri_for_r1])
         result.should have(1).item         # we had one reviewable annotation
-        result[0].should have(1).item      # one sentence with differences
+        result[0].should have(2).item # one sentence with differences & the report
         result[0][1].should have(2).items # and 2 words with differences
         wrong_words = result[0][1]
         w2, w3 = wrong_words.take(2, 3)
