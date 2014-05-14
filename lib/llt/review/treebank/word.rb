@@ -24,11 +24,11 @@ module LLT
         add(Postag.new(tag))
       end
 
-      # Eventually we'll need this configurable
       COMPARABLE_ELEMENTS = %i{ lemma postag head relation }
 
-      def compare(other, diff_container)
-        COMPARABLE_ELEMENTS.each do |comparator|
+      def compare(other, diff_container, comparables)
+        comparables = COMPARABLE_ELEMENTS unless comparables # default value
+        comparables.each do |comparator|
           a, b = [self, other].map { |w| w[comparator].to_s }
           if a != b
             d = diff_container[id] ||= Difference::Word.new(self)

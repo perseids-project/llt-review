@@ -17,7 +17,8 @@ module LLT
         @container.keys.map(&:to_s).join(' ')
       end
 
-      def compare(other, diff_container)
+      # star is for additional params other classes like Treebank need
+      def compare(other, diff_container, *)
         unless translation == other.translation
           d = diff_container[id] ||= Difference::Word.new(self)
           d.add(Difference::Translation.new(translation, other.translation))

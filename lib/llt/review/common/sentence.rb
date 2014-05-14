@@ -11,9 +11,9 @@ module LLT
         @report ||= create_report
       end
 
-      def compare(other)
+      def compare(other, comparables = nil)
         diff = new_sentence_diff
-        words.each { |id, word| word.compare(other[id], diff) }
+        words.each { |id, word| word.compare(other[id], diff, comparables) }
         diff
       end
 
