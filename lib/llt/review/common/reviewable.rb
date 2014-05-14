@@ -20,9 +20,9 @@ module LLT
         @container
       end
 
-      def compare(gold)
+      def compare(gold, comparables = nil)
         comparison = Comparison.new(gold, self)
-        comparison.compare
+        comparison.compare(comparables)
         add(comparison) if comparison.any?
       end
 

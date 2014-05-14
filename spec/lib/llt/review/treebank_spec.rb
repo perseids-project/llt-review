@@ -61,7 +61,7 @@ describe LLT::Review::Treebank do
         result = differ.diff([:uri_for_g1], [:uri_for_r1])
         result.should have(1).item         # we had one reviewable annotation
         result[0].should have(2).items     # one sentence with differences, report also sitting here
-        result[0][21].should have(4).items # and 3 words with differences
+        result[0][21].should have(4).items # and 4 words with differences
         diff = result[0][21]
         w1, w2,  w3, w4 = diff.take(1, 2, 3, 4).map(&:diff)
 
@@ -124,6 +124,22 @@ describe LLT::Review::Treebank do
 
       result = differ.diff(%i{ uri_for_g1 uri_for_g2 }, %i{ uri_for_r1 uri_for_r2 })
       result.should have(4).items # we have two times two reviewable annotations now
+    end
+
+    it "takes an optional array of elements to compare with each other" do
+      allow(differ).to receive(:get_from_uri).with(:uri_for_g1) { g1 }
+      allow(differ).to receive(:get_from_uri).with(:uri_for_r1) { r1 }
+
+      result = differ.diff([:uri_for_g1], [:uri_for_r1], [:head, :relation])
+      result.should have(1).item         # we had one reviewable annotation
+      result[0].should have(2).items     # one sentence with differences, report also sitting here
+      result[0][21].should have(2).items # and 2 words with differences
+      diff = result[0][21]
+
+      diff[1].should be_true
+      diff[2].should be_nil # has only postag differences
+      diff[3].should be_nil # has only lemma and postag differences
+      diff[4].should be_true
     end
   end
 

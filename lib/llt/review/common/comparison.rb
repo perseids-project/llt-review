@@ -32,11 +32,11 @@ module LLT
         end.flatten.compact
       end
 
-      def compare
+      def compare(comparables = nil)
         a = @gold.sentences
         b = @reviewable.sentences
         a.each do |sentence_id, sentence|
-          difference = sentence.compare(b[sentence_id])
+          difference = sentence.compare(b[sentence_id], comparables)
           add(difference) if difference.any?
         end
       end

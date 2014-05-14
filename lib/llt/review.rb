@@ -15,14 +15,14 @@ module LLT
 
     include Core::Api::Helpers
 
-    def diff(gold, reviewables)
+    def diff(gold, reviewables, comparables = nil)
       parses = parse_files(Gold: gold, Reviewable: reviewables)
 
       @gold, @reviewables = parses.partition do |parse_data|
         parse_data.instance_of?(self.class.const_get(:Gold))
       end
 
-      compare
+      compare(comparables)
       diff_report
       all_diffs
     end
@@ -68,9 +68,9 @@ module LLT
       used.include?(id) ? true : (used << id; false)
     end
 
-    def compare
+    def compare(comparables = nil)
       @gold.each do |gold|
-        @reviewables.each { |reviewable| reviewable.compare(gold) }
+        @reviewables.each { |reviewable| reviewable.compare(gold, comparables) }
       end
     end
 
