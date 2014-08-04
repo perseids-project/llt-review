@@ -40,11 +40,15 @@
           = s_id
         - sentence.each do |w_id, w|
           - if w_diff = s_diff[w_id]
-            %span.error.tooltip{tooltip: "#{w_diff.container.keys.join("\n")}"}
+            - tooltip = w_diff.map do |k, v|
+              - "#{k}: #{v.original} -> #{v.new}"
+            %span.error.tooltip{tooltip: tooltip.join("\n")}
               = w.form
           - else
             %span
               = w.form
+          %sup.tiny
+            = w_id
 
 
 
