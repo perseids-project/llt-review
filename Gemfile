@@ -12,3 +12,7 @@ platform :jruby do
   gem 'nokogiri'
   gem 'jruby-httpclient'
 end
+
+gem 'haml'
+gem 'sass'
+gem 'pry'
