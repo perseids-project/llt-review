@@ -1,0 +1,52 @@
+%h1.center Welcome!
+
+- diff.all_diffs.each do |c|
+  - rev = c.reviewable
+  - gold = c.gold
+  %p
+    = "Comparison of #{gold.id} and #{rev.id}"
+
+  %h4.center.underline Report
+
+  %table
+    %tr
+      %th
+      %th Total
+      %th.success{title: 'right'} ✔
+      %th.error{title: 'wrong'} ✘
+      %th.yellow{title: 'unique'} 1
+    - c.report.each do |category, rep|
+      %tr
+        %td.first
+          = category.capitalize
+        %td
+          = rep.total
+        %td
+          = rep.right
+        %td
+          = rep.wrong
+        %td
+          = rep.unique
+
+
+  %h4.center.underline Diff
+  - c.each do |s_id, s_diff|
+    - next if s_id == :report
+    - sentence = rev.sentences[s_id]
+
+    .sentence
+      %p
+        %strong.big.yellow
+          = s_id
+        - sentence.each do |w_id, w|
+          - if w_diff = s_diff[w_id]
+            %span.error.tooltip{tooltip: "#{w_diff.container.keys.join("\n")}"}
+              = w.form
+          - else
+            %span
+              = w.form
+
+
+
+
+
