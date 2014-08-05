@@ -1,3 +1,10 @@
+@mixin bg-transition($duration) {
+  transition: background-color $duration ease-out;
+  -webkit-transition: background-color $duration ease-out;
+  -moz-transition: background-color $duration ease-out;
+  -o-transition: background-color $duration ease-out;
+
+}
 .container {
   max-width: 1000px;
   margin: 20px auto;
@@ -22,6 +29,16 @@ td.first {
 
 .success {
   color: rgb(106, 243, 106);
+}
+
+.success-bg {
+  background-color: green;
+  @include bg-transition(200ms);
+}
+
+.error-bg {
+  background-color: darkred;
+  @include bg-transition(200ms);
 }
 
 .error {

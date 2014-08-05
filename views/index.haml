@@ -2,6 +2,11 @@
   - "http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
 - def to_tooltip(cat, v)
   - %{#{cat}: <span class="success">#{v.original}</span> -> <span class="error">#{v.new}</span>}
+- def extract_heads(diff, s_id)
+  - if heads = diff[:head]
+    - [to_id(s_id, heads.original), to_id(s_id, heads.new)]
+- def to_id(s_id, w_id)
+  - "#{s_id}-#{w_id}"
 
 - diff.all_diffs.each do |c|
   - rev = c.reviewable
@@ -42,13 +47,16 @@
         %strong.big.yellow
           = s_id
         - sentence.each do |w_id, w|
+          - attrs = { id: to_id(s_id, w_id), class: 'token' }
           - if w_diff = s_diff[w_id]
-            - tooltip = w_diff.map { |k, v| to_tooltip(k, v) }
-            %span.token.error.tooltip{tooltip: tooltip.join("\n")}
-              = w.form
-          - else
-            %span.token
-              = w.form
+            - attrs[:tooltip] = w_diff.map { |k, v| to_tooltip(k, v) }.join("\n")
+            - if heads = extract_heads(w_diff, s_id)
+              - attrs[:hr] = heads[0]
+              - attrs[:hw] = heads[1]
+              - attrs[:class] << ' head-error'
+            - attrs[:class] << ' error tooltip'
+          %span{attrs}
+            = w.form
           %sup.tiny
             = w_id
       .center
