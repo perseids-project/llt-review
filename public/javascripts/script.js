@@ -14,6 +14,14 @@ $(document).ready(function() {
     });
   }
 
+  function addWordsDiffBindings() {
+    var sel = '.word-diffs';
+    $(sel).hide();
+    $('.word-diff-container').click(function() {
+      $(this).find(sel).toggle(300);
+    });
+  }
 
+  addWordsDiffBindings();
   addTokenTooltips();
 });

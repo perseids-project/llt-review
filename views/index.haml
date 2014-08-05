@@ -59,9 +59,22 @@
             = w.form
           %sup.tiny<
             = w_id
-      .center
-        %a{ href: arethusa('4083')}
-          View in Arethusa
+        %div.word-diff-container
+          .h4{style: 'margin-left: 20px'} per Word
+          %div.word-diffs
+            - s_diff.each do |w_id, w_diff|
+              %div
+                - w = sentence[w_id]
+                %span
+                  = w.form
+                %sup.tiny<
+                  = w_id
+            
+
+        .center
+          %a{ href: arethusa('4083')}
+            View in Arethusa
+
 
 
 
