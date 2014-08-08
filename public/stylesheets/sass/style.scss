@@ -70,3 +70,27 @@ sup.tiny {
   top: -0.8em;
   left: -0.4em;
 }
+
+table.word-diff-table {
+  width: 72%;
+  margin-left: 14%;
+  margin-right: 14%;
+  font-size: .8rem;
+
+  td {
+    &.large {
+      width: 24%;
+    }
+    &.small {
+      width: 19%;
+      border-left: 1px solid #434343;
+    }
+    &.postag {
+      font-family: "Lucida Console", Monaco, monospace;
+    }
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}

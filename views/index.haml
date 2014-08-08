@@ -1,6 +1,6 @@
 - def arethusa(rev, gold = nil, chunk = nil, word = nil)
   -#- "http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
-  - "http://localhost:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
+  - "http://85.127.253.84:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
 - def to_tooltip(cat, v)
   - %{#{cat}: <span class="success">#{v.original}</span> -> <span class="error">#{v.new}</span>}
 - def extract_heads(diff, s_id)
@@ -64,15 +64,54 @@
           %sup.tiny<
             = w_id
         %div.word-diff-container
-          .h4{style: 'margin-left: 20px'} per Word
+          .h4.clickable.underline{style: 'margin-left: 20px'} Diffs per Word
           %div.word-diffs
-            - s_diff.each do |w_id, w_diff|
-              %div
-                - w = sentence[w_id]
-                %span
-                  = w.form
-                %sup.tiny<
-                  = w_id
+            %table.word-diff-table
+              %tr{style: 'width: 28%'}
+                %th.center
+                %th.center head
+                %th.center relation
+                %th.center lemma
+                %th.center postag
+              - sentence.each do |w_id, w|
+                %tr
+                  - w_diff = s_diff[w_id]
+                  - errors = w_diff ? w_diff.container : {}
+                  %td.first.large
+                    %span
+                      = w.form
+                    %sup.tiny<
+                      = w_id
+                  - error = errors[:head]
+                  - cl = error ? 'error-bg' : 'success-bg'
+                  %td{class: [cl, 'small']}
+                    - val = (error ? error.new : w[:head]).to_s
+                    - parsed_head = sentence[val.to_i]
+                    - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
+                    %span
+                      = f
+                    %sup.tiny<
+                      = id
+                  - error = errors[:relation]
+                  - cl = error ? 'error-bg' : 'success-bg'
+                  %td{class: [cl, 'small']}
+                    - val = (error ? error.new : w[:relation]).to_s
+                    %span
+                      = val
+                  - error = errors[:lemma]
+                  - cl = error ? 'error-bg' : 'success-bg'
+                  %td{class: [cl, 'small']}
+                    - val = (error ? error.new : w[:lemma]).to_s
+                    %span
+                      = val
+                  - error = errors[:postag]
+                  - cl = error ? 'error-bg' : 'success-bg'
+                  %td{class: [cl, 'small', 'center', 'postag']}
+                    - val = (error ? error.new : w[:postag]).to_s
+                    %span
+                      = val
+
+
 
         .center
           %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id))}
