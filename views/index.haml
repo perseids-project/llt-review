@@ -31,7 +31,8 @@
       %th.yellow{title: 'unique'} 1
       %th{title: 'Percentage'} %
     - c.report.each do |category, rep|
-      %tr
+      - cl = category == :relations ? 'clickable' : ''
+      %tr.toggler{toggler: category, class: cl}
         %td.first
           = category.capitalize
         %td
@@ -46,6 +47,35 @@
           - percent = to_percent(rep.total, rep.right)
           %span.percentage{percentage: percent}
             = percent
+      - if category == :relations
+        %tr{id: category}
+          %td{colspan: 6}
+            %table.subtable
+              %tr
+                %th
+                %th Total
+                %th.success{title: 'right'} ✔
+                %th.error{title: 'wrong'} ✘
+                %th.yellow{title: 'unique'} 1
+                %th{title: 'Percentage'} %
+              - sorted = rep.each_with_object([]) do |(k, v), h|
+                - percent = to_percent(v.total, v.right)
+                - h << [percent, k, v]
+              - sorted.sort.each do |percent, label, obj|
+                %tr
+                  %td.first.right
+                    = label
+                  %td
+                    = obj.total
+                  %td
+                    = obj.right
+                  %td
+                    = obj.wrong
+                  %td
+                    = obj.unique
+                  %td
+                    %span.percentage{percentage: percent}
+                      = percent
 
 
   %h4.center.underline Diff
@@ -72,51 +102,50 @@
             = w_id
         %div.word-diff-container
           .h4.clickable.underline{style: 'margin-left: 20px'} Diffs per Word
-          %div.word-diffs
-            %table.word-diff-table
-              %tr{style: 'width: 28%'}
-                %th.center
-                %th.center head
-                %th.center relation
-                %th.center lemma
-                %th.center postag
-              - sentence.each do |w_id, w|
-                %tr
-                  - w_diff = s_diff[w_id]
-                  - errors = w_diff ? w_diff.container : {}
-                  %td.first.large
-                    %span
-                      = w.form
-                    %sup.tiny<
-                      = w_id
-                  - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
-                  - tds.each do |category, classes|
-
-                  - error = errors[category]
-                  - cl = error ? 'error-bg' : 'success-bg'
-                    %td{class: [cl, 'small'] + classes}
-                      - val = (error ? error.new : w[category]).to_s
-                      - if category == :head
-                        - parsed_head = sentence[val.to_i]
-                        - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
-                        %span
-                          = f
-                        %sup.tiny<
-                          = id
-                      - else
-                        %span
-                          = val
+          %table.word-diff-table
+            %tr{style: 'width: 28%'}
+              %th.center
+              %th.center head
+              %th.center relation
+              %th.center lemma
+              %th.center postag
+            - sentence.each do |w_id, w|
               %tr
-                - total = sentence.container.length
-                - wrongs = [s_diff.container.length]
-                - categories = %i{ head relation lemma postag };
-                - wrongs += categories.map do |cat|
-                  - s_diff.container.inject(0) { |m, (_, w_diff)| m += w_diff[cat] ? 1 : 0 }
-                - wrongs.each do |wrong|
-                  - percent = to_percent(total, total - wrong)
-                  %td.center
-                    %span.percentage{percentage: percent}
-                      = percent
+                - w_diff = s_diff[w_id]
+                - errors = w_diff ? w_diff.container : {}
+                %td.first.large
+                  %span
+                    = w.form
+                  %sup.tiny<
+                    = w_id
+                - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
+                - tds.each do |category, classes|
+
+                - error = errors[category]
+                - cl = error ? 'error-bg' : 'success-bg'
+                  %td{class: [cl, 'small'] + classes}
+                    - val = (error ? error.new : w[category]).to_s
+                    - if category == :head
+                      - parsed_head = sentence[val.to_i]
+                      - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
+                      %span
+                        = f
+                      %sup.tiny<
+                        = id
+                    - else
+                      %span
+                        = val
+            %tr
+              - total = sentence.container.length
+              - wrongs = [s_diff.container.length]
+              - categories = %i{ head relation lemma postag };
+              - wrongs += categories.map do |cat|
+                - s_diff.container.inject(0) { |m, (_, w_diff)| m += w_diff[cat] ? 1 : 0 }
+              - wrongs.each do |wrong|
+                - percent = to_percent(total, total - wrong)
+                %td.center
+                  %span.percentage{percentage: percent}
+                    = percent
 
 
 

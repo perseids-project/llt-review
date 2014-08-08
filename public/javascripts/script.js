@@ -53,7 +53,7 @@ $(document).ready(function() {
   }
 
   function addWordsDiffBindings() {
-    var sel = '.word-diffs';
+    var sel = '.word-diff-table';
     $(sel).hide();
     $('.word-diff-container').click(function() {
       $(this).find(sel).toggle(300);
@@ -69,7 +69,19 @@ $(document).ready(function() {
     });
   }
 
+  function addCategoryToggler() {
+    $('.toggler').each(function() {
+      var el = $(this);
+      var target = $('#' + el.attr('toggler'));
+      el.click(function() {
+        target.toggle(300);
+      });
+      target.hide();
+    });
+  }
+
   addWordsDiffBindings();
   addTokenTooltips();
   addPercentageColors();
+  addCategoryToggler();
 });
