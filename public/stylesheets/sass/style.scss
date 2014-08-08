@@ -14,6 +14,10 @@
   text-align: center;
 }
 
+.right {
+  text-align: right;
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -72,10 +76,11 @@ sup.tiny {
 }
 
 table.word-diff-table {
+  @extend table.subtable;
+
   width: 72%;
   margin-left: 14%;
   margin-right: 14%;
-  font-size: .8rem;
 
   td {
     &.large {
@@ -89,6 +94,10 @@ table.word-diff-table {
       font-family: "Lucida Console", Monaco, monospace;
     }
   }
+}
+
+table.subtable {
+  font-size: .8rem;
 }
 
 .clickable {
