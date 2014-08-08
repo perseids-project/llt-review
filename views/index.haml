@@ -8,6 +8,8 @@
     - [to_id(s_id, heads.original), to_id(s_id, heads.new)]
 - def to_id(s_id, w_id)
   - "#{s_id}-#{w_id}"
+- def to_percent(total, part)
+  - ((part.to_f / total) * 100).round(2)
 - def extracted_id(id)
   - last = id.split('/').last
   - /(.*?)(\.([\d\w]*?))?$/.match(last)[1]
@@ -27,6 +29,7 @@
       %th.success{title: 'right'} ✔
       %th.error{title: 'wrong'} ✘
       %th.yellow{title: 'unique'} 1
+      %th{title: 'Percentage'} %
     - c.report.each do |category, rep|
       %tr
         %td.first
@@ -39,6 +42,10 @@
           = rep.wrong
         %td
           = rep.unique
+        %td
+          - percent = to_percent(rep.total, rep.right)
+          %span.percentage{percentage: percent}
+            = percent
 
 
   %h4.center.underline Diff
@@ -82,34 +89,34 @@
                       = w.form
                     %sup.tiny<
                       = w_id
-                  - error = errors[:head]
+                  - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
+                  - tds.each do |category, classes|
+
+                  - error = errors[category]
                   - cl = error ? 'error-bg' : 'success-bg'
-                  %td{class: [cl, 'small']}
-                    - val = (error ? error.new : w[:head]).to_s
-                    - parsed_head = sentence[val.to_i]
-                    - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
-                    %span
-                      = f
-                    %sup.tiny<
-                      = id
-                  - error = errors[:relation]
-                  - cl = error ? 'error-bg' : 'success-bg'
-                  %td{class: [cl, 'small']}
-                    - val = (error ? error.new : w[:relation]).to_s
-                    %span
-                      = val
-                  - error = errors[:lemma]
-                  - cl = error ? 'error-bg' : 'success-bg'
-                  %td{class: [cl, 'small']}
-                    - val = (error ? error.new : w[:lemma]).to_s
-                    %span
-                      = val
-                  - error = errors[:postag]
-                  - cl = error ? 'error-bg' : 'success-bg'
-                  %td{class: [cl, 'small', 'center', 'postag']}
-                    - val = (error ? error.new : w[:postag]).to_s
-                    %span
-                      = val
+                    %td{class: [cl, 'small'] + classes}
+                      - val = (error ? error.new : w[category]).to_s
+                      - if category == :head
+                        - parsed_head = sentence[val.to_i]
+                        - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
+                        %span
+                          = f
+                        %sup.tiny<
+                          = id
+                      - else
+                        %span
+                          = val
+              %tr
+                - total = sentence.container.length
+                - wrongs = [s_diff.container.length]
+                - categories = %i{ head relation lemma postag };
+                - wrongs += categories.map do |cat|
+                  - s_diff.container.inject(0) { |m, (_, w_diff)| m += w_diff[cat] ? 1 : 0 }
+                - wrongs.each do |wrong|
+                  - percent = to_percent(total, total - wrong)
+                  %td.center
+                    %span.percentage{percentage: percent}
+                      = percent
 
 
 
