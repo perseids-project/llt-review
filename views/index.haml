@@ -1,5 +1,6 @@
 - def arethusa(rev, gold = nil, chunk = nil, word = nil)
-  - "http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
+  -#- "http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
+  - "http://localhost:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
 - def to_tooltip(cat, v)
   - %{#{cat}: <span class="success">#{v.original}</span> -> <span class="error">#{v.new}</span>}
 - def extract_heads(diff, s_id)
@@ -7,6 +8,9 @@
     - [to_id(s_id, heads.original), to_id(s_id, heads.new)]
 - def to_id(s_id, w_id)
   - "#{s_id}-#{w_id}"
+- def extracted_id(id)
+  - last = id.split('/').last
+  - /(.*?)(\.([\d\w]*?))?$/.match(last)[1]
 
 - diff.all_diffs.each do |c|
   - rev = c.reviewable
@@ -69,10 +73,9 @@
                   = w.form
                 %sup.tiny<
                   = w_id
-            
 
         .center
-          %a{ href: arethusa('4083')}
+          %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id))}
             View in Arethusa
 
 
