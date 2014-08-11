@@ -67,7 +67,7 @@ $(document).ready(function() {
   function addCategoryToggler() {
     $('.toggler').each(function() {
       var el = $(this);
-      var target = $('#' + el.attr('toggler'));
+      var target = el.siblings('#' + el.attr('toggler'));
       el.click(function() {
         target.toggle(300);
       });
