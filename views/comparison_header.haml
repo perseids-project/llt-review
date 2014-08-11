@@ -1,10 +1,12 @@
-%div
-  %span Comparison of
+%div.comparison_toggle{ c_id: combined_extracted_id(comparison)}
+  - percentage = comparison.report[:words].percentage
+  %span
+    •
+    %span{title: "Percentage of identical tokens"}
+      = haml :percentage, locals: { percentage: percentage }
+  %span -
   %strong
     = origin(comparison.gold)
-  %span and
+  %span against
   %strong
     = origin(comparison.reviewable)
-  %span -
-  - percentage = comparison.report[:words].percentage
-  = haml :percentage, locals: { percentage: percentage }

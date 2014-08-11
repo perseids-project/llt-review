@@ -1,97 +1,99 @@
+%h3.center.underline LLT Review
+
 - diff.all_diffs.each do |c|
   - rev = c.reviewable
   - gold = c.gold
   %p
     = haml :comparison_header, locals: { comparison: c }
+  %div.comparison{id: combined_extracted_id(c)}
+    %h4.center.underline Report
 
-  %h4.center.underline Report
+    %table
+      %tr
+        = haml :report_headers
+      - c.report.each do |category, rep|
+        - cl = category == :relations ? 'clickable' : ''
 
-  %table
-    %tr
-      = haml :report_headers
-    - c.report.each do |category, rep|
-      - cl = category == :relations ? 'clickable' : ''
+        %tr.toggler{toggler: category, class: cl}
+          = haml :report_columns, locals: { label: category.capitalize, report: rep}
 
-      %tr.toggler{toggler: category, class: cl}
-        = haml :report_columns, locals: { label: category.capitalize, report: rep}
-
-      - if category == :relations
-        %tr{id: category}
-          %td{colspan: 6}
-            %table.subtable
-              %tr
-                = haml :report_headers
-              - sorted = rep.each_with_object([]) do |(k, v), h|
-                - h << [v.percentage, k, v]
-              - sorted.sort.each do |percent, label, obj|
+        - if category == :relations
+          %tr{id: category}
+            %td{colspan: 6}
+              %table.subtable
                 %tr
-                  = haml :report_columns, locals: { label: label, report: obj }
+                  = haml :report_headers
+                - sorted = rep.each_with_object([]) do |(k, v), h|
+                  - h << [v.percentage, k, v]
+                - sorted.sort.each do |percent, label, obj|
+                  %tr
+                    = haml :report_columns, locals: { label: label, report: obj }
 
-  %h4.center.underline Diff
-  - c.each do |s_id, s_diff|
-    - next if s_id == :report
-    - sentence = rev.sentences[s_id]
+    %h4.center.underline Diff
+    - c.each do |s_id, s_diff|
+      - next if s_id == :report
+      - sentence = rev.sentences[s_id]
 
-    .sentence
-      %p
-        %strong.big.yellow
-          = s_id
-        - sentence.each do |w_id, w|
-          - attrs = { id: to_id(s_id, w_id), class: 'token' }
-          - if w_diff = s_diff[w_id]
-            - attrs[:tooltip] = w_diff.map { |k, v| to_tooltip(k, v) }.join("\n")
-            - if heads = extract_heads(w_diff, s_id)
-              - attrs[:hr] = heads[0]
-              - attrs[:hw] = heads[1]
-              - attrs[:class] << ' head-error'
-            - attrs[:class] << ' error tooltip'
-          %span{attrs}
-            = haml :token, locals: { form: w.form, id: w_id }
+      .sentence
+        %p
+          %strong.big.yellow
+            = s_id
+          - sentence.each do |w_id, w|
+            - attrs = { id: to_id(s_id, w_id), class: 'token' }
+            - if w_diff = s_diff[w_id]
+              - attrs[:tooltip] = w_diff.map { |k, v| to_tooltip(k, v) }.join("\n")
+              - if heads = extract_heads(w_diff, s_id)
+                - attrs[:hr] = heads[0]
+                - attrs[:hw] = heads[1]
+                - attrs[:class] << ' head-error'
+              - attrs[:class] << ' error tooltip'
+            %span{attrs}
+              = haml :token, locals: { form: w.form, id: w_id }
 
-        %div.word-diff-container
-          .h4.clickable.underline{style: 'margin-left: 20px'} Diffs per Word
-          %table.word-diff-table
-            %tr{style: 'width: 28%'}
-              %th.center
-              %th.center head
-              %th.center relation
-              %th.center lemma
-              %th.center postag
-            - sentence.each do |w_id, w|
+          %div.word-diff-container
+            .h4.clickable.underline{style: 'margin-left: 20px'} Diffs per Word
+            %table.word-diff-table
+              %tr{style: 'width: 28%'}
+                %th.center
+                %th.center head
+                %th.center relation
+                %th.center lemma
+                %th.center postag
+              - sentence.each do |w_id, w|
+                %tr
+                  - w_diff = s_diff[w_id]
+                  - errors = w_diff ? w_diff.container : {}
+                  %td.first.large
+                    - icon, cl = errors.empty? ? ['✔', :success] : ['✘', :error]
+                    %span{class: cl}
+                      = icon
+                    = haml :token, locals: { form: w.form, id: w_id }
+
+                  - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
+                  - tds.each do |category, classes|
+
+                  - error = errors[category]
+                  - cl = error ? 'error-bg' : 'success-bg'
+                    %td{class: [cl, 'small'] + classes}
+                      - val = (error ? error.new : w[category]).to_s
+                      - if category == :head
+                        - parsed_head = sentence[val.to_i]
+                        - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
+                        = haml :token, locals: { form: f, id: id }
+                      - else
+                        %span
+                          = val
               %tr
-                - w_diff = s_diff[w_id]
-                - errors = w_diff ? w_diff.container : {}
-                %td.first.large
-                  - icon, cl = errors.empty? ? ['✔', :success] : ['✘', :error]
-                  %span{class: cl}
-                    = icon
-                  = haml :token, locals: { form: w.form, id: w_id }
+                - total = sentence.container.length
+                - wrongs = [s_diff.container.length]
+                - categories = %i{ head relation lemma postag };
+                - wrongs += categories.map do |cat|
+                  - s_diff.container.inject(0) { |m, (_, w_diff)| m += w_diff[cat] ? 1 : 0 }
+                - wrongs.each do |wrong|
+                  - percent = to_percent(total, total - wrong)
+                  %td.center
+                    = haml :percentage, locals: { percentage: percent }
 
-                - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
-                - tds.each do |category, classes|
-
-                - error = errors[category]
-                - cl = error ? 'error-bg' : 'success-bg'
-                  %td{class: [cl, 'small'] + classes}
-                    - val = (error ? error.new : w[category]).to_s
-                    - if category == :head
-                      - parsed_head = sentence[val.to_i]
-                      - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
-                      = haml :token, locals: { form: f, id: id }
-                    - else
-                      %span
-                        = val
-            %tr
-              - total = sentence.container.length
-              - wrongs = [s_diff.container.length]
-              - categories = %i{ head relation lemma postag };
-              - wrongs += categories.map do |cat|
-                - s_diff.container.inject(0) { |m, (_, w_diff)| m += w_diff[cat] ? 1 : 0 }
-              - wrongs.each do |wrong|
-                - percent = to_percent(total, total - wrong)
-                %td.center
-                  = haml :percentage, locals: { percentage: percent }
-
-        .center.small
-          %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id), s_id)}
-            View in Arethusa
+          .center.small
+            %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id), s_id)}
+              View in Arethusa
