@@ -41,9 +41,14 @@ class Api < Sinatra::Base
   end
 
   def process_params(params)
-    if params[:backend] == 'perseids'
-      expand_perseids_urls(params, :gold)
-      expand_perseids_urls(params, :reviewable)
+    if backend = params[:backend]
+      p = case backend
+          when 'perseids'     then 'sosol.perseids.org/sosol'
+          when 'perseids-dev' then 'dev.alpheios.net:3000'
+          end
+
+      expand_perseids_urls(params, :gold, p)
+      expand_perseids_urls(params, :reviewable, p)
     end
   end
 
@@ -62,10 +67,10 @@ class Api < Sinatra::Base
     diff
   end
 
-  def expand_perseids_urls(params, key)
+  def expand_perseids_urls(params, key, sosol_path)
     t = Array(params[key])
     params[key] = t.map do |publication_id|
-      "http://sosol.perseids.org/sosol/dmm_api/item_TreebankCite/#{publication_id}"
+      "http://#{sosol_path}/dmm_api/item_TreebankCite/#{publication_id}"
     end
   end
 end
