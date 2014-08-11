@@ -16,6 +16,7 @@ module LLT
         case name
         when 'word'     then register_word(attrs)
         when 'sentence' then register_sentence(first_val(attrs))
+        when 'treebank' then register_treebank_attrs(attrs)
         when 'annotator' then @in_annotator = true
         end
 
@@ -45,6 +46,12 @@ module LLT
       def register_word(attrs)
         super(attrs.shift.last) # need to shift, we don't want the id in the next step
         attrs.each { |k, v| @word.send("#{k}=", v) }
+      end
+
+      def register_treebank_attrs(attrs)
+        hsh = Hash[attrs]
+        register_language(hsh['xml:lang'])
+        register_format(hsh['format'])
       end
     end
   end
