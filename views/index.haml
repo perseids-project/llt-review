@@ -71,6 +71,9 @@
                 - w_diff = s_diff[w_id]
                 - errors = w_diff ? w_diff.container : {}
                 %td.first.large
+                  - icon, cl = errors.empty? ? ['✔', :success] : ['✘', :error]
+                  %span{class: cl}
+                    = icon
                   = haml :token, locals: { form: w.form, id: w_id }
 
                 - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
