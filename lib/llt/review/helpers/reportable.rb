@@ -16,6 +16,10 @@ module LLT
         each { |_, el| el.init_diff }
       end
 
+      def percentage(category = :right)
+        ((send(category).to_f / @total) * 100).round(2)
+      end
+
       def add(element)
         if el = @container[element.id]
           el.add_total(element)
