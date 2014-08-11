@@ -15,8 +15,8 @@ module LLT
         /(.*?)(\.([\w]*?))?$/.match(last)[1]
       end
 
-      def arethusa(rev, gold = nil, chunk = nil, word = nil)
-        path = "http://sosol.perseids.org/tools/arethusa/app/#/perseids_review_lat_aldt"
+      def arethusa(rev, gold, lang, chunk = nil, word = nil)
+        path = "http://sosol.perseids.org/tools/arethusa/app/#/perseids_review_#{lang}_aldt"
         path << "?doc=#{rev}&gold=#{gold}"
         if chunk || word
           path << "&chunk=#{chunk}" if chunk
