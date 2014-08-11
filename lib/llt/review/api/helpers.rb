@@ -7,7 +7,7 @@ module LLT
 
       def extracted_id(id)
         last = id.split('/').last
-        /(.*?)(\.([\d\w]*?))?$/.match(last)[1]
+        /(.*?)(\.([\w]*?))?$/.match(last)[1]
       end
 
       def arethusa(rev, gold = nil, chunk = nil, word = nil)
