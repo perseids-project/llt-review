@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %head
+    %title LLT Review
+    %link{ rel: 'stylesheet', href: url('/stylesheets/default_styles.css') }
+    %link{ rel: 'stylesheet', href: url('/stylesheets/style.css') }
+  %body
+    .container= yield
+
+    %script{ src: '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'}
+    %script{ src: url('/javascripts/tooltipsy.min.js') }
+    %script{ src: url('/javascripts/script.js') }

@@ -15,6 +15,12 @@ module LLT
         case name
         when :word     then @in_word = true
         when :sentence then @in_sentence = true
+        when :annotator then @in_annotator = true
+        when :treebank then @in_treebank = true
+        end
+
+        if @in_annotator
+          set_annotator_variable(name, true)
         end
       end
 
@@ -22,6 +28,11 @@ module LLT
         case name
         when :word     then @in_word = false
         when :sentence then @in_sentence = false
+        when :annotator then @in_annotator = false
+        end
+
+        if @in_annotator
+          set_annotator_variable(name, false)
         end
       end
 
@@ -35,6 +46,15 @@ module LLT
           end
         when @in_sentence
           register_sentence(value) if name == :id
+        when @in_treebank
+          register_language(value) if name == :"xml:lang"
+          register_format(value)   if name == :format
+        end
+      end
+
+      def text(value)
+        if @in_annotator
+          parse_annotator_values(value)
         end
       end
     end

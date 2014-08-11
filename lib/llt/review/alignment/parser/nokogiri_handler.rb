@@ -36,7 +36,7 @@ module LLT
       def set_languages(attrs)
         hsh = Hash[attrs]
         lang = hsh['xml:lang']
-        hsh['lnum'] == 'l1' ? @lang1 = lang : @lang2 = lang
+        hsh['lnum'] == 'L1' ? @lang1 = lang : @lang2 = lang
       end
     end
   end
