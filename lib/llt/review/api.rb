@@ -41,7 +41,7 @@ class Api < Sinatra::Base
   end
 
   def process_params(params)
-    if params[:backend] = 'perseids'
+    if params[:backend] == 'perseids'
       expand_perseids_urls(params, :gold)
       expand_perseids_urls(params, :reviewable)
     end
