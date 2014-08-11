@@ -5,10 +5,10 @@
     %div
       %span Comparison of
       %strong
-        = origin(gold)
+        -#= origin(gold)
       %span and
       %strong
-        = origin(rev)
+        -#= origin(rev)
       %span -
       - percentage = c.report[:words].percentage
       = haml :percentage, locals: { percentage: percentage }
@@ -22,7 +22,7 @@
       - cl = category == :relations ? 'clickable' : ''
 
       %tr.toggler{toggler: category, class: cl}
-        = haml :report_columns, locals: { label: category, report: rep}
+        = haml :report_columns, locals: { label: category.capitalize, report: rep}
 
       - if category == :relations
         %tr{id: category}
