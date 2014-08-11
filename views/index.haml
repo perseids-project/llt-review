@@ -2,7 +2,13 @@
   - rev = c.reviewable
   - gold = c.gold
   %p
-    = "Comparison of #{origin(gold)} and #{origin(rev)}"
+    %div
+      %span Comparison of
+      %strong
+        = origin(gold)
+      %span and
+      %strong
+        = origin(rev)
 
   %h4.center.underline Report
 
