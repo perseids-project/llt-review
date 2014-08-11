@@ -6,6 +6,10 @@ module LLT
       def complete?
         @short && @name && @address && @url
       end
+
+      def name_and_short_to_s
+        "#{@name} (#{@short})"
+      end
     end
   end
 end
