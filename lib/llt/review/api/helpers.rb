@@ -12,7 +12,12 @@ module LLT
 
       def arethusa(rev, gold = nil, chunk = nil, word = nil)
         #"http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
-        "http://85.127.253.84:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
+        route = "http://85.127.253.84:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
+        if chunk || word
+          route << "&chunk=#{chunk}" if chunk
+          route << "&w=#{word}" if word
+        end
+        route
       end
 
       def to_tooltip(cat, v)
