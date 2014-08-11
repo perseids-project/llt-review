@@ -22,8 +22,6 @@ class Api < Sinatra::Base
 
   get '/:type/diff/:view' do
     process_params(params)
-    puts params
-    exit
     diff = process_diff(params)
 
     if params[:view] == 'html'
