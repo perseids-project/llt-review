@@ -9,6 +9,9 @@
       %span and
       %strong
         = origin(rev)
+      %span -
+      - percentage = c.report[:words].percentage
+      = haml :percentage, locals: { percentage: percentage }
 
   %h4.center.underline Report
 
@@ -34,9 +37,8 @@
         %td
           = rep.unique
         %td
-          - percent = to_percent(rep.total, rep.right)
-          %span.percentage{percentage: percent}
-            = percent
+          - percent = rep.percentage
+          = haml :percentage, locals: { percentage: percent }
       - if category == :relations
         %tr{id: category}
           %td{colspan: 6}
@@ -139,8 +141,8 @@
 
 
 
-        .center
-          %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id))}
+        .center.small
+          %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id), s_id)}
             View in Arethusa
 
 
