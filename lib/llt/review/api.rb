@@ -1,11 +1,15 @@
 require 'sinatra/base'
 require 'sinatra/respond_with'
 require 'llt/review'
+require 'llt/review/api/helpers'
 
 class Api < Sinatra::Base
   register Sinatra::RespondWith
 
   set :root, File.expand_path('../../../..', __FILE__)
+
+
+  helpers LLT::Review::Api::Helpers
 
   get '/:type/diff' do
     diff = process_diff(params)

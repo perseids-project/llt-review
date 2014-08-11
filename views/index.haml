@@ -1,24 +1,8 @@
-- def arethusa(rev, gold = nil, chunk = nil, word = nil)
-  -#- "http://sosol.perseids.org/tools/arethusa/app/#/perseidslataldt?doc=#{rev}"
-  - "http://85.127.253.84:8081/app/#/review_test?doc=#{rev}&gold=#{gold}"
-- def to_tooltip(cat, v)
-  - %{#{cat}: <span class="success">#{v.original}</span> -> <span class="error">#{v.new}</span>}
-- def extract_heads(diff, s_id)
-  - if heads = diff[:head]
-    - [to_id(s_id, heads.original), to_id(s_id, heads.new)]
-- def to_id(s_id, w_id)
-  - "#{s_id}-#{w_id}"
-- def to_percent(total, part)
-  - ((part.to_f / total) * 100).round(2)
-- def extracted_id(id)
-  - last = id.split('/').last
-  - /(.*?)(\.([\d\w]*?))?$/.match(last)[1]
-
 - diff.all_diffs.each do |c|
   - rev = c.reviewable
   - gold = c.gold
   %p
-    = "Comparison of #{gold.id} and #{rev.id}"
+    = "Comparison of #{origin(gold)} and #{origin(rev)}"
 
   %h4.center.underline Report
 
