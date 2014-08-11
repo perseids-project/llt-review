@@ -19,10 +19,10 @@ module LLT
         path = "http://sosol.perseids.org/tools/arethusa/app/#/perseids_review_lat_aldt"
         path << "?doc=#{rev}&gold=#{gold}"
         if chunk || word
-          route << "&chunk=#{chunk}" if chunk
-          route << "&w=#{word}" if word
+          path << "&chunk=#{chunk}" if chunk
+          path << "&w=#{word}" if word
         end
-        route
+        path
       end
 
       def to_tooltip(cat, v)
