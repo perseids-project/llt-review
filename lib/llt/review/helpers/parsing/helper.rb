@@ -53,7 +53,7 @@ module LLT
     end
 
     def parse_annotator_values(str)
-      params = [:short, :name, :address, :url]
+      params = [:short, :name, :address, :uri]
       params.each do |param|
         if instance_variable_get("@in_#{param}")
           annotator.send("#{param}=", str)
