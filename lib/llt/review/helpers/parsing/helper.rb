@@ -1,6 +1,8 @@
 module LLT
   module Review::Helpers::Parsing::Helper
     require 'llt/review/helpers/parsing/helper/for_nokogiri'
+    require 'llt/review/helpers/parsing/helper/annotators'
+    require 'llt/review/helpers/parsing/helper/annotator'
 
     def initialize
       @result = Review::Helpers::Parsing::Result.new
@@ -20,6 +22,14 @@ module LLT
     def register_word(value)
       @word = namespace.const_get(:Word).new(value.to_i)
       @sentence.add(@word)
+    end
+
+    def register_format(format)
+      @result.format = format
+    end
+
+    def register_language(language)
+      @result.lang = language
     end
 
     def namespace
