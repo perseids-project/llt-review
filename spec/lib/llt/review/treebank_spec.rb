@@ -189,34 +189,41 @@ describe LLT::Review::Treebank do
       pos['v'].total.should == 2
 
       persons = datapoints[:persons]
-      persons.total.should == 2
+      persons.total.should == 10
       persons['3'].total.should == 2
+      persons['-'].total.should == 8
 
       numbers = datapoints[:numbers]
-      numbers.total.should == 8
+      numbers.total.should == 10
       numbers['s'].total.should == 8
+      numbers['-'].total.should == 2
 
       tenses = datapoints[:tenses]
-      tenses.total.should == 2
+      tenses.total.should == 10
       tenses['i'].total.should == 2
+      tenses['-'].total.should == 8
 
       moods = datapoints[:moods]
-      moods.total.should == 2
+      moods.total.should == 10
       moods['i'].total.should == 2
+      moods['-'].total.should == 8
 
       voices= datapoints[:voices]
-      voices.total.should == 2
+      voices.total.should == 10
       voices['a'].total.should == 2
+      voices['-'].total.should == 8
 
       genders = datapoints[:genders]
-      genders.total.should == 6
+      genders.total.should == 10
       genders['n'].total.should == 4
       genders['m'].total.should == 2
+      genders['-'].total.should == 4
 
       cases = datapoints[:cases]
-      cases.total.should == 6
+      cases.total.should == 10
       cases['b'].total.should == 4
       cases['n'].total.should == 2
+      cases['-'].total.should == 4
     end
   end
 end
