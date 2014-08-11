@@ -20,7 +20,7 @@ module LLT
         end
 
         if @in_annotator
-          instance_variable_set("@in_#{name}", true);
+          set_annotator_variable(name, true)
         end
       end
 
@@ -32,18 +32,7 @@ module LLT
         end
 
         if @in_annotator
-          instance_variable_set("@in_#{name}", false);
-        end
-      end
-
-      def annotator
-        @annotator ||= Annotator.new
-      end
-
-      def add_complete_annotator
-        if annotator.complete?
-          @result.annotators.add(annotator)
-          @annotator = nil
+          set_annotator_variable(name, false)
         end
       end
 
@@ -65,13 +54,7 @@ module LLT
 
       def text(value)
         if @in_annotator
-          params = [:short, :name, :address, :url]
-          params.each do |param|
-            if instance_variable_get("@in_#{param}")
-              annotator.send("#{param}=", value)
-              add_complete_annotator
-            end
-          end
+          parse_annotator_values(value)
         end
       end
     end

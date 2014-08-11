@@ -16,6 +16,27 @@ module LLT
         case name
         when 'word'     then register_word(attrs)
         when 'sentence' then register_sentence(first_val(attrs))
+        when 'annotator' then @in_annotator = true
+        end
+
+        if @in_annotator
+          set_annotator_variable(name, true)
+        end
+      end
+
+      def end_element(name, attrs = [])
+        if name == 'annotator'
+          @in_annotator = false
+        end
+
+        if @in_annotator
+          set_annotator_variable(name, false)
+        end
+      end
+
+      def characters(string)
+        if @in_annotator
+          parse_annotator_values(string)
         end
       end
 
