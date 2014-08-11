@@ -96,8 +96,7 @@
               - wrongs.each do |wrong|
                 - percent = to_percent(total, total - wrong)
                 %td.center
-                  %span.percentage{percentage: percent}
-                    = percent
+                  = haml :percentage, locals: { percentage: percent }
 
         .center.small
           %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id), s_id)}
