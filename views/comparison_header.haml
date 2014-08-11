@@ -1,0 +1,10 @@
+%div
+  %span Comparison of
+  %strong
+    = origin(comparison.gold)
+  %span and
+  %strong
+    = origin(comparison.reviewable)
+  %span -
+  - percentage = comparison.report[:words].percentage
+  = haml :percentage, locals: { percentage: percentage }

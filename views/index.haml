@@ -2,16 +2,7 @@
   - rev = c.reviewable
   - gold = c.gold
   %p
-    %div
-      %span Comparison of
-      %strong
-        -#= origin(gold)
-      %span and
-      %strong
-        -#= origin(rev)
-      %span -
-      - percentage = c.report[:words].percentage
-      = haml :percentage, locals: { percentage: percentage }
+    = haml :comparison_header, locals: { comparison: c }
 
   %h4.center.underline Report
 
