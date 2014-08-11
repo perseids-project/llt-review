@@ -55,9 +55,8 @@
               - attrs[:class] << ' head-error'
             - attrs[:class] << ' error tooltip'
           %span{attrs}
-            = w.form
-          %sup.tiny<
-            = w_id
+            = haml :token, locals: { form: w.form, id: w_id }
+
         %div.word-diff-container
           .h4.clickable.underline{style: 'margin-left: 20px'} Diffs per Word
           %table.word-diff-table
@@ -72,10 +71,8 @@
                 - w_diff = s_diff[w_id]
                 - errors = w_diff ? w_diff.container : {}
                 %td.first.large
-                  %span
-                    = w.form
-                  %sup.tiny<
-                    = w_id
+                  = haml :token, locals: { form: w.form, id: w_id }
+
                 - tds = { head: [], relation: [], lemma: [], postag: ['center', 'postag'] }
                 - tds.each do |category, classes|
 
@@ -86,10 +83,7 @@
                     - if category == :head
                       - parsed_head = sentence[val.to_i]
                       - f, id = parsed_head ? [parsed_head.form, parsed_head.id] : ["ROOT", 0]
-                      %span
-                        = f
-                      %sup.tiny<
-                        = id
+                      = haml :token, locals: { form: f, id: id }
                     - else
                       %span
                         = val
@@ -105,14 +99,6 @@
                   %span.percentage{percentage: percent}
                     = percent
 
-
-
         .center.small
           %a{ href: arethusa(extracted_id(rev.id), extracted_id(gold.id), s_id)}
             View in Arethusa
-
-
-
-
-
-
