@@ -12,6 +12,7 @@ class Api < Sinatra::Base
   helpers LLT::Review::Api::Helpers
 
   get '/:type/diff' do
+    process_params(params)
     diff = process_diff(params)
 
     respond_to do |f|
@@ -20,6 +21,9 @@ class Api < Sinatra::Base
   end
 
   get '/:type/diff/:view' do
+    process_params(params)
+    puts params
+    exit
     diff = process_diff(params)
 
     if params[:view] == 'html'
@@ -38,6 +42,13 @@ class Api < Sinatra::Base
     end
   end
 
+  def process_params(params)
+    if params[:backend] = 'perseids'
+      expand_perseids_urls(params, :gold)
+      expand_perseids_urls(params, :reviewable)
+    end
+  end
+
   def process_diff(params)
     gold = Array(params[:gold])
     rev  = Array(params[:reviewable])
@@ -51,5 +62,12 @@ class Api < Sinatra::Base
     diff = LLT::Review.const_get(klass.capitalize).new
     diff.diff(gold, rev, comparables)
     diff
+  end
+
+  def expand_perseids_urls(params, key)
+    t = Array(params[key])
+    params[key] = t.map do |publication_id|
+      "http://sosol.perseids.org/sosol/dmm_api/item_TreebankCite/#{publication_id}"
+    end
   end
 end
