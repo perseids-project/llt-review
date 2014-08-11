@@ -68,9 +68,17 @@ $(document).ready(function() {
     $('.toggler').each(function() {
       var el = $(this);
       var target = el.siblings('#' + el.attr('toggler'));
-      el.click(function() {
-        target.toggle(300);
-      });
+      el.click(function() { target.toggle(300); });
+      target.hide();
+    });
+  }
+
+  function addReportToggler() {
+    $('.comparison_toggle').each(function() {
+      var el = $(this);
+      var target = $('#' + el.attr('c_id'));
+      el.click(function() { target.toggle(300); });
+      el.addClass('clickable');
       target.hide();
     });
   }
@@ -79,4 +87,5 @@ $(document).ready(function() {
   addTokenTooltips();
   addPercentageColors();
   addCategoryToggler();
+  addReportToggler();
 });

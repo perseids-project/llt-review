@@ -5,6 +5,11 @@ module LLT
         "Publication ##{extracted_id(el.id)} by #{el.sentences.annotators}"
       end
 
+      def combined_extracted_id(comp)
+        ids = [comp.gold, comp.reviewable].map { |el| extracted_id(el.id)}.join('-')
+        "comp#{ids}"
+      end
+
       def extracted_id(id)
         last = id.split('/').last
         /(.*?)(\.([\w]*?))?$/.match(last)[1]
