@@ -20,20 +20,10 @@
       = haml :report_headers
     - c.report.each do |category, rep|
       - cl = category == :relations ? 'clickable' : ''
+
       %tr.toggler{toggler: category, class: cl}
-        %td.first
-          = category.capitalize
-        %td
-          = rep.total
-        %td
-          = rep.right
-        %td
-          = rep.wrong
-        %td
-          = rep.unique
-        %td
-          - percent = rep.percentage
-          = haml :percentage, locals: { percentage: percent }
+        = haml :report_columns, locals: { label: category, report: rep}
+
       - if category == :relations
         %tr{id: category}
           %td{colspan: 6}
@@ -44,19 +34,7 @@
                 - h << [v.percentage, k, v]
               - sorted.sort.each do |percent, label, obj|
                 %tr
-                  %td.first.right
-                    = label
-                  %td
-                    = obj.total
-                  %td
-                    = obj.right
-                  %td
-                    = obj.wrong
-                  %td
-                    = obj.unique
-                  %td
-                    = haml :percentage, locals: { percentage: percent }
-
+                  = haml :report_columns, locals: { label: label, report: obj }
 
   %h4.center.underline Diff
   - c.each do |s_id, s_diff|

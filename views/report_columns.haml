@@ -1,0 +1,13 @@
+%td.first
+  = label.capitalize
+%td
+  = report.total
+%td
+  = report.right
+%td
+  = report.wrong
+%td
+  = report.unique
+%td
+  = haml :percentage, locals: { percentage: report.percentage }
+
