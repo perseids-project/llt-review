@@ -3,7 +3,7 @@ module LLT
     class Word
       include Core::Structures::HashContainable
 
-      attr_accessor :form, :lemma, :head, :relation
+      attr_accessor :form, :lemma, :head, :relation, :inexistant
       attr_reader :postag
 
       Attr = Struct.new(:id, :attribute) do
@@ -18,6 +18,10 @@ module LLT
 
       %i{ lemma head relation }.each do |type|
         define_method("#{type}=") { |val| add(Attr.new(type, val)) }
+      end
+
+      def [](key)
+        super(key) || send("#{key}=", '-')
       end
 
       def postag=(tag)

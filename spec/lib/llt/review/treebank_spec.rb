@@ -141,6 +141,117 @@ describe LLT::Review::Treebank do
       diff[3].should be_nil # has only lemma and postag differences
       diff[4].should be_true
     end
+
+    context "with slightly out of sync documents" do
+      let(:ge1) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" lemma="in1" postag="r--------" head="5" relation="AuxP"/>
+              <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen1" postag="n-s---nb-" head="1" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="SBJ"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+              <word id="6" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED" elliptic="true"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
+      let(:re1) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" lemma="in1" postag="r--------" head="4" relation="AuxP"/>
+              <word id="2" form="eo" lemma="is1" postag="p-s---nd-" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" head="1" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="OBJ"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
+      it "does not fall for additional (such as elliptic) nodes in the gold file" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ge1) { ge1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_re1) { re1 }
+
+        expect { differ.diff([:uri_for_ge1], [:uri_for_re1]) }.to_not raise_error
+      end
+
+      it "does not fall for additional (such as elliptic) nodes in the review file" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_re1) { re1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ge1) { ge1 }
+
+        expect { differ.diff([:uri_for_re1], [:uri_for_ge1]) }.to_not raise_error
+      end
+    end
+
+    context "with partially unannotated files" do
+      let(:gi1) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" lemma="in1" postag="r--------" head="5" relation="AuxP"/>
+              <word id="2" form="eo" lemma="is1" postag="p-s---nb-" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen1" postag="n-s---nb-" head="1" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5" relation="SBJ"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
+      let(:ri1) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" postag="r--------" head="4" relation="AuxP"/>
+              <word id="2" form="eo" postag="p-s---nd-" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
+      let(:ri2) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" postag="" head="4" relation="AuxP"/>
+              <word id="2" form="eo" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
+      it "does not fall with less content in the review file" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_gi1) { gi1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ri1) { ri1 }
+
+        expect { differ.diff([:uri_for_gi1], [:uri_for_ri1]) }.to_not raise_error
+      end
+
+      it "does not fall with less content in the gold file" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_gi1) { gi1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ri1) { ri1 }
+
+        expect { differ.diff([:uri_for_ri1], [:uri_for_gi1]) }.to_not raise_error
+      end
+
+      it "does not fall with missing postags" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_gi1) { gi1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ri2) { ri2 }
+
+        expect { differ.diff([:uri_for_ri2], [:uri_for_gi1]) }.to_not raise_error
+        expect { differ.diff([:uri_for_gi1], [:uri_for_ri2]) }.to_not raise_error
+      end
+    end
   end
 
   describe "#report" do

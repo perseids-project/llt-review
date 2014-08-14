@@ -5,7 +5,7 @@ module LLT
 
       def initialize(postag)
         @id = :postag
-        @postag = postag
+        @postag = new_postag(postag)
       end
 
       def to_s
@@ -56,6 +56,14 @@ module LLT
       def add_datapoints_container(data)
         CONTAINER_TABLE.each do |pl, sg|
           data.add(Report::Generic.new(pl, 0, sg))
+        end
+      end
+
+      def new_postag(postag)
+        if !postag || postag.empty? || postag == '-'
+          '-' * POSTAG_SCHEMA.length
+        else
+          postag
         end
       end
     end
