@@ -21,10 +21,7 @@ module LLT
       end
 
       def [](key)
-        unless v = super(key)
-          v = @container[key] = Attr.new(key, '-')
-        end
-        v
+        super(key) || send("#{key}=", '-')
       end
 
       def postag=(tag)
