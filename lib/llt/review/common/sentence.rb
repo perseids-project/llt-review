@@ -13,7 +13,11 @@ module LLT
 
       def compare(other, comparables = nil)
         diff = new_sentence_diff
-        words.each { |id, word| word.compare(other[id], diff, comparables) }
+        words.each do |id, word|
+          other_word = other[id] || dummy_word(id)
+
+          word.compare(other_word, diff, comparables)
+        end
         diff
       end
 
@@ -24,6 +28,10 @@ module LLT
       end
 
       private
+
+      def dummy_word(id)
+        # implemented by subclasses
+      end
 
       def new_sentence_diff
         diff_namespace.const_get(:Sentence).new(self)

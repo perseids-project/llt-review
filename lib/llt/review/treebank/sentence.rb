@@ -16,6 +16,12 @@ module LLT
         end.merge(postags: Report::Postags.new(size))
       end
 
+      def dummy_word(id)
+        w = Word.new(id)
+        w.form = "-"
+        w
+      end
+
       def diff_namespace
         Review::Treebank::Difference
       end
