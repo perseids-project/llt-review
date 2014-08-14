@@ -3,7 +3,7 @@ module LLT
     class Word
       include Core::Structures::HashContainable
 
-      attr_accessor :form, :lemma, :head, :relation
+      attr_accessor :form, :lemma, :head, :relation, :inexistant
       attr_reader :postag
 
       Attr = Struct.new(:id, :attribute) do

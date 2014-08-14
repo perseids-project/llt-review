@@ -19,6 +19,7 @@ module LLT
       def dummy_word(id)
         w = Word.new(id)
         w.form = "-"
+        w.inexistant = true
         w
       end
 
