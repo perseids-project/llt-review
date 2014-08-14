@@ -20,6 +20,13 @@ module LLT
         define_method("#{type}=") { |val| add(Attr.new(type, val)) }
       end
 
+      def [](key)
+        unless v = super(key)
+          v = @container[key] = Attr.new(key, '-')
+        end
+        v
+      end
+
       def postag=(tag)
         add(Postag.new(tag))
       end
