@@ -216,6 +216,20 @@ describe LLT::Review::Treebank do
         EOF
       end
 
+      let(:ri2) do
+        <<-EOF
+          <treebank>
+            <sentence id="21" document_id="Perseus:text:1999.02.0002" subdoc="Book=2:chapter=5" span="In3:erat0">
+              <word id="1" form="In" postag="" head="4" relation="AuxP"/>
+              <word id="2" form="eo" head="3" relation="ATR"/>
+              <word id="3" form="flumine" lemma="flumen2" postag="n-s---nd-" relation="ADV"/>
+              <word id="4" form="pons" lemma="pons1" postag="n-s---mn-" head="5"/>
+              <word id="5" form="erat" lemma="sum1" postag="v3siia---" head="0" relation="PRED"/>
+            </sentence>
+          </treebank>
+        EOF
+      end
+
       it "does not fall with less content in the review file" do
         allow(differ).to receive(:get_from_uri).with(:uri_for_gi1) { gi1 }
         allow(differ).to receive(:get_from_uri).with(:uri_for_ri1) { ri1 }
@@ -228,6 +242,14 @@ describe LLT::Review::Treebank do
         allow(differ).to receive(:get_from_uri).with(:uri_for_ri1) { ri1 }
 
         expect { differ.diff([:uri_for_ri1], [:uri_for_gi1]) }.to_not raise_error
+      end
+
+      it "does not fall with missing postags" do
+        allow(differ).to receive(:get_from_uri).with(:uri_for_gi1) { gi1 }
+        allow(differ).to receive(:get_from_uri).with(:uri_for_ri2) { ri2 }
+
+        expect { differ.diff([:uri_for_ri2], [:uri_for_gi1]) }.to_not raise_error
+        expect { differ.diff([:uri_for_gi1], [:uri_for_ri2]) }.to_not raise_error
       end
     end
   end
