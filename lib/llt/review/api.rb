@@ -44,7 +44,7 @@ class Api < Sinatra::Base
     if backend = params[:backend]
       p = case backend
           when 'perseids'     then 'sosol.perseids.org/sosol'
-          when 'perseids-dev' then 'sosol-rep.perseids.org'
+          when 'perseids-dev' then 'sosol-rep.perseids.org/sosol'
           end
 
       expand_perseids_urls(params, :gold, p)
