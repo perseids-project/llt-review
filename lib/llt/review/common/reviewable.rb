@@ -23,7 +23,7 @@ module LLT
       def compare(gold, comparables = nil)
         comparison = Comparison.new(gold, self)
         comparison.compare(comparables)
-        add(comparison) if comparison.any?
+        add(comparison)
       end
 
       def to_xml
