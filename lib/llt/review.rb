@@ -81,10 +81,10 @@ module LLT
 
     def parse_threaded(uris_with_classes)
       getter_pool = DataWorker.pool(size: 2)
-      threads = uris_with_classes.map do |klass, uri|
+      futures = uris_with_classes.map do |klass, uri|
         getter_pool.future.get_data(self.class.const_get(klass),uri,self.class.const_get(:Parser))
       end
-      threads
+      futures.map { |f| f.value }
     end
 
     def header
