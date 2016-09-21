@@ -82,7 +82,7 @@ module LLT
     def parse_threaded(uris_with_classes)
       getter_pool = DataWorker.pool(size: 2)
       threads = uris_with_classes.map do |klass, uri|
-        getter_pool.future.get_data(self.class.const_get(klass),uri)
+        getter_pool.future.get_data(self.class.const_get(klass),uri,self.class.const_get(:Parser))
       end
       threads
     end
@@ -118,9 +118,9 @@ module LLT
       require 'llt/core/api/helpers'
       include Celluloid
       include Core::Api::Helpers
-      def get_data(klass,uri)
+      def get_data(klass,uri,parser)
         data = get_from_uri(uri)
-        klass.new(uri, parse(data))
+        klass.new(uri, parser.new.parse(data))
       end
     end
   end
