@@ -8,6 +8,8 @@ gem 'llt-core', git: 'git://github.com/latin-language-toolkit/llt-core.git'
 
 gem 'ox', platform: :ruby
 
+gem 'celluloid'
+
 platform :jruby do
   gem 'nokogiri'
   gem 'jruby-httpclient'

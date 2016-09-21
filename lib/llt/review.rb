@@ -2,6 +2,7 @@ require 'llt/core/api/helpers'
 require 'llt/core/structures/hash_containable'
 require 'llt/core/structures/hash_containable/generic'
 require "llt/review/version"
+require "celluloid"
 
 module LLT
   # This is pretty much the only messy class this whole gem contains.
@@ -14,6 +15,7 @@ module LLT
     require 'llt/review/alignment'
 
     include Core::Api::Helpers
+    include Celluloid
 
     def diff(gold, reviewables, comparables = nil)
       parses = parse_files(Gold: gold, Reviewable: reviewables)
@@ -80,13 +82,11 @@ module LLT
     end
 
     def parse_threaded(uris_with_classes)
+      getter_pool = DataWorker.pool(size: 2)
       threads = uris_with_classes.map do |klass, uri|
-        Thread.new do
-          data = get_from_uri(uri)
-          self.class.const_get(klass).new(uri, parse(data))
-        end
+        getter_pool.future.get_data(klass,uri)
       end
-      threads.map { |t| t.join; t.value }
+      threads
     end
 
     def header
@@ -113,6 +113,14 @@ module LLT
 
     def parse(data)
       self.class.const_get(:Parser).new.parse(data)
+    end
+
+    class DataWorker
+      include Celluloid
+      def get_data(klass,uri)
+        data = get_from_uri(uri)
+        self.class.const_get(klass).new(uri, parse(data))
+      end
     end
   end
 end
