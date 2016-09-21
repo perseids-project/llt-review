@@ -2,7 +2,6 @@ require 'llt/core/api/helpers'
 require 'llt/core/structures/hash_containable'
 require 'llt/core/structures/hash_containable/generic'
 require "llt/review/version"
-require "celluloid"
 
 module LLT
   # This is pretty much the only messy class this whole gem contains.
@@ -15,7 +14,6 @@ module LLT
     require 'llt/review/alignment'
 
     include Core::Api::Helpers
-    include Celluloid
 
     def diff(gold, reviewables, comparables = nil)
       parses = parse_files(Gold: gold, Reviewable: reviewables)
@@ -116,6 +114,8 @@ module LLT
     end
 
     class DataWorker
+      require "celluloid"
+      require 'llt/core/api/helpers'
       include Celluloid
       def get_data(klass,uri)
         data = get_from_uri(uri)
