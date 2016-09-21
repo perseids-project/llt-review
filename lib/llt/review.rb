@@ -80,6 +80,8 @@ module LLT
     end
 
     def parse_threaded(uris_with_classes)
+      # be a good consumer
+      # ideally we would make pool size a configurable option 
       getter_pool = DataWorker.pool(size: 2)
       futures = uris_with_classes.map do |klass, uri|
         getter_pool.future.get_data(self.class.const_get(klass),uri,self.class.const_get(:Parser))
