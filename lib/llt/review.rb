@@ -117,6 +117,7 @@ module LLT
       require "celluloid"
       require 'llt/core/api/helpers'
       include Celluloid
+      include Core::Api::Helpers
       def get_data(klass,uri)
         data = get_from_uri(uri)
         self.class.const_get(klass).new(uri, parse(data))
