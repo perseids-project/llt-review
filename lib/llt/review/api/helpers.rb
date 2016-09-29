@@ -16,7 +16,7 @@ module LLT
       end
 
       def arethusa(rev, gold, chunk = nil, word = nil)
-        path = "http://sosol.perseids.org/tools/arethusa/app/#/perseids_review"
+        path = "http://www.perseids.org/tools/arethusa/app/#/perseids_review"
         path << "?doc=#{rev}&gold=#{gold}"
         if chunk || word
           path << "&chunk=#{chunk}" if chunk
