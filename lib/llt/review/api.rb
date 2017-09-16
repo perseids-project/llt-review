@@ -70,7 +70,7 @@ class Api < Sinatra::Base
   def expand_perseids_urls(params, key, sosol_path)
     t = Array(params[key])
     params[key] = t.map do |publication_id|
-      "http://#{sosol_path}/dmm_api/item/TreebankCite/#{publication_id}"
+      "https://#{sosol_path}/dmm_api/item/TreebankCite/#{publication_id}"
     end
   end
 end
