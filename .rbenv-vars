@@ -1,0 +1,2 @@
+JRUBY_OPTS=--2.0 -X-C -J-Xmx1024m -J-XX:+UseConcMarkSweepGC
+RUBYOPT=-W0
